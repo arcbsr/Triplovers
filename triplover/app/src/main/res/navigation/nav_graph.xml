@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/FirstFragment">
+
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="com.arcadio.triplover.acitivies.FlightSearchFragment"
+        android:label="@string/flightsearch_fragment_label"
+        tools:layout="@layout/fragment_flight_options">
+
+    </fragment>
+    <fragment
+        android:id="@+id/FlightList"
+        android:name="com.arcadio.triplover.acitivies.FlightListFragment"
+        android:label="@string/flightlist_fragment_label"
+        tools:layout="@layout/fragment_flight_list" >
+        <action
+            android:id="@+id/action_back_flightsearch"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+</navigation>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginRight="@dimen/_10sdp"
+    android:layout_marginLeft="@dimen/_10sdp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:backgroundTint="@color/white_dark"
+    android:elevation="8dp"
+    app:cardCornerRadius="8dp">
+
+    <RelativeLayout
+        android:padding="@dimen/_5sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--text view for our course name-->
+        <TextView
+            android:id="@+id/item_cityname"
+            style="@style/TTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_flight"
+            android:drawablePadding="@dimen/_10sdp"
+            android:drawableTint="@color/colorPrimary"
+            android:padding="@dimen/_5sdp"
+            android:text="City Name" />
+
+        <!--text view for our course description-->
+        <TextView
+            android:id="@+id/item_citydes"
+            style="@style/TTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_cityname"
+            android:padding="@dimen/_5sdp"
+            android:text="City Name"
+            android:textColor="@color/rajon_hint"
+            android:textStyle="normal" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

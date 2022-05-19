@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".acitivies.FlightSearchFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/search_flight"
+            android:fillViewport="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_5sdp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:backgroundTint="@color/white"
+                        android:clipToPadding="false"
+                        app:cardElevation="10dp"
+                        card_view:cardCornerRadius="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/round_border"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tab_oneway"
+                                style="@style/TTextView"
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/semi_trans"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                                android:gravity="center"
+                                android:text="One-Way"
+                                android:textColor="@color/black" />
+
+                            <View
+                                android:layout_width=".5dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/semi_trans" />
+
+                            <TextView
+                                android:id="@+id/tab_roundtip"
+                                style="@style/TTextView"
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/semi90_trans"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                                android:gravity="center"
+                                android:text="Round-Trip"
+                                android:textColor="@color/black" />
+
+                            <View
+                                android:layout_width=".5dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/semi_trans" />
+
+                            <TextView
+                                android:id="@+id/tab_multicity"
+                                style="@style/TTextView"
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/semi_trans"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                                android:gravity="center"
+                                android:text="Multi-City"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/round_border"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_2sdp">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycle_flight_search"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/date_panel_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_60sdp">
+
+                            <TextView
+                                android:id="@+id/add_more"
+                                style="@style/TTextView"
+                                android:layout_width="@dimen/_100sdp"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/round_border_sel"
+                                android:clickable="true"
+                                android:drawableLeft="@drawable/ic_baseline_add_24"
+                                android:drawableTint="@color/green"
+                                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                                android:gravity="center"
+                                android:padding="@dimen/_8sdp"
+                                android:text="Add More"
+                                android:textColor="@color/green"
+                                android:visibility="visible" />
+
+                            <LinearLayout
+                                android:id="@+id/date_panel"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <LinearLayout
+                                    android:id="@+id/depart_date"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/_5sdp"
+                                    android:visibility="visible">
+
+                                    <TextView
+                                        style="@style/TTextView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:padding="@dimen/_3sdp"
+                                        android:text="Departure Date" />
+
+                                    <TextView
+                                        android:id="@+id/dept_txt_date"
+                                        style="@style/TTextView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/round_border"
+                                        android:drawableRight="@drawable/ic_down"
+                                        android:drawableTint="@color/rajon_hint"
+                                        android:gravity="center"
+                                        android:paddingLeft="@dimen/_3sdp"
+                                        android:paddingTop="@dimen/_8sdp"
+                                        android:paddingRight="@dimen/_3sdp"
+                                        android:paddingBottom="@dimen/_8sdp"
+                                        android:text="Mon, Nov 04, 2022" />
+                                </LinearLayout>
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="@dimen/_20sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:layout_margin="@dimen/_5sdp"
+                                    android:scaleType="fitCenter"
+                                    android:src="@drawable/ic_calender" />
+
+                                <LinearLayout
+                                    android:id="@+id/return_date"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/_5sdp"
+                                    android:visibility="visible">
+
+                                    <TextView
+                                        style="@style/TTextView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:padding="@dimen/_3sdp"
+                                        android:text="Return Date" />
+
+                                    <TextView
+                                        android:id="@+id/retn_txt_date"
+                                        style="@style/TTextView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/round_border"
+                                        android:drawableRight="@drawable/ic_down"
+                                        android:drawableTint="@color/rajon_hint"
+                                        android:gravity="center"
+                                        android:paddingLeft="@dimen/_3sdp"
+                                        android:paddingTop="@dimen/_8sdp"
+                                        android:paddingRight="@dimen/_3sdp"
+                                        android:paddingBottom="@dimen/_8sdp"
+                                        android:text="Mon, Nov 04, 2022" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </RelativeLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:background="@color/sepe_color" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_60sdp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_5sdp">
+
+                                <TextView
+                                    style="@style/TTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="@string/adult" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="@dimen/_5sdp">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/adult_plus"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/round_border"
+                                        android:padding="@dimen/_3sdp"
+                                        android:src="@drawable/ic_baseline_add_24" />
+
+                                    <TextView
+                                        android:id="@+id/adult_counter"
+                                        style="@style/TTextView"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textSize="@dimen/_14sdp" />
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/adult_minus"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/round_border"
+                                        android:padding="@dimen/_3sdp"
+                                        android:src="@drawable/ic_baseline_remove_24" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width=".5dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/sepe_color" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_5sdp">
+
+                                <TextView
+                                    style="@style/TTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="@string/child_req" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="@dimen/_5sdp">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/child_plus"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/round_border"
+                                        android:padding="@dimen/_3sdp"
+                                        android:src="@drawable/ic_baseline_add_24" />
+
+                                    <TextView
+                                        android:id="@+id/child_counter"
+                                        style="@style/TTextView"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textSize="@dimen/_14sdp" />
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/child_minus"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/round_border"
+                                        android:padding="@dimen/_3sdp"
+                                        android:src="@drawable/ic_baseline_remove_24" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width=".5dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/sepe_color" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_5sdp">
+
+                                <TextView
+                                    style="@style/TTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="@string/infant_req" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="horizontal"
+                                    android:padding="@dimen/_5sdp">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/infant_plus"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/round_border"
+                                        android:padding="@dimen/_3sdp"
+                                        android:src="@drawable/ic_baseline_add_24" />
+
+                                    <TextView
+                                        android:id="@+id/infant_counter"
+                                        style="@style/TTextView"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textSize="@dimen/_14sdp" />
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/infant_minus"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/round_border"
+                                        android:padding="@dimen/_3sdp"
+                                        android:src="@drawable/ic_baseline_remove_24" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:background="@color/sepe_color" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:background="@color/sepe_color" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_50sdp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/tab_economy"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackgroundBorderless">
+
+                                <TextView
+                                    style="@style/TTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Economy" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width=".5dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/sepe_color" />
+
+                            <LinearLayout
+                                android:id="@+id/tab_prem_economy"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackgroundBorderless">
+
+                                <TextView
+                                    style="@style/TTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Premium\nEconomy" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width=".5dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/sepe_color" />
+
+                            <LinearLayout
+                                android:id="@+id/tab_business"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackgroundBorderless">
+
+                                <TextView
+                                    style="@style/TTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Business" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width=".5dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/sepe_color" />
+
+                            <LinearLayout
+                                android:id="@+id/tab_firstclass"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackgroundBorderless">
+
+                                <TextView
+                                    style="@style/TTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="First Class" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height=".5dp"
+                            android:background="@color/sepe_color" />
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_direct"
+                        style="@style/TTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_gravity="left"
+                        android:layout_above="@+id/search_flight"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:text="Direct Flight"
+                        app:switchPadding="@dimen/_20sdp" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/search_flight"
+            style="@style/TDButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/search_flight" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

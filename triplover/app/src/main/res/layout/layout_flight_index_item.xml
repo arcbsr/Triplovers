@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_back"
+    android:layout_width="@dimen/_160sdp"
+    android:layout_height="@dimen/_100sdp"
+    android:layout_margin="@dimen/_2sdp"
+    android:background="@drawable/background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/semi_trans"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/_2sdp"
+        app:alignContent="stretch"
+        app:alignItems="stretch"
+        app:flexWrap="wrap">
+
+        <TextView
+            android:id="@+id/item_flight_from"
+            style="@style/TTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="DAC"
+            app:layout_flexBasisPercent="33%" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="match_parent"
+            android:padding="@dimen/_3sdp"
+            android:src="@drawable/ic_flight"
+            android:tint="@color/rajon_hint"
+            app:layout_flexBasisPercent="15%" />
+
+        <TextView
+            android:id="@+id/item_flight_to"
+            style="@style/TTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="CGP"
+            app:layout_flexBasisPercent="33%" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/item_flight_info"
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            android:src="@drawable/ic_baseline_info_24"
+            android:tint="@color/sky_blue"
+            app:layout_flexBasisPercent="15%" />
+    </com.google.android.flexbox.FlexboxLayout>
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/item_flight_empty"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_5sdp"
+        android:src="@drawable/ic_baseline_add_24"
+        android:tint="@color/rajon_hint"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/item_flight_select"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/_5sdp"
+        android:paddingRight="@dimen/_5sdp"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_2sdp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/item_dep_airname"
+                style="@style/TTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="airlines"/>
+
+            <TextView
+                android:id="@+id/item_dept_date"
+                style="@style/TTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_dep_airname"
+                android:gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:textSize="@dimen/_9sdp"
+                android:text="2022-07-10" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/_2sdp"
+            android:paddingRight="@dimen/_2sdp">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/item_dep_stime"
+                    style="@style/TTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_9sdp"
+                    android:text="13:25"/>
+
+                <TextView
+                    android:id="@+id/item_dep_sairport"
+                    style="@style/TTextView"
+                    android:textSize="@dimen/_9sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="KWI" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/item_dep_duration"
+                    style="@style/TTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_flight"
+                    android:drawableTint="@color/rajon_hint"
+                    android:gravity="center"
+                    android:text="13:25"
+                    android:textSize="@dimen/_8sdp"
+                    android:textStyle="normal" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingRight="@dimen/_8sdp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_centerVertical="true"
+                        android:background="@color/rajon_hint" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_6sdp"
+                        android:layout_height="@dimen/_6sdp"
+                        android:src="@drawable/ic_dotted"
+                        app:tint="@color/rajon" />
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/item_dep_stops"
+                    style="@style/TTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Non-stop"
+                    android:textSize="@dimen/_8sdp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_weight=".5"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/item_dep_etime"
+                    style="@style/TTextView"
+                    android:textSize="@dimen/_9sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="13:25"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/item_dep_eairport"
+                    style="@style/TTextView"
+                    android:textSize="@dimen/_9sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="KWI"
+                    android:textStyle="normal" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
