@@ -9,14 +9,14 @@
             android:icon="@drawable/ic_baseline_home_24"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_login"
-            android:icon="@drawable/ic_baseline_login_24"
-            android:title="@string/menu_login" />
-        <item
             android:id="@+id/nav_booking"
             android:icon="@drawable/ic_mybooking"
             android:title="@string/menu_booking" />
 
+        <item
+            android:id="@+id/nav_loginuser"
+            android:icon="@drawable/ic_baseline_login_24"
+            android:title="@string/menu_login" />
     </group>
     <item android:title="Suppors">
         <menu>

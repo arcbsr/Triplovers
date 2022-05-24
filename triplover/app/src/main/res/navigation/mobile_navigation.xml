@@ -12,12 +12,6 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_login"
-        android:name="com.arcadio.triplover.ui.login.LoginFragment"
-        android:label="@string/menu_login"
-        tools:layout="@layout/fragment_login" />
-
-    <fragment
         android:id="@+id/nav_booking"
         android:name="com.arcadio.triplover.ui.booking.BookingFragment"
         android:label="@string/menu_booking"

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -118,6 +119,8 @@ public class FlightListDataActivity extends BaseActivity {
                 error = msg;
             }
         }).execute();
+
+        binding.flightSelectedList.setVisibility(View.GONE);
     }
 
     SearchJsModel searchJsModel;
@@ -174,9 +177,19 @@ public class FlightListDataActivity extends BaseActivity {
         // Set layout manager to position the items
         binding.flightList.setLayoutManager(new LinearLayoutManager(FlightListDataActivity.this));
         initFlightListView();
+        binding.flightSelectedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDetails(adapterIndex.getAllDirection(), true);
+            }
+        });
     }
 
     private void showDetails(final List<Direction> directions, boolean isViewOnly) {
+        if (directions.size() == 0) {
+            Toast.makeText(this, getString(R.string.nothing_show), Toast.LENGTH_SHORT).show();
+            return;
+        }
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.layout_recycleview);
 //        ((TextView) bottomSheetDialog.findViewById(R.id.flight_details_price))

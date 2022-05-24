@@ -49,9 +49,13 @@ public class FlightsTabAdapter extends RecyclerView.Adapter<FlightsTabAdapter.Vi
     }
 
     public List<Direction> getAllDirection() {
+
         List<Direction> directions = new ArrayList<>();
-        for (Route route : routes) {
-            directions.add(route.getDirection());
+        if (routes != null) {
+            for (Route route : routes) {
+                if (route.getDirection() != null)
+                    directions.add(route.getDirection());
+            }
         }
         return directions;
     }

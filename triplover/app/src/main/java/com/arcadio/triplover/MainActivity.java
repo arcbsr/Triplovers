@@ -1,5 +1,6 @@
 package com.arcadio.triplover;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Toast;
@@ -11,7 +12,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.arcadio.triplover.databinding.ActivityMainBinding;
+import com.arcadio.triplover.fragments.LoginDialogFragment;
+import com.arcadio.triplover.models.usermodel.LoginResponse;
+import com.arcadio.triplover.utils.KLog;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 public class MainActivity extends BaseActivity {
 
@@ -31,7 +37,7 @@ public class MainActivity extends BaseActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_login, R.id.nav_booking)
+                R.id.nav_home, R.id.nav_booking)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -44,15 +50,35 @@ public class MainActivity extends BaseActivity {
                 drawer.close();
                 return true;
             } else if (item.getItemId() == R.id.nav_about) {
-                Toast.makeText(this, "nav_about..", Toast.LENGTH_SHORT).show();
+                drawer.close();
                 return true;
             } else if (item.getItemId() == R.id.nav_contact) {
                 Toast.makeText(this, "nav_contact..", Toast.LENGTH_SHORT).show();
                 return true;
-            } else if (item.getItemId() == R.id.nav_login) {
-                navController.navigate(R.id.nav_login);
+            } else if (item.getItemId() == R.id.nav_loginuser) {
                 drawer.close();
-                return true;
+//                navController.navigate(R.id.nav_login);
+                new LoginDialogFragment(new LoginDialogFragment.Listener() {
+                    @Override
+                    public void onLogIn(LoginResponse response) {
+                        KLog.w(response == null ? "Error in data" : new Gson().toJson(response));
+                    }
+
+                    @Override
+                    public void onLoginFailed() {
+                        new MaterialAlertDialogBuilder(MainActivity.this)
+                                .setTitle("Falied")
+                                .setMessage(getString(R.string.loginFailed))
+                                .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    }
+                                })
+                                .show();
+                    }
+                }).show(getSupportFragmentManager(), "LoginFrom");
+                return false;
             }
             return false;
         });

@@ -48,6 +48,9 @@
     <string name="no_flight_msg">Sorry, No Flight Found...</string>
     <string name="search_again">Search Again</string>
     <string name="close">Close</string>
+    <string name="invalid">Invalid</string>
+    <string name="loginFailed">Sorry, Login failed. Try again.</string>
+    <string name="nothing_show">Nothing to show</string>
     <string-array name="spinnerItems">
         <item>1</item>
         <item>2</item>

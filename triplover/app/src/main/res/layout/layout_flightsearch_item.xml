@@ -68,7 +68,7 @@
                 android:layout_height="match_parent"
                 android:padding="@dimen/_5sdp"
                 android:src="@drawable/ic_flight"
-                app:tint="@color/colorPrimary" />
+                app:tint="@color/white_dark" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/city_destination"
@@ -155,7 +155,7 @@
                 android:drawableTint="@color/colorPrimary"
                 android:gravity="center"
                 android:text="Mon,Nov 04,2022"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/rajon" />
         </LinearLayout>
 
         <Button
@@ -164,8 +164,8 @@
             android:layout_height="@dimen/_30sdp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:backgroundTint="@color/white"
-            android:textColor="@android:color/holo_red_dark"
+            android:backgroundTint="@color/sky_blue"
+            android:textColor="@color/white_dark"
             android:text="@string/remove"
             android:textAllCaps="false" />
     </RelativeLayout>

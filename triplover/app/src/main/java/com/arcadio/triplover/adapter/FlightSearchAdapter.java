@@ -13,8 +13,10 @@ import com.arcadio.triplover.R;
 import com.arcadio.triplover.models.CityModels;
 import com.arcadio.triplover.models.search.request.Route;
 import com.arcadio.triplover.utils.Enums;
+import com.arcadio.triplover.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class FlightSearchAdapter extends RecyclerView.Adapter<FlightSearchAdapter.ViewHolder> {
@@ -51,7 +53,7 @@ public class FlightSearchAdapter extends RecyclerView.Adapter<FlightSearchAdapte
         if (routes.size() > 0) {
             return routes.get(pos);
         } else {
-            return new Route("DAC","CGP","Wed, May 18, 2022");
+            return new Route("DAC", "CGP", Utils.getDateString(Calendar.getInstance().getTime()));
 
 
         }
@@ -65,10 +67,10 @@ public class FlightSearchAdapter extends RecyclerView.Adapter<FlightSearchAdapte
     public void updateData(int position, CityModels cityModels, Enums.CalenderType calenderType) {
         if (calenderType == Enums.CalenderType.DEPART) {
             routes.get(position).setOrigin(cityModels.getIata());
-            routes.get(position).setDepartCityName(cityModels.getName()+", "+ cityModels.getCountry());
+            routes.get(position).setDepartCityName(cityModels.getName() + ", " + cityModels.getCountry());
         } else {
             routes.get(position).setDestination(cityModels.getIata());
-            routes.get(position).setDestinationcityname(cityModels.getName()+", "+ cityModels.getCountry());
+            routes.get(position).setDestinationcityname(cityModels.getName() + ", " + cityModels.getCountry());
         }
         if (flightType == Enums.FlightType.ROUND) {
             Route routeauto = position == 0 ? routes.get(1) : routes.get(0);

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -61,8 +62,9 @@ public class FlightSearchFragment extends BaseFragment {
         },
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
-        dialog.getDatePicker().setMinDate(calendar.getTimeInMillis() - 1000);
-        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + 3);
+        dialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+
+        calendar.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH) + 3);
         dialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
         dialog.show();
     }
@@ -95,12 +97,12 @@ public class FlightSearchFragment extends BaseFragment {
     }
 
     private void TabBarSetup(View view) {
-        binding.tabOneway.setBackgroundColor(getColorFromResource(R.color.semi90_trans));
-        binding.tabOneway.setTextColor(getColorFromResource(R.color.rajon));
-        binding.tabRoundtip.setBackgroundColor(getColorFromResource(R.color.semi90_trans));
-        binding.tabRoundtip.setTextColor(getColorFromResource(R.color.rajon));
-        binding.tabMulticity.setBackgroundColor(getColorFromResource(R.color.semi90_trans));
-        binding.tabMulticity.setTextColor(getColorFromResource(R.color.rajon));
+        binding.tabOneway.setBackgroundColor(getColorFromResource(R.color.colorPrimary));
+        binding.tabOneway.setTextColor(getColorFromResource(R.color.white));
+        binding.tabRoundtip.setBackgroundColor(getColorFromResource(R.color.colorPrimary));
+        binding.tabRoundtip.setTextColor(getColorFromResource(R.color.white));
+        binding.tabMulticity.setBackgroundColor(getColorFromResource(R.color.colorPrimary));
+        binding.tabMulticity.setTextColor(getColorFromResource(R.color.white));
         binding.returnDate.setVisibility(View.INVISIBLE);
         binding.departDate.setVisibility(View.VISIBLE);
         binding.addMore.setVisibility(View.INVISIBLE);
@@ -111,8 +113,8 @@ public class FlightSearchFragment extends BaseFragment {
         if (view != null) {
 //            binding.tabOneway.setBackgroundColor(getColorFromResource(R.color.semi_trans));
 //            binding.tabOneway.setTextColor(getColorFromResource(R.color.white));
-            view.setBackgroundColor(getColorFromResource(R.color.semi_trans));
-//            ((TextView) view).setTextColor(getColorFromResource(R.color.black));
+            view.setBackgroundColor(getColorFromResource(R.color.white));
+            ((TextView) view).setTextColor(getColorFromResource(R.color.black));
             return;
         }
         binding.tabOneway.setOnClickListener(new View.OnClickListener() {

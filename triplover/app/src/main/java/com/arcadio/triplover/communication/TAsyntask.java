@@ -11,11 +11,21 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.arcadio.triplover.R;
+import com.arcadio.triplover.utils.Constants;
 import com.arcadio.triplover.utils.KLog;
+
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class TAsyntask extends AsyncTask<Void, Void, Void> {
 
     public static final String ERROR_CANCEL = "cancel";
+    public static final String ERROR_NODATA = "nodata";
 
     public interface KAsyncListener {
         void onPreListener();
@@ -85,7 +95,7 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
             if (dialog != null && dialog.isShowing()) {
                 asyncListener.onCompleteListener();
                 ObjectAnimator anim = animController(dialog.findViewById(R.id.loading_image_anim), dialog.findViewById(R.id.loading_image_anim)
-                        .getX()
+                                .getX()
                         , 0f, 500);
                 anim.addListener(new AnimatorListenerAdapter() {
                     @Override
@@ -113,5 +123,47 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
         buttonAnimator.start();
 
         return buttonAnimator;
+    }
+
+    public static String postRequest(String searchAuery, String postUrl) {
+        MediaType JSON
+                = MediaType.get("application/json; charset=utf-8");
+
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody body = RequestBody.create(searchAuery, JSON);
+        Request request = new Request.Builder()
+                .url(Constants.ROOT_URL + postUrl)
+                .post(body)
+                .build();
+        try (Response response = client.newCall(request).execute()) {
+            String result = response.body().string();
+            KLog.w(result);
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String postRequestHeader(String searchAuery, String postUrl, String authToken) {
+        MediaType JSON
+                = MediaType.get("application/json; charset=utf-8");
+
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody body = RequestBody.create(searchAuery, JSON);
+        Request request = new Request.Builder()
+                .url(Constants.ROOT_URL + postUrl)
+                .post(body)
+                .build();
+        try (Response response = client.newCall(request).execute()) {
+            String result = response.body().string();
+            KLog.w(result);
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
