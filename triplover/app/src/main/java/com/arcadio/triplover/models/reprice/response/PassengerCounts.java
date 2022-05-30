@@ -1,15 +1,12 @@
 
-package com.arcadio.triplover.models.search.response;
+package com.arcadio.triplover.models.reprice.response;
 
+import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-import javax.annotation.Generated;
-
 @Generated("jsonschema2pojo")
-public class PassengerCounts implements Serializable {
+public class PassengerCounts {
 
     @SerializedName("cnn")
     @Expose

@@ -146,7 +146,7 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    public static String postRequestHeader(String searchAuery, String postUrl, String authToken) {
+    public static ResponseResult postRequestHeader(String searchAuery, String postUrl, String authToken) {
         MediaType JSON
                 = MediaType.get("application/json; charset=utf-8");
 
@@ -155,15 +155,23 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
         RequestBody body = RequestBody.create(searchAuery, JSON);
         Request request = new Request.Builder()
                 .url(Constants.ROOT_URL + postUrl)
+                .addHeader("Authorization", "Bearer " + authToken)
                 .post(body)
                 .build();
         try (Response response = client.newCall(request).execute()) {
-            String result = response.body().string();
-            KLog.w(result);
+            ResponseResult result = new ResponseResult();
+            result.code = response.code();
+            result.result = response.body().string();
+//            String result = response.body().string();
+            KLog.w(result.result);
             return result;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+    public static class ResponseResult{
+        public int code = 200;
+        public String result="";
     }
 }

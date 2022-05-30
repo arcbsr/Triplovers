@@ -1,17 +1,112 @@
 package com.arcadio.triplover.utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.telephony.TelephonyManager;
+
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class CountryToPhonePrefix {
     public static Map<String, String> map = new HashMap<>();
 
     public static String prefixFor(String iso2CountryCode) {
-        String result = map.get(iso2CountryCode);
-        if (result == null) {
-            throw new IllegalArgumentException("Unknown country code " + iso2CountryCode);
+        if (map.containsKey(iso2CountryCode)) {
+            return map.get(iso2CountryCode);
         }
-        return result;
+        return "";
+    }
+
+    public static class CountryDetails {
+        public String countryName = "";
+        public String countryCode = "";
+        public String phoneCode = "";
+        public boolean isSelected = false;
+
+        public CountryDetails(String countryName, String countryCode, String phoneCode, boolean isSelected) {
+            this.countryName = countryName;
+            this.countryCode = countryCode;
+            this.phoneCode = phoneCode;
+            this.isSelected = isSelected;
+        }
+    }
+
+    private static HashMap<String, CountryDetails> countries = new HashMap<>();
+
+    public static HashMap<String, CountryDetails> CountryCodesBuilder(String defaultCode) {
+        if (defaultCode == null) {
+            defaultCode = "";
+        }
+        if (countries.size() == 0) {
+            for (String iso : Locale.getISOCountries()) {
+                Locale l = new Locale("", iso);
+                countries.put(l.getCountry(), new CountryDetails(l.getDisplayName(), l.getCountry(), prefixFor(l.getCountry()),
+                        (iso.equalsIgnoreCase(defaultCode) ? true : false)));
+            }
+        }
+        return countries;
+    }
+
+    public static CountryDetails CountryCodeBuilder(String defaultCode) {
+        if (defaultCode == null || defaultCode.isEmpty()) {
+            defaultCode = "";
+        }
+        defaultCode = defaultCode.toUpperCase();
+        if (countries.size() == 0) {
+            for (String iso : Locale.getISOCountries()) {
+                Locale l = new Locale("", iso);
+                countries.put(l.getCountry(), new CountryDetails(l.getDisplayName(), l.getCountry(), prefixFor(l.getCountry()),
+                        (iso.equalsIgnoreCase(defaultCode) ? true : false)));
+            }
+        }
+        KLog.w(defaultCode);
+        CountryDetails countryDetails = new CountryDetails("", "", "", false);
+        if (countries.containsKey(defaultCode)) {
+            countryDetails = countries.get(defaultCode);
+        }
+        return countryDetails;
+    }
+
+    public static String SearchCountryCodeBuilder(String defaultCode, Enums.CodeSearchType codeSearchType) {
+        if (defaultCode == null || defaultCode.isEmpty()) {
+            return "";
+        }
+        if (countries.size() == 0) {
+            for (String iso : Locale.getISOCountries()) {
+                Locale l = new Locale("", iso);
+                countries.put(l.getCountry(), new CountryDetails(l.getDisplayName(), l.getCountry(), prefixFor(l.getCountry()),
+                        (iso.equalsIgnoreCase(defaultCode) ? true : false)));
+
+            }
+        }
+        for (String iso : countries.keySet()) {
+            switch (codeSearchType) {
+                case Countries:
+                    if ((defaultCode.equalsIgnoreCase(countries.get(iso).countryName))) {
+                        return countries.get(iso).countryName;
+                    }
+                    break;
+                case PhoneCodes:
+                    if ((defaultCode.equalsIgnoreCase(countries.get(iso).phoneCode))) {
+                        return countries.get(iso).phoneCode;
+                    }
+                    break;
+                case CountryCodes:
+                    if ((defaultCode.equalsIgnoreCase(countries.get(iso).countryCode))) {
+                        return countries.get(iso).countryCode;
+                    }
+                    break;
+            }
+
+        }
+        return "";
+    }
+
+    public static String getLocalCode(Activity context) {
+        TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String code = manager.getNetworkCountryIso().toUpperCase();
+        return code;
     }
 
     static {

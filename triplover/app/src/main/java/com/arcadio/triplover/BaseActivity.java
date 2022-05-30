@@ -1,12 +1,15 @@
 package com.arcadio.triplover;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.arcadio.triplover.utils.Utils;
+import com.google.gson.Gson;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -29,5 +32,17 @@ public class BaseActivity extends AppCompatActivity {
             return getResources().getColor(resourceId);
         }
         return Color.WHITE;
+    }
+
+    protected Context getContext() {
+        return this;
+    }
+
+    protected Activity getActivity() {
+        return this;
+    }
+
+    protected Gson getGson() {
+        return Utils.getGson();
     }
 }

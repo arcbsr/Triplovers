@@ -5,16 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.arcadio.triplover.R;
 import com.arcadio.triplover.acitivies.FlightSearchActivity;
 import com.arcadio.triplover.databinding.FragmentHomeBinding;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.arcadio.triplover.utils.CountryToPhonePrefix;
+import com.arcadio.triplover.utils.Dialogs;
+import com.arcadio.triplover.utils.Enums;
 
 public class HomeFragment extends Fragment {
 
@@ -36,7 +36,18 @@ public class HomeFragment extends Fragment {
         binding.btnHotel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new Dialogs().ShowDialog(getActivity(), Enums.CodeSearchType.Countries,
+                        CountryToPhonePrefix.getLocalCode(getActivity()), new Dialogs.DialogListener() {
+                    @Override
+                    public void onItemSelected(String code) {
 
+                    }
+
+                            @Override
+                            public void onCountrySelected(CountryToPhonePrefix.CountryDetails code) {
+
+                            }
+                        });
 
             }
         });

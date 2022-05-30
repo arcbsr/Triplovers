@@ -19,6 +19,7 @@
     <string name="menu_logins">Login</string>
     <string name="terms_condition"><b><u>Terms &amp; Conditions</u></b></string>
     <string name="login_u"><b><u>Login</u></b></string>
+    <string name="login_u_details">If you have an account, <b><u><font fgcolor='#F16B2E'>Please Login</font></u></b>, or continue as a guest</string>
 
     <string name="flight_details"><u>Flight Details</u></string>
     <string name="create_acc_u"><b><u>Create New</u></b></string>
@@ -51,10 +52,40 @@
     <string name="invalid">Invalid</string>
     <string name="loginFailed">Sorry, Login failed. Try again.</string>
     <string name="nothing_show">Nothing to show</string>
+    <string name="title">Title</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="dob">Date of Birth</string>
+    <string name="nationality">Nationality</string>
+    <string name="doc_type">Document Type</string>
+    <string name="doc_number">Document Number*</string>
+    <string name="issuedin">Issued In</string>
+    <string name="expiry">Expires No*</string>
+    <string name="book_continue">Book and Continue</string>
+    <string name="passenger_details">Passenger Details</string>
+    <string name="gender">Gender</string>
+    <string name="contact">Contact</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="phone_contrycode">Phone Code</string>
+    <string name="country_code">Country Code</string>
+    <string name="city_name">City Name</string>
+    <string name="done">Done</string>
     <string-array name="spinnerItems">
         <item>1</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
+    </string-array>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="passenger_title">
+        <item>MR</item>
+        <item>MRS</item>
+    </string-array>
+    <string-array name="doc_type">
+        <item>Passport</item>
     </string-array>
 </resources>

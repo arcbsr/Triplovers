@@ -19,7 +19,9 @@ import com.arcadio.triplover.R;
 import com.arcadio.triplover.models.usermodel.LoginReq;
 import com.arcadio.triplover.models.usermodel.LoginResponse;
 import com.arcadio.triplover.models.usermodel.UserLoginController;
+import com.arcadio.triplover.utils.Constants;
 import com.arcadio.triplover.utils.CountryToPhonePrefix;
+import com.arcadio.triplover.utils.PreferencesHelpers;
 
 public class LoginDialogFragment extends DialogFragment {
     public interface Listener {
@@ -66,9 +68,11 @@ public class LoginDialogFragment extends DialogFragment {
                     new UserLoginController().LoginData(getActivity(), loginReq, new UserLoginController.onLoginListener() {
                         @Override
                         public void onSuccess(LoginResponse response) {
-
-                            mCallback.onLogIn(response);
-                            dismiss();
+                            if (response.getToken() != null) {
+                                PreferencesHelpers.saveStringData(getContext(), Constants.USER_TOKEN, response.getToken());
+                                mCallback.onLogIn(response);
+                                dismiss();
+                            }
                         }
 
                         @Override

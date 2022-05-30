@@ -13,10 +13,9 @@ import com.arcadio.triplover.models.search.response.Direction;
 import com.arcadio.triplover.models.search.response.SearchJsModel;
 import com.arcadio.triplover.utils.Constants;
 import com.arcadio.triplover.utils.KLog;
-import com.google.gson.Gson;
+import com.arcadio.triplover.utils.Utils;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -74,7 +73,7 @@ public class CitySearchActivity extends BaseActivity {
                         .build();
                 try (Response response = client.newCall(request).execute()) {
                     String result = response.body().string();
-                    searchJsModel = new Gson().fromJson(result, SearchJsModel.class);
+                    searchJsModel = Utils.getGson().fromJson(result, SearchJsModel.class);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -11,4 +11,14 @@ public class Enums {
         ROUND,
         MULTICITY
     }
+    public enum UserAgeType {
+        ADULT,
+        CHILD,
+        INFANT
+    }
+    public enum CodeSearchType {
+        CountryCodes,
+        Countries,
+        PhoneCodes
+    }
 }

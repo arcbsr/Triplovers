@@ -1,6 +1,7 @@
 package com.arcadio.triplover.acitivies;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,14 +20,16 @@ import com.arcadio.triplover.adapter.FlightsTabAdapter;
 import com.arcadio.triplover.communication.TAsyntask;
 import com.arcadio.triplover.databinding.ActivityFlightListDataBinding;
 import com.arcadio.triplover.listeners.AdapterListener;
+import com.arcadio.triplover.models.reprice.request.RePriceReq;
 import com.arcadio.triplover.models.search.request.Route;
 import com.arcadio.triplover.models.search.response.Direction;
+import com.arcadio.triplover.models.search.response.PassengerCounts;
 import com.arcadio.triplover.models.search.response.SearchJsModel;
 import com.arcadio.triplover.utils.Constants;
 import com.arcadio.triplover.utils.KLog;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.gson.Gson;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -88,8 +91,8 @@ public class FlightListDataActivity extends BaseActivity {
                     }
                     String result = response.body().string();
                     KLog.w(result);
-                    searchJsModel = new Gson().fromJson(result, SearchJsModel.class);
-                } catch (IOException e) {
+                    searchJsModel = getGson().fromJson(result, SearchJsModel.class);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -185,6 +188,17 @@ public class FlightListDataActivity extends BaseActivity {
         });
     }
 
+    private RePriceReq getPriceReqQuery(final List<Direction> directions) {
+        RePriceReq rePriceReq = new RePriceReq();
+        rePriceReq.setItemCodeRef(searchJsModel.getItem1().getAirSearchResponses().get(0).getItemCodeRef());
+        rePriceReq.setUniqueTransID(searchJsModel.getItem1().getAirSearchResponses().get(0).getUniqueTransID());
+
+        for (Direction direction : directions) {
+            rePriceReq.getSegmentCodeRefs().add(direction.getSegments().get(0).getSegmentCodeRef());
+        }
+        return rePriceReq;
+    }
+
     private void showDetails(final List<Direction> directions, boolean isViewOnly) {
         if (directions.size() == 0) {
             Toast.makeText(this, getString(R.string.nothing_show), Toast.LENGTH_SHORT).show();
@@ -197,6 +211,18 @@ public class FlightListDataActivity extends BaseActivity {
 
         if (!isViewOnly && ((FlightsTabAdapter) binding.flightSelectedList.getAdapter()).isAllFlightSelected()) {
             ((TextView) bottomSheetDialog.findViewById(R.id.search_flight_confirm)).setText(getString(R.string.confirm));
+            bottomSheetDialog.findViewById(R.id.search_flight_confirm).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    RePriceReq priceReq = getPriceReqQuery(directions);
+                    PassengerCounts passengerCounts = searchJsModel.getItem1().getAirSearchResponses().get(0).getPassengerCounts();
+                    Intent pasentry = new Intent(FlightListDataActivity.this, PassengerEntryActivity.class);
+                    pasentry.putExtra(Constants.PASS_PASSENGER_COUNTER, passengerCounts);
+                    pasentry.putExtra(Constants.PASS_REPRICE_REAUEST, priceReq);
+                    startActivity(pasentry);
+                    bottomSheetDialog.dismiss();
+                }
+            });
         } else {
             ((TextView) bottomSheetDialog.findViewById(R.id.search_flight_confirm)).setText(getString(R.string.close));
             bottomSheetDialog.findViewById(R.id.search_flight_confirm).setOnClickListener(view -> bottomSheetDialog.dismiss());

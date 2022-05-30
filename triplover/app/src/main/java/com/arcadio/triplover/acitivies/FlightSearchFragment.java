@@ -286,10 +286,8 @@ public class FlightSearchFragment extends BaseFragment {
             public void onClick(View view) {
 //                NavController controller = NavHostFragment.findNavController(FlightSearchFragment.this);
 //                Bundle bundle = new Bundle();
-                Gson gson = new GsonBuilder()
-                        .excludeFieldsWithoutExposeAnnotation()
-                        .create();
-                String data = gson.toJson(searchReq);
+
+                String data = Utils.getGson().toJson(searchReq);
                 PreferencesHelpers.saveStringData(getContext(), PreferencesHelpers.SEARCH_QUERY, data);
 //                bundle.putString(Constants.QUERY_FLIGHT_SEARCH, data);
 //                controller.navigate(R.id.FlightList, bundle);
