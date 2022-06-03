@@ -15,6 +15,7 @@ import com.arcadio.triplover.utils.Constants;
 import com.arcadio.triplover.utils.KLog;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -93,7 +94,6 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
         }
         try {
             if (dialog != null && dialog.isShowing()) {
-                asyncListener.onCompleteListener();
                 ObjectAnimator anim = animController(dialog.findViewById(R.id.loading_image_anim), dialog.findViewById(R.id.loading_image_anim)
                                 .getX()
                         , 0f, 500);
@@ -103,6 +103,7 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
                         super.onAnimationEnd(animation);
                         dialog.findViewById(R.id.loading_image_anim).clearAnimation();
                         dialog.dismiss();
+                        asyncListener.onCompleteListener();
                     }
                 });
 
@@ -125,25 +126,31 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
         return buttonAnimator;
     }
 
-    public static String postRequest(String searchAuery, String postUrl) {
+    public static ResponseResult postRequest(String searchAuery, String postUrl) {
         MediaType JSON
                 = MediaType.get("application/json; charset=utf-8");
 
-        OkHttpClient client = new OkHttpClient();
+//        OkHttpClient client = new OkHttpClient();
 
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.MINUTES)
+                .readTimeout(5, TimeUnit.MINUTES)
+                .build();
         RequestBody body = RequestBody.create(searchAuery, JSON);
         Request request = new Request.Builder()
                 .url(Constants.ROOT_URL + postUrl)
                 .post(body)
                 .build();
+        ResponseResult responseResult = new ResponseResult();
         try (Response response = client.newCall(request).execute()) {
             String result = response.body().string();
+            responseResult.code = response.code();
+            responseResult.result = result;
             KLog.w(result);
-            return result;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return responseResult;
     }
 
     public static ResponseResult postRequestHeader(String searchAuery, String postUrl, String authToken) {
@@ -151,7 +158,6 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
                 = MediaType.get("application/json; charset=utf-8");
 
         OkHttpClient client = new OkHttpClient();
-
         RequestBody body = RequestBody.create(searchAuery, JSON);
         Request request = new Request.Builder()
                 .url(Constants.ROOT_URL + postUrl)
@@ -170,8 +176,9 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
         }
         return null;
     }
-    public static class ResponseResult{
-        public int code = 200;
-        public String result="";
+
+    public static class ResponseResult {
+        public int code = -1;
+        public String result = "";
     }
 }

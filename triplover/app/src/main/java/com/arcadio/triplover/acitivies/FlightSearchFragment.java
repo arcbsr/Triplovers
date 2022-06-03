@@ -1,12 +1,10 @@
 package com.arcadio.triplover.acitivies;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,14 +18,12 @@ import com.arcadio.triplover.models.CityModels;
 import com.arcadio.triplover.models.search.request.Route;
 import com.arcadio.triplover.models.search.request.SearchReq;
 import com.arcadio.triplover.utils.Constants;
+import com.arcadio.triplover.utils.Dialogs;
 import com.arcadio.triplover.utils.Enums;
 import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.arcadio.triplover.utils.Utils;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 
 public class FlightSearchFragment extends BaseFragment {
 
@@ -52,28 +48,39 @@ public class FlightSearchFragment extends BaseFragment {
 
 
     private void showCalender(int position, Enums.CalenderType type, Enums.FlightType flightType) {
-        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-        calendar.setTimeInMillis(searchReq.getRoutes().get(position).getTimeMilisecon());
-        DatePickerDialog dialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                updateDate(position, type, flightType, i, i1, i2);
-            }
-        },
-                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH));
-        dialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+//        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+//        calendar.setTimeInMillis(searchReq.getRoutes().get(position).getTimeMilisecon());
+//        DatePickerDialog dialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+//            @Override
+//            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+//                updateDate(position, type, flightType, i, i1, i2);
+//            }
+//        },
+//                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+//                calendar.get(Calendar.DAY_OF_MONTH));
+//        dialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+//
+//        calendar.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH) + 3);
+//        dialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+//        dialog.show();
+        new Dialogs().showCalender(getContext(), searchReq.getRoutes().get(position).getTimeMilisecon(),
+                0, Calendar.getInstance().getTimeInMillis(), getString(R.string.date_format)
+                , new Dialogs.DialogListener2() {
+                    @Override
+                    public void onItemSelected(long miliSecond, String code) {
+                        updateDate(position, type, flightType, miliSecond);
+                    }
 
-        calendar.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH) + 3);
-        dialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
-        dialog.show();
+
+                });
     }
 
 
-    private void updateDate(int position, Enums.CalenderType type, Enums.FlightType flightType, int i, int i1, int i2) {
+    private void updateDate(int position, Enums.CalenderType type, Enums.FlightType flightType, long miliSecond) {
         //String date = i + "-" + i1 + "-" + i2;
         Calendar calendar = Calendar.getInstance();
-        calendar.set(i, i1, i2);
+        calendar.setTimeInMillis(miliSecond);
+//        calendar.set(y, m, d);
 
         Route route = searchReq.getRoutes().get(position);
         route.setDepartureDate(Utils.getDateString(calendar.getTime()));

@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -32,19 +36,34 @@ public class CountryToPhonePrefix {
         }
     }
 
-    private static HashMap<String, CountryDetails> countries = new HashMap<>();
+    private static LinkedHashMap<String, CountryDetails> countries = new LinkedHashMap<>();
 
-    public static HashMap<String, CountryDetails> CountryCodesBuilder(String defaultCode) {
+    public static LinkedHashMap<String, CountryDetails> CountryCodesBuilder(String defaultCode) {
         if (defaultCode == null) {
             defaultCode = "";
         }
+        countries.clear();
         if (countries.size() == 0) {
+            ArrayList<CountryDetails> allCodes = new ArrayList<>();
             for (String iso : Locale.getISOCountries()) {
                 Locale l = new Locale("", iso);
-                countries.put(l.getCountry(), new CountryDetails(l.getDisplayName(), l.getCountry(), prefixFor(l.getCountry()),
-                        (iso.equalsIgnoreCase(defaultCode) ? true : false)));
+                String phoneCode = prefixFor(l.getCountry());
+                if (phoneCode != null && !phoneCode.isEmpty())
+                    allCodes.add(new CountryDetails(l.getDisplayName(), l.getCountry(), prefixFor(l.getCountry()),
+                            (iso.equalsIgnoreCase(defaultCode) ? true : false)));
+            }
+            Collections.sort(allCodes, new Comparator<CountryDetails>() {
+
+                @Override
+                public int compare(CountryDetails o1, CountryDetails o2) {
+                    return o1.countryName.compareTo(o2.countryName);
+                }
+            });
+            for (CountryDetails details : allCodes) {
+                countries.put(details.countryCode, details);
             }
         }
+
         return countries;
     }
 

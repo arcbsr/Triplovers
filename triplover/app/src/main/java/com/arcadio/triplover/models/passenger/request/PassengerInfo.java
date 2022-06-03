@@ -44,6 +44,15 @@ public class PassengerInfo {
         return nameElement;
     }
 
+    public void updatePassengerInfo(PassengerInfo passengerInfo) {
+        this.nameElement = passengerInfo.nameElement;
+        this.documentInfo = passengerInfo.documentInfo;
+        this.contactInfo = passengerInfo.contactInfo;
+        this.gender = passengerInfo.gender;
+        this.passengerType = passengerInfo.passengerType;
+        this.dateOfBirth = passengerInfo.dateOfBirth;
+    }
+
     public void setNameElement(NameElement nameElement) {
         this.nameElement = nameElement;
     }

@@ -12,9 +12,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.arcadio.triplover.acitivies.FlightSearchActivity;
 import com.arcadio.triplover.databinding.FragmentHomeBinding;
+import com.arcadio.triplover.models.passenger.request.PassengerInfo;
 import com.arcadio.triplover.utils.CountryToPhonePrefix;
 import com.arcadio.triplover.utils.Dialogs;
-import com.arcadio.triplover.utils.Enums;
+import com.arcadio.triplover.utils.PreferencesHelpers;
+import com.arcadio.triplover.utils.Utils;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -36,22 +40,34 @@ public class HomeFragment extends Fragment {
         binding.btnHotel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Dialogs().ShowDialog(getActivity(), Enums.CodeSearchType.Countries,
-                        CountryToPhonePrefix.getLocalCode(getActivity()), new Dialogs.DialogListener() {
-                    @Override
-                    public void onItemSelected(String code) {
 
-                    }
-
-                            @Override
-                            public void onCountrySelected(CountryToPhonePrefix.CountryDetails code) {
-
-                            }
-                        });
-
+                showPassengerDetails(-1);
             }
         });
         return root;
+    }
+
+    private void showPassengerDetails(int postionToUpdate) {
+
+        List<String> passDataToSave = PreferencesHelpers.loadPassenger(getContext());
+        String[] data = new String[passDataToSave.size()];
+        int index = 0;
+        for (String ss : passDataToSave) {
+            PassengerInfo passengerInfo = Utils.getGson().fromJson(ss, PassengerInfo.class);
+            data[index] = passengerInfo.getNameElement().getFirstName();
+            index++;
+        }
+        new Dialogs().ShowDialogGender("", getActivity(), new Dialogs.DialogListener() {
+            @Override
+            public void onItemSelected(String code, int position) {
+
+            }
+
+            @Override
+            public void onCountrySelected(CountryToPhonePrefix.CountryDetails code, int position) {
+
+            }
+        }, "", data);
     }
 
     @Override

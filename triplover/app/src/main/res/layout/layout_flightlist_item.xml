@@ -16,8 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_70sdp"
-            android:orientation="vertical"
-            android:padding="@dimen/_3sdp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -30,25 +29,24 @@
                     android:layout_margin="@dimen/_3sdp"
                     android:layout_marginRight="@dimen/_15sdp"
                     android:layout_weight="1.2"
-                    android:background="@drawable/round_border"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/_3sdp">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/item_dep_airthumb"
                         android:layout_width="match_parent"
+                        android:layout_above="@id/item_dep_airname"
                         android:layout_height="match_parent"
-                        android:layout_above="@+id/item_dep_airname"
                         android:src="@drawable/airline_thumb" />
 
                     <TextView
+                        android:maxLines="1"
                         android:id="@+id/item_dep_airname"
                         style="@style/TTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:gravity="center"
-                        android:text="Jazeera Airways"
+                        android:text=""
                         android:textSize="@dimen/_8sdp"
                         android:textStyle="normal" />
                 </RelativeLayout>
@@ -313,11 +311,12 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/item_main_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:background="@color/semi90_trans"
-            android:paddingLeft="@dimen/_5sdp"
+            android:background="@color/semi_trans"
+            android:paddingLeft="@dimen/_10sdp"
             android:paddingTop="@dimen/_3sdp"
             android:paddingRight="@dimen/_5sdp"
             android:paddingBottom="@dimen/_3sdp">
@@ -327,7 +326,7 @@
                 style="@style/TTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/flight_aircode"
+                android:layout_below="@id/flight_aircode"
                 android:gravity="center"
                 android:text="Non-Refundable"
                 android:textColor="@color/y_cream" />
@@ -337,7 +336,6 @@
                 style="@style/TTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:gravity="center"
                 android:text="BS-105"
                 android:textSize="@dimen/_10sdp" />
@@ -347,7 +345,6 @@
                 style="@style/TTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_toRightOf="@+id/flight_aircode"
                 android:gravity="center"

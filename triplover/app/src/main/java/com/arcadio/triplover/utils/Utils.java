@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Utils {
-    public static final String DATE_FORMAT = "dd-MM-yyyy";
+//    public static final String DATE_FORMAT = "yyyy-MM-dd";
 
     public static String getDate(long milliSeconds, String dateFormat) {
         // Create a DateFormatter object for displaying date in specified format.
@@ -28,18 +28,19 @@ public class Utils {
     }
 
     public static long stringToMilliseconds(String date, String format) {
+        if (date == null || date.isEmpty()) {
+            return System.currentTimeMillis();
+        }
         try {
             SimpleDateFormat sdf = new SimpleDateFormat(format);
 
             Date mDate = sdf.parse(date);
             long timeInMilliseconds = mDate.getTime();
-
             return timeInMilliseconds;
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         return System.currentTimeMillis();
     }
 

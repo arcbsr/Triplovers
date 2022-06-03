@@ -37,7 +37,7 @@
             android:layout_centerInParent="true"
             android:layout_margin="@dimen/_20sdp"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 android:layout_width="match_parent"
@@ -80,6 +80,7 @@
                 android:gravity="center_vertical">
 
                 <CheckBox
+                    android:id="@+id/login_remember"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -144,7 +145,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -165,14 +166,24 @@
                     android:textColor="@color/white_dark"
                     android:textSize="@dimen/_16sdp" />
 
+                <TextView
+                    android:id="@+id/signup_error"
+                    style="@style/TTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@android:color/holo_red_dark" />
+
                 <EditText
+                    android:id="@+id/signup_fname"
                     style="@style/TEdittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:hint="First Name" />
 
                 <EditText
+                    android:id="@+id/signup_lname"
                     style="@style/TEdittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -180,6 +191,7 @@
                     android:hint="Last Name" />
 
                 <EditText
+                    android:id="@+id/signup_email"
                     style="@style/TEdittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -187,6 +199,7 @@
                     android:hint="Email" />
 
                 <EditText
+                    android:id="@+id/signup_password"
                     style="@style/TEdittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -195,6 +208,7 @@
                     android:inputType="textPassword" />
 
                 <EditText
+                    android:id="@+id/signup_repassword"
                     style="@style/TEdittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -208,19 +222,21 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:orientation="horizontal">
 
-                    <AutoCompleteTextView
+                    <TextView
                         android:id="@+id/signup_contrycode"
                         style="@style/TEdittext"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@drawable/round_border_edit"
+                        android:drawableRight="@drawable/ic_down"
                         android:gravity="center"
                         android:maxLines="1"
-                        android:padding="0dp"
+                        android:paddingLeft="@dimen/_5sdp"
                         android:text="+880" />
 
                     <EditText
+                        android:id="@+id/signup_phone"
                         style="@style/TEdittext"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -259,6 +275,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/signup_submit"
                     style="@style/TDButton"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_48sdp"

@@ -1,5 +1,6 @@
 package com.arcadio.triplover.acitivies;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import com.arcadio.triplover.R;
 import com.arcadio.triplover.adapter.BasicAdapter;
 import com.arcadio.triplover.communication.TAsyntask;
 import com.arcadio.triplover.fragments.LoginDialogFragment;
+import com.arcadio.triplover.listeners.TextWatcherListener;
 import com.arcadio.triplover.models.passenger.request.ContactInfo;
 import com.arcadio.triplover.models.passenger.request.DocumentInfo;
 import com.arcadio.triplover.models.passenger.request.NameElement;
@@ -34,6 +36,10 @@ import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.arcadio.triplover.utils.Utils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 
 public class PassengerEntryActivity extends BaseActivity {
@@ -83,6 +89,7 @@ public class PassengerEntryActivity extends BaseActivity {
                 }).show(getSupportFragmentManager(), "LoginFrom");
             }
         });
+        passDataToSave = PreferencesHelpers.loadPassenger(this);
         gatherInfo(PreferencesHelpers.loadStringData(this, Constants.USER_TOKEN, ""));
     }
 
@@ -112,18 +119,20 @@ public class PassengerEntryActivity extends BaseActivity {
             @Override
             public void onCompleteListener() {
                 if (response == null) {
-                    finish();
-                    return;
+
                 } else {
                     if (response.code == 200) {
                         RePriceResponse priceResponse = getGson().fromJson(response.result, RePriceResponse.class);
                         if (priceResponse != null && priceResponse.getItem1() != null) {
                             setUpData(priceResponse);
+                            return;
+
                         } else {
                             finish();
                             return;
                         }
                     } else if (response.code == 401) {
+
                         new LoginDialogFragment(new LoginDialogFragment.Listener() {
                             @Override
                             public void onLogIn(LoginResponse response) {
@@ -144,9 +153,11 @@ public class PassengerEntryActivity extends BaseActivity {
                                         .show();
                             }
                         }).show(getSupportFragmentManager(), "LoginFrom");
+
                     }
                 }
             }
+
 
             @Override
             public void onErrorListener(String msg) {
@@ -156,8 +167,6 @@ public class PassengerEntryActivity extends BaseActivity {
     }
 
     private void initPassengerInfo(int size, Enums.UserAgeType userAgeType, String defaultCountryCode) {
-
-
         String phoneCode = CountryToPhonePrefix.CountryCodeBuilder(defaultCountryCode).phoneCode;
         for (int count = 0; count < size; count++) {
             PassengerInfo passengerInfo = new PassengerInfo();
@@ -180,9 +189,41 @@ public class PassengerEntryActivity extends BaseActivity {
             passengerInfo.getDocumentInfo().setNationality(defaultCountryCode);
             allPassengers.addPassengerInfoes(passengerInfo);
         }
+
     }
 
+    private void showPassengerDetails(int positionToUpdate) {
+        String[] data = new String[passDataToSave.size()];
+        int index = 0;
+        for (String ss : passDataToSave) {
+            PassengerInfo passengerInfo = getGson().fromJson(ss, PassengerInfo.class);
+            data[index] = passengerInfo.getNameElement().getFirstName();
+            index++;
+        }
+        new Dialogs().ShowDialogGender("", getActivity(), new Dialogs.DialogListener() {
+            @Override
+            public void onItemSelected(String code, int position) {
+                PassengerInfo passengerInfo = getGson().fromJson(passDataToSave.get(position), PassengerInfo.class);
+                allPassengers.getPassengerInfoes().get(positionToUpdate).updatePassengerInfo(passengerInfo);
+
+                notifyPassengerList();
+            }
+
+            @Override
+            public void onCountrySelected(CountryToPhonePrefix.CountryDetails code, int position) {
+
+            }
+        }, "", data, true);
+    }
+
+    private void notifyPassengerList() {
+        ((RecyclerView) findViewById(R.id.passenger_list)).getAdapter().notifyDataSetChanged();
+    }
+
+    List<String> passDataToSave = new ArrayList<>();
+
     private void setUpData(RePriceResponse response) {
+
         String countryCode = CountryToPhonePrefix.getLocalCode(getActivity());
         PassengerCounts passengerCounts = response.getItem1().getPassengerCounts();
         allPassengers = new PassengerReq();
@@ -192,44 +233,6 @@ public class PassengerEntryActivity extends BaseActivity {
         initPassengerInfo(passengerCounts.getAdt(), Enums.UserAgeType.ADULT, countryCode);
         initPassengerInfo(passengerCounts.getCnn(), Enums.UserAgeType.CHILD, countryCode);
         initPassengerInfo(passengerCounts.getInf(), Enums.UserAgeType.INFANT, countryCode);
-
-//        String countryCode = CountryToPhonePrefix.SearchCountryCodeBuilder
-//                (CountryToPhonePrefix.getLocalCode(getActivity()), Enums.CodeSearchType.CountryCodes);
-//
-//        String phoneCode = CountryToPhonePrefix.SearchCountryCodeBuilder
-//                (CountryToPhonePrefix.getLocalCode(getActivity()), Enums.CodeSearchType.PhoneCodes);
-//        for (int adult = 0; adult < passengerCounts.getAdt(); adult++) {
-//            PassengerInfo passengerInfo = new PassengerInfo();
-//            passengerInfo.title = "Adult# " + (adult + 1);
-//            passengerInfo.setPassengerType("ADT");
-//            passengerInfo.getContactInfo().setCountryCode(countryCode);
-//            passengerInfo.getContactInfo().setPhoneCountryCode(phoneCode);
-//            allPassengers.addPassengerInfoes(passengerInfo);
-//        }
-//        for (int child = 0; child < passengerCounts.getCnn(); child++) {
-//            PassengerInfo passengerInfo = new PassengerInfo();
-//            passengerInfo.title = "Child# " + (child + 1);
-//            passengerInfo.setPassengerType("CNN");
-//            passengerInfo.getContactInfo().setCountryCode(countryCode);
-//            passengerInfo.getContactInfo().setPhoneCountryCode(phoneCode);
-//            allPassengers.addPassengerInfoes(passengerInfo);
-//        }
-//        for (int infant = 0; infant < passengerCounts.getInf(); infant++) {
-//            PassengerInfo passengerInfo = new PassengerInfo();
-//            passengerInfo.title = "Infant# " + (infant + 1);
-//            passengerInfo.setPassengerType("INF");
-//            passengerInfo.getContactInfo().setCountryCode(countryCode);
-//            passengerInfo.getContactInfo().setPhoneCountryCode(phoneCode);
-//            allPassengers.addPassengerInfoes(passengerInfo);
-//        }
-//        for (int ins = 0; ins < passengerCounts.getIns(); ins++) {
-//            PassengerInfo passengerInfo = new PassengerInfo();
-//            passengerInfo.title = "Ins# " + (ins + 1);
-//            passengerInfo.setPassengerType("INS");
-//            passengerInfo.getContactInfo().setCountryCode(countryCode);
-//            passengerInfo.getContactInfo().setPhoneCountryCode(phoneCode);
-//            allPassengers.addPassengerInfoes(passengerInfo);
-//        }
         RecyclerView passengerRCView = findViewById(R.id.passenger_list);
         passengerRCView.setAdapter(new BasicAdapter(new BasicAdapter.BasicListener() {
             @Override
@@ -244,16 +247,16 @@ public class PassengerEntryActivity extends BaseActivity {
 
             @Override
             public void onBindViewHolder(BasicAdapter.ViewHolder holder, int position) {
+                holder.itemView.findViewById(R.id.item_pas_header).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showPassengerDetails(position);
+                    }
+                });
                 int pos = holder.getAdapterPosition();
                 PassengerInfo passenger = allPassengers.getPassengerInfoes().get(pos);
                 setupPassengerInfo(pos, holder.itemView, false);
-                holder.itemView.findViewById(R.id.item_pas_edit).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        passengerEditForm(pos);
-                    }
-                });
-//                holder.itemView.setOnClickListener(new View.OnClickListener() {
+//                holder.itemView.findViewById(R.id.item_pas_edit).setOnClickListener(new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View view) {
 //                        passengerEditForm(pos);
@@ -280,6 +283,16 @@ public class PassengerEntryActivity extends BaseActivity {
 
     private void bookingTicket(RePriceResponse response) {
         KLog.w(getGson().toJson(allPassengers));
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Title").setMessage(getGson().toJson(allPassengers));
+        AlertDialog alert = builder.create();
+        alert.show();
+        List<String> passDataToSave = new ArrayList<>();
+        for (PassengerInfo info : allPassengers.getPassengerInfoes()) {
+            passDataToSave.add(getGson().toJson(info));
+        }
+        PreferencesHelpers.savePassemger(passDataToSave, this);
+
     }
 
     private void passengerEditForm(int position) {
@@ -337,19 +350,20 @@ public class PassengerEntryActivity extends BaseActivity {
         PassengerInfo passenger = allPassengers.getPassengerInfoes().get(pos);
         ContactInfo contactInfo = passenger.getContactInfo();
         DocumentInfo documentInfo = passenger.getDocumentInfo();
+        NameElement nameElement = passenger.getNameElement();
         view.findViewById(R.id.item_pas_nationality).setOnClickListener(!isEnable ? null : new View.OnClickListener() {
             @Override
             public void onClick(View view2) {
 
                 new Dialogs().ShowDialog(getString(R.string.nationality),
-                        getActivity(), Enums.CodeSearchType.CountryCodes,
+                        getActivity(), Enums.CodeSearchType.Countries,
                         documentInfo.getNationality(), new Dialogs.DialogListener() {
                             @Override
-                            public void onItemSelected(String code) {
+                            public void onItemSelected(String code, int position) {
                             }
 
                             @Override
-                            public void onCountrySelected(CountryToPhonePrefix.CountryDetails countryDetails) {
+                            public void onCountrySelected(CountryToPhonePrefix.CountryDetails countryDetails, int position) {
 
                                 documentInfo.setNationality(countryDetails.countryCode);
                                 getTextView(R.id.item_pas_nationality, view).setText(passenger.getDocumentInfo().getNationality());
@@ -362,13 +376,13 @@ public class PassengerEntryActivity extends BaseActivity {
             public void onClick(View view2) {
                 new Dialogs().ShowDialogGender(getString(R.string.gender), getActivity(), new Dialogs.DialogListener() {
                     @Override
-                    public void onItemSelected(String code) {
+                    public void onItemSelected(String code, int position) {
                         passenger.setGender(code);
                         getTextView(R.id.item_pas_gender, view, isEnable).setText(passenger.getGender());
                     }
 
                     @Override
-                    public void onCountrySelected(CountryToPhonePrefix.CountryDetails code) {
+                    public void onCountrySelected(CountryToPhonePrefix.CountryDetails code, int position) {
 
                     }
                 }, passenger.getGender(), getResources().getStringArray(R.array.gender));
@@ -379,13 +393,13 @@ public class PassengerEntryActivity extends BaseActivity {
             public void onClick(View view2) {
                 new Dialogs().ShowDialogGender(getString(R.string.gender), getActivity(), new Dialogs.DialogListener() {
                     @Override
-                    public void onItemSelected(String code) {
+                    public void onItemSelected(String code, int position) {
                         passenger.getNameElement().setTitle(code);
                         getTextView(R.id.item_pas_title, view, isEnable).setText(passenger.getNameElement().getTitle());
                     }
 
                     @Override
-                    public void onCountrySelected(CountryToPhonePrefix.CountryDetails code) {
+                    public void onCountrySelected(CountryToPhonePrefix.CountryDetails code, int position) {
 
                     }
                 }, passenger.getNameElement().getTitle(), getResources().getStringArray(R.array.passenger_title));
@@ -399,12 +413,12 @@ public class PassengerEntryActivity extends BaseActivity {
                         getActivity(), Enums.CodeSearchType.PhoneCodes,
                         contactInfo.getPhoneCountryCode(), new Dialogs.DialogListener() {
                             @Override
-                            public void onItemSelected(String code) {
+                            public void onItemSelected(String code, int position) {
 
                             }
 
                             @Override
-                            public void onCountrySelected(CountryToPhonePrefix.CountryDetails countryDetails) {
+                            public void onCountrySelected(CountryToPhonePrefix.CountryDetails countryDetails, int position) {
                                 contactInfo.setPhoneCountryCode(countryDetails.phoneCode);
                                 contactInfo.setCountryCode(countryDetails.countryCode);
                                 getTextView(R.id.item_pas_phnccode, view).setText(contactInfo.getPhoneCountryCode());
@@ -419,13 +433,13 @@ public class PassengerEntryActivity extends BaseActivity {
 
                 new Dialogs().ShowDialogGender(getString(R.string.doc_type), getActivity(), new Dialogs.DialogListener() {
                     @Override
-                    public void onItemSelected(String code) {
+                    public void onItemSelected(String code, int position) {
                         documentInfo.setDocumentType(code);
                         getTextView(R.id.item_pas_doctype, view, isEnable).setText(documentInfo.getDocumentType());
                     }
 
                     @Override
-                    public void onCountrySelected(CountryToPhonePrefix.CountryDetails code) {
+                    public void onCountrySelected(CountryToPhonePrefix.CountryDetails code, int position) {
 
                     }
                 }, documentInfo.getDocumentType(), getResources().getStringArray(R.array.doc_type));
@@ -435,18 +449,14 @@ public class PassengerEntryActivity extends BaseActivity {
             @Override
             public void onClick(View view2) {
 
-                new Dialogs().showCalender(getContext(), pos,
-                        Utils.stringToMilliseconds(passenger.getDateOfBirth(), Utils.DATE_FORMAT)
-                        , new Dialogs.DialogListener() {
+                new Dialogs().showCalender(getContext(),
+                        Utils.stringToMilliseconds(passenger.getDateOfBirth(), getString(R.string.date_format)),
+                        Calendar.getInstance().getTimeInMillis(), 0, getString(R.string.date_format)
+                        , new Dialogs.DialogListener2() {
                             @Override
-                            public void onItemSelected(String code) {
-                                passenger.setDateOfBirth(code);
+                            public void onItemSelected(long miliSecond, String code) {
+                                passenger.setDateOfBirth(Utils.getDate(miliSecond, getString(R.string.date_format)));
                                 getTextView(R.id.item_pas_dob, view).setText(passenger.getDateOfBirth());
-                            }
-
-                            @Override
-                            public void onCountrySelected(CountryToPhonePrefix.CountryDetails code) {
-
                             }
                         });
             }
@@ -455,20 +465,61 @@ public class PassengerEntryActivity extends BaseActivity {
             @Override
             public void onClick(View view2) {
 
-                new Dialogs().showCalender(getContext(), pos,
-                        Utils.stringToMilliseconds(documentInfo.getExpireDate(), Utils.DATE_FORMAT)
-                        , new Dialogs.DialogListener() {
+                new Dialogs().showCalender(getContext(),
+                        Utils.stringToMilliseconds(documentInfo.getExpireDate(), getString(R.string.date_format)),
+                        0, 0, getString(R.string.date_format)
+                        , new Dialogs.DialogListener2() {
                             @Override
-                            public void onItemSelected(String code) {
-                                documentInfo.setExpireDate(code);
+                            public void onItemSelected(long miliSecond, String code) {
+                                documentInfo.setExpireDate(Utils.getDate(miliSecond, getString(R.string.date_format)));
                                 getTextView(R.id.item_pas_docexpiry, view).setText(documentInfo.getExpireDate());
                             }
 
-                            @Override
-                            public void onCountrySelected(CountryToPhonePrefix.CountryDetails code) {
 
-                            }
                         });
+            }
+        });
+        //Edittext update..
+        TextWatcherListener.onTextListener(getEditTextView(R.id.item_pas_fname, view, isEnable), new TextWatcherListener.onTextedChangedListener() {
+            @Override
+            public void onChanged(String text) {
+                nameElement.setFirstName(text);
+            }
+        });
+        TextWatcherListener.onTextListener(getEditTextView(R.id.item_pas_lname, view, isEnable), new TextWatcherListener.onTextedChangedListener() {
+            @Override
+            public void onChanged(String text) {
+                nameElement.setLastName(text);
+            }
+        });
+        TextWatcherListener.onTextListener(getEditTextView(R.id.item_pas_docno, view, isEnable), new TextWatcherListener.onTextedChangedListener() {
+            @Override
+            public void onChanged(String text) {
+                documentInfo.setDocumentNumber(text);
+            }
+        });
+        TextWatcherListener.onTextListener(getEditTextView(R.id.item_pas_docissuein, view, isEnable), new TextWatcherListener.onTextedChangedListener() {
+            @Override
+            public void onChanged(String text) {
+                documentInfo.setIssuingCountry(text);
+            }
+        });
+        TextWatcherListener.onTextListener(getEditTextView(R.id.item_pas_email, view, isEnable), new TextWatcherListener.onTextedChangedListener() {
+            @Override
+            public void onChanged(String text) {
+                contactInfo.setEmail(text);
+            }
+        });
+        TextWatcherListener.onTextListener(getEditTextView(R.id.item_pas_phone, view, isEnable), new TextWatcherListener.onTextedChangedListener() {
+            @Override
+            public void onChanged(String text) {
+                contactInfo.setPhone(text);
+            }
+        });
+        TextWatcherListener.onTextListener(getEditTextView(R.id.item_pas_cityname, view, isEnable), new TextWatcherListener.onTextedChangedListener() {
+            @Override
+            public void onChanged(String text) {
+                contactInfo.setCityName(text);
             }
         });
     }
@@ -481,84 +532,29 @@ public class PassengerEntryActivity extends BaseActivity {
 
         getTextView(R.id.item_pas_title, view, isEnable).setText(nameElement.getTitle());
         getEditTextView(R.id.item_pas_fname, view, isEnable).setText(nameElement.getFirstName());
+
         getEditTextView(R.id.item_pas_lname, view, isEnable).setText(nameElement.getLastName());
-        getTextView(R.id.item_pas_header, view).setText(passenger.title);
+        getTextView(R.id.item_pas_header, view).setText(passenger.title.toUpperCase());
 
         getEditTextView(R.id.item_pas_docno, view, isEnable).setText(passenger.getDocumentInfo().getDocumentNumber());
         getTextView(R.id.item_pas_doctype, view, isEnable).setText(passenger.getDocumentInfo().getDocumentType());
         getEditTextView(R.id.item_pas_docissuein, view, isEnable).setText(passenger.getDocumentInfo().getIssuingCountry());
         getTextView(R.id.item_pas_docexpiry, view, isEnable).setText(passenger.getDocumentInfo().getExpireDate());
-        //getEditTextView(R.id.item_pas_nationality, view, isEnable).setText(passenger.getDocumentInfo().getNationality());
+        getTextView(R.id.item_pas_docexpiry, view, isEnable).setHint(getTextView(R.id.item_pas_docexpiry, view, isEnable).getHint().toString().toUpperCase());
         getTextView(R.id.item_pas_nationality, view).setText(passenger.getDocumentInfo().getNationality());
-//        view.findViewById(R.id.item_pas_nationality).setOnClickListener(!isEnable ? null : new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view2) {
-//
-//                new Dialogs().ShowDialog(getString(R.string.nationality),
-//                        getActivity(), Enums.CodeSearchType.CountryCodes,
-//                        CountryToPhonePrefix.getLocalCode(getActivity()), new Dialogs.DialogListener() {
-//                            @Override
-//                            public void onItemSelected(String code) {
-//                            }
-//
-//                            @Override
-//                            public void onCountrySelected(CountryToPhonePrefix.CountryDetails countryDetails) {
-//
-//                                documentInfo.setNationality(countryDetails.countryCode);
-//                                getTextView(R.id.item_pas_nationality, view).setText(passenger.getDocumentInfo().getNationality());
-//                            }
-//                        });
-//            }
-//        });
+
 
         getTextView(R.id.item_pas_dob, view, isEnable).setText(passenger.getDateOfBirth());
+        getTextView(R.id.item_pas_dob, view, isEnable).setHint(getTextView(R.id.item_pas_dob, view, isEnable).getHint().toString().toUpperCase());
         getTextView(R.id.item_pas_gender, view, isEnable).setText(passenger.getGender());
-//        view.findViewById(R.id.item_pas_gender).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view2) {
-//                new Dialogs().ShowDialogGender(getActivity(), new Dialogs.DialogListener() {
-//                    @Override
-//                    public void onItemSelected(String code) {
-//                        passenger.setGender(code);
-//                        getTextView(R.id.item_pas_gender, view, isEnable).setText(passenger.getGender());
-//                    }
-//
-//                    @Override
-//                    public void onCountrySelected(CountryToPhonePrefix.CountryDetails code) {
-//
-//                    }
-//                });
-//            }
-//        });
+
         getEditTextView(R.id.item_pas_email, view, isEnable).setText(contactInfo.getEmail());
         getEditTextView(R.id.item_pas_cityname, view, isEnable).setText(contactInfo.getCityName());
         getTextView(R.id.item_pas_contrycode, view, isEnable).setText(contactInfo.getCountryCode());
         getEditTextView(R.id.item_pas_phone, view, isEnable).setText(contactInfo.getPhone());
-//        getEditTextView(R.id.item_pas_phnccode, view, isEnable).setText(contactInfo.getPhoneCountryCode());
 
         getTextView(R.id.item_pas_phnccode, view).setText(contactInfo.getPhoneCountryCode());
-//        view.findViewById(R.id.item_pas_phnccode).setOnClickListener(!isEnable ? null : new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view2) {
-//
-//                new Dialogs().ShowDialog(getString(R.string.phone_contrycode),
-//                        getActivity(), Enums.CodeSearchType.PhoneCodes,
-//                        CountryToPhonePrefix.getLocalCode(getActivity()), new Dialogs.DialogListener() {
-//                            @Override
-//                            public void onItemSelected(String code) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onCountrySelected(CountryToPhonePrefix.CountryDetails countryDetails) {
-//                                contactInfo.setPhoneCountryCode(countryDetails.phoneCode);
-//                                contactInfo.setCountryCode(countryDetails.countryCode);
-//                                getTextView(R.id.item_pas_phnccode, view).setText(contactInfo.getPhoneCountryCode());
-//                                getTextView(R.id.item_pas_contrycode, view).setText(contactInfo.getCountryCode());
-//                            }
-//                        });
-//            }
-//        });
+
         dropDownListview(pos, view, isEnable);
     }
 
@@ -577,16 +573,9 @@ public class PassengerEntryActivity extends BaseActivity {
     private EditText getEditTextView(int id, View view, boolean isEnable) {
 
         EditText editText = view.findViewById(id);
-        editText.setEnabled(isEnable);
+        editText.setEnabled(true);
 
         if (!isEnable) {
-//            editText.setInputType(InputType.TYPE_NULL);
-//            editText.setKeyListener(null);
-//            editText.setCursorVisible(false);
-//            editText.setFocusable(false);
-//            editText.setClickable(false);
-//            editText.setOnClickListener(null);
-//            editText.setFocusableInTouchMode(false);
         }
         return editText;
     }

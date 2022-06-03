@@ -1,8 +1,11 @@
 package com.arcadio.triplover.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +17,7 @@ import com.arcadio.triplover.models.search.response.Detail;
 import com.arcadio.triplover.models.search.response.Direction;
 import com.arcadio.triplover.models.search.response.SearchJsModel;
 import com.arcadio.triplover.models.search.response.Segment;
+import com.arcadio.triplover.utils.ImageLoader;
 import com.arcadio.triplover.utils.Utils;
 
 import java.util.ArrayList;
@@ -28,10 +32,18 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
 
     public interface FlightSelectedListener {
         void flightSelected(Direction direction, int viewId);
+
+        Context getContext();
+    }
+
+    public FlightsAdapter(SearchJsModel searchJsModel, FlightSelectedListener listener) {
+        this.searchJsModel = searchJsModel;
+        this.listener = listener;
     }
 
     public FlightsAdapter(SearchJsModel searchJsModel) {
         this.searchJsModel = searchJsModel;
+
     }
 
     private FlightSelectedListener listener;
@@ -65,11 +77,6 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
         //this.airSearchResponse = searchJsModel.getItem1().getAirSearchResponses().get(searchPosition);
         this.directions = searchJsModel.getItem1().getAirSearchResponses().get(searchPosition).getDirections().get(airFlightIndex);
         notifyDataSetChanged();
-    }
-
-    public void setListener(FlightSelectedListener listener) {
-        this.listener = listener;
-
     }
 
     @NonNull
@@ -113,13 +120,26 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
 //            holder.item_ret_eairport.setText(rsegment.getTo());
 //            holder.item_ret_duration.setText(rdetail.getFlightTime());
 //            holder.item_ret_stops.setText((rDirection.getStops() == 0 ? "Non Stop" : rDirection.getStops() + " Stops"));
-//        } else {
+//        } else {        }
         holder.itemView.findViewById(R.id.item_return_layout).setVisibility(View.GONE);
-//        }
+        if (direction.isSeleced) {
+            ((Button) holder.itemView.findViewById(R.id.flight_book)).setText(listener.getContext().getString(R.string.next) + ">>");
+            holder.itemView.findViewById(R.id.item_main_layout).setBackgroundColor(Utils.getColorFromResource(listener.getContext(),
+                    R.color.orange));
+
+        } else {
+            holder.itemView.findViewById(R.id.item_main_layout).setBackgroundColor(Utils.getColorFromResource(listener.getContext(),
+                    R.color.semi_trans));
+            ((Button) holder.itemView.findViewById(R.id.flight_book)).setText(listener.getContext().getString(R.string.select));
+        }
         holder.itemView.findViewById(R.id.flight_book).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
+                    for (Direction direction1 : directions) {
+                        direction1.isSeleced = false;
+                    }
+                    direction.isSeleced = true;
                     listener.flightSelected(directions.get(holder.getAdapterPosition()), view.getId());
                 }
             }
@@ -132,6 +152,9 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
                 }
             }
         });
+        if (listener != null) {
+            ImageLoader.loadImage(direction.getPlatingCarrierCode(), holder.item_dep_airthumb, listener.getContext());
+        }
     }
 
 
@@ -148,6 +171,7 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
         public TextView airname, departStartTime, departEndTime, departStartAirCode, departEndAircode, flightTime, flightName, flightPrice,
                 item_dep_stops, flight_refundable;
         public TextView item_ret_stime, item_ret_etime, item_ret_sairport, item_ret_eairport, item_ret_duration, item_ret_stops, item_ret_airname;
+        public ImageView item_dep_airthumb;
 
         public ViewHolder(View view) {
             super(view);
@@ -170,6 +194,9 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
             item_ret_duration = view.findViewById(R.id.item_ret_duration);
             item_ret_stops = view.findViewById(R.id.item_ret_stops);
             item_ret_airname = view.findViewById(R.id.item_ret_airname);
+            //image thumb
+
+            item_dep_airthumb = view.findViewById(R.id.item_dep_airthumb);
         }
 
     }

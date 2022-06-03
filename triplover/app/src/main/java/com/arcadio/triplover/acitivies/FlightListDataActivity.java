@@ -1,10 +1,12 @@
 package com.arcadio.triplover.acitivies;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,20 +28,12 @@ import com.arcadio.triplover.models.search.response.Direction;
 import com.arcadio.triplover.models.search.response.PassengerCounts;
 import com.arcadio.triplover.models.search.response.SearchJsModel;
 import com.arcadio.triplover.utils.Constants;
-import com.arcadio.triplover.utils.KLog;
+import com.arcadio.triplover.utils.ImageLoader;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class FlightListDataActivity extends BaseActivity {
     private ActivityFlightListDataBinding binding;
@@ -74,27 +68,14 @@ public class FlightListDataActivity extends BaseActivity {
             @Override
             public void onThreadListener(String data) {
                 String searchAuery = getIntent().getStringExtra(Constants.QUERY_FLIGHT_SEARCH);
-                KLog.w(searchAuery);
-                MediaType JSON
-                        = MediaType.get("application/json; charset=utf-8");
 
-                OkHttpClient client = new OkHttpClient();
 
-                RequestBody body = RequestBody.create(searchAuery, JSON);
-                Request request = new Request.Builder()
-                        .url(Constants.ROOT_URL + "api/Search")
-                        .post(body)
-                        .build();
-                try (Response response = client.newCall(request).execute()) {
-                    if (error.equalsIgnoreCase(TAsyntask.ERROR_CANCEL)) {
-                        return;
-                    }
-                    String result = response.body().string();
-                    KLog.w(result);
-                    searchJsModel = getGson().fromJson(result, SearchJsModel.class);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                TAsyntask.ResponseResult result = TAsyntask.postRequest(searchAuery, Constants.ROOT_URL_SEARCH);
+                if (result.code != 200) {
+                    return;
                 }
+                searchJsModel = getGson().fromJson(result.result, SearchJsModel.class);
+
             }
 
             @Override
@@ -151,8 +132,7 @@ public class FlightListDataActivity extends BaseActivity {
 
         binding.flightSelectedList.setLayoutManager(new LinearLayoutManager(FlightListDataActivity.this,
                 LinearLayoutManager.HORIZONTAL, false));
-        adapter = new FlightsAdapter(searchJsModel);
-        adapter.setListener(new FlightsAdapter.FlightSelectedListener() {
+        adapter = new FlightsAdapter(searchJsModel, new FlightsAdapter.FlightSelectedListener() {
             @Override
             public void flightSelected(Direction direction, int viewId) {
                 switch (viewId) {
@@ -160,6 +140,7 @@ public class FlightListDataActivity extends BaseActivity {
                         airSearchPosition = direction.searchPosition;
                         adapterIndex.updateItem(airFlightIndex, direction);
                         if (airFlightIndex == routes.size() - 1) {
+                            adapter.notifyDataSetChanged();
                             binding.flightsNext.setVisibility(View.VISIBLE);
                             showDetails(adapterIndex.getAllDirection(), false);
                             return;
@@ -173,6 +154,11 @@ public class FlightListDataActivity extends BaseActivity {
                         showDetails(list, true);
                         break;
                 }
+            }
+
+            @Override
+            public Context getContext() {
+                return FlightListDataActivity.this;
             }
         });
         // Attach the adapter to the recyclerview to populate items
@@ -263,6 +249,8 @@ public class FlightListDataActivity extends BaseActivity {
                 det4 += "\n[" + directions.get(position).getSegments().get(0).getTo() + "]";
                 det4 += "\nTerminal: " + directions.get(position).getSegments().get(0).getDetails().get(0).getDestinationTerminal();
                 ((TextView) holder.itemView.findViewById(R.id.item_details_ret_details)).setText(det4);
+                ImageLoader.loadImage(directions.get(position).getPlatingCarrierCode(),
+                        ((ImageView) holder.itemView.findViewById(R.id.item_details_thumb)), getContext());
             }
         });
         recyclerView.setAdapter(adapter);
