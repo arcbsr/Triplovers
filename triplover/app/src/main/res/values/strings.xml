@@ -22,6 +22,7 @@
     <string name="login_u_details">If you have an account, <b><u><font fgcolor='#F16B2E'>Please Login</font></u></b>, or continue as a guest</string>
 
     <string name="flight_details"><u>Flight Details</u></string>
+    <string name="flight_detail">Flight Details</string>
     <string name="create_acc_u"><b><u>Create New</u></b></string>
     <string name="title_activity_flight_search">FlightSearchActivity</string>
     <!-- Strings used for fragments for navigation -->
@@ -73,6 +74,11 @@
     <string name="city_name">City Name</string>
     <string name="done">Done</string>
     <string name="date_format">yyyy-MM-dd</string>
+    <string name="went_wrong">Something went wrong, Please try again...</string>
+    <string name="comming_soon">comming soon</string>
+    <string name="booking_ref">Booking Reference:</string>
+    <string name="issue_date">Issue Date:</string>
+    <string name="no_data">No Data Found</string>
     <string-array name="spinnerItems">
         <item>1</item>
         <item>2</item>

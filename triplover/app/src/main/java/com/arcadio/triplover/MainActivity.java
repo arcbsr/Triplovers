@@ -1,9 +1,9 @@
 package com.arcadio.triplover;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.arcadio.triplover.acitivies.MyBookingActivity;
 import com.arcadio.triplover.databinding.ActivityMainBinding;
 import com.arcadio.triplover.fragments.LoginDialogFragment;
 import com.arcadio.triplover.models.usermodel.LoginResponse;
@@ -18,6 +19,14 @@ import com.arcadio.triplover.utils.KLog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
+import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCommerzInitialization;
+import com.sslwireless.sslcommerzlibrary.model.response.SSLCTransactionInfoModel;
+import com.sslwireless.sslcommerzlibrary.model.util.SSLCCurrencyType;
+import com.sslwireless.sslcommerzlibrary.model.util.SSLCSdkType;
+import com.sslwireless.sslcommerzlibrary.view.singleton.IntegrateSSLCommerz;
+import com.sslwireless.sslcommerzlibrary.viewmodel.listener.SSLCTransactionResponseListener;
+
+import java.util.Random;
 
 public class MainActivity extends BaseActivity {
 
@@ -49,11 +58,15 @@ public class MainActivity extends BaseActivity {
                 navController.navigate(R.id.nav_home);
                 drawer.close();
                 return true;
+            }else if (item.getItemId() == R.id.nav_booking) {
+                startActivity(new Intent(getContext(), MyBookingActivity.class));
+                drawer.close();
+                return false;
             } else if (item.getItemId() == R.id.nav_about) {
                 drawer.close();
                 return true;
             } else if (item.getItemId() == R.id.nav_contact) {
-                Toast.makeText(this, "nav_contact..", Toast.LENGTH_SHORT).show();
+
                 return true;
             } else if (item.getItemId() == R.id.nav_loginuser) {
                 drawer.close();
@@ -82,7 +95,9 @@ public class MainActivity extends BaseActivity {
             }
             return false;
         });
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

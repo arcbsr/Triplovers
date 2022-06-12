@@ -14,10 +14,14 @@
         android:theme="@style/Theme.TripLover"
         android:usesCleartextTraffic="true">
         <activity
-            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/Theme.TripLover.NoActionBar"
+            android:name=".acitivies.MyBookingActivity"
+            android:exported="false" />
+        <activity
             android:name=".acitivies.PassengerEntryActivity"
             android:exported="false"
-            android:theme="@style/Theme.TripLover.NoActionBar" />
+            android:theme="@style/Theme.TripLover.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".acitivies.CitySearchActivity"
             android:exported="false" />

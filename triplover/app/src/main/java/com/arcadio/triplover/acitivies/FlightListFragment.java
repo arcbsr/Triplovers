@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.arcadio.triplover.adapter.FlightsAdapter;
 import com.arcadio.triplover.communication.TAsyntask;
+import com.arcadio.triplover.config.BuildConfiguration;
 import com.arcadio.triplover.databinding.FragmentFlightListBinding;
 import com.arcadio.triplover.models.search.request.SearchReq;
 import com.arcadio.triplover.models.search.response.Direction;
@@ -63,79 +64,79 @@ public class FlightListFragment extends Fragment {
     }
 
     private void prepareFlights() {
-        new TAsyntask(getActivity(), new TAsyntask.KAsyncListener() {
-            SearchJsModel searchJsModel;
-
-            @Override
-            public void onPreListener() {
-
-            }
-
-            @Override
-            public void onThreadListener(String data) {
-                String searchAuery = getArguments().getString(Constants.QUERY_FLIGHT_SEARCH);
-                SearchReq searchReq = new SearchReq();
-//                Route route = new Route("DAC", "CGP", "2022-06-29");
-//                searchReq.getRoutes().add(new Route("DAC", "CGP", "2022-06-29"));
-//                //searchReq.getRoutes().add(new Route("CGP", "DAC", "2022-07-7"));
-//                searchReq.setAdults(2);
-//                searchReq.setChilds(1);
-//                searchReq.setCabinClass(1);
-
-//                String jsonData = new Gson().toJson(searchReq);
-                KLog.w(searchAuery);
-                MediaType JSON
-                        = MediaType.get("application/json; charset=utf-8");
-
-                OkHttpClient client = new OkHttpClient();
-
-                RequestBody body = RequestBody.create(searchAuery, JSON);
-                Request request = new Request.Builder()
-                        .url(Constants.ROOT_URL + "api/Search")
-                        .post(body)
-                        .build();
-                try (Response response = client.newCall(request).execute()) {
-                    String result = response.body().string();
-                    searchJsModel = Utils.getGson().fromJson(result, SearchJsModel.class);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onCompleteListener() {
-                if (searchJsModel == null) {
-                    NavHostFragment.findNavController(FlightListFragment.this).popBackStack();
-                    return;
-                }
-                FlightsAdapter adapter = new FlightsAdapter(searchJsModel);
-                // Attach the adapter to the recyclerview to populate items
-                binding.recycleFlightlist.setAdapter(adapter);
-                // Set layout manager to position the items
-                binding.recycleFlightlist.setLayoutManager(new LinearLayoutManager(getContext()));
-
-                int airSearchPosition = 0;
-                List<Direction> totalDir = new ArrayList<>();
-//                List<Direction> deptDirections = searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition).getDirections().get(0);
-//                for (Direction direction : deptDirections) {
-//                    String ds = new Gson().toJson(direction);
-//                    Direction converted = new Gson().fromJson(ds, Direction.class);
-//                    List<Direction> retDirections = searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition).getDirections().get(1);
-//                    for (Direction retDirection : retDirections) {
-//                        converted.direction = retDirection;
-//                        totalDir.add(converted);
-//                    }
+//        new TAsyntask(getActivity(), new TAsyntask.KAsyncListener() {
+//            SearchJsModel searchJsModel;
+//
+//            @Override
+//            public void onPreListener() {
+//
+//            }
+//
+//            @Override
+//            public void onThreadListener(String data) {
+//                String searchAuery = getArguments().getString(Constants.QUERY_FLIGHT_SEARCH);
+//                SearchReq searchReq = new SearchReq();
+////                Route route = new Route("DAC", "CGP", "2022-06-29");
+////                searchReq.getRoutes().add(new Route("DAC", "CGP", "2022-06-29"));
+////                //searchReq.getRoutes().add(new Route("CGP", "DAC", "2022-07-7"));
+////                searchReq.setAdults(2);
+////                searchReq.setChilds(1);
+////                searchReq.setCabinClass(1);
+//
+////                String jsonData = new Gson().toJson(searchReq);
+//                KLog.w(searchAuery);
+//                MediaType JSON
+//                        = MediaType.get("application/json; charset=utf-8");
+//
+//                OkHttpClient client = new OkHttpClient();
+//
+//                RequestBody body = RequestBody.create(searchAuery, JSON);
+//                Request request = new Request.Builder()
+//                        .url(BuildConfiguration.getBaseURL() + "api/Search")
+//                        .post(body)
+//                        .build();
+//                try (Response response = client.newCall(request).execute()) {
+//                    String result = response.body().string();
+//                    searchJsModel = Utils.getGson().fromJson(result, SearchJsModel.class);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
 //                }
-
-                adapter.addItems(searchJsModel.getItem1().getAirSearchResponses().get(3), totalDir);
-
-            }
-
-            @Override
-            public void onErrorListener(String msg) {
-
-            }
-        }).execute();
+//            }
+//
+//            @Override
+//            public void onCompleteListener() {
+//                if (searchJsModel == null) {
+//                    NavHostFragment.findNavController(FlightListFragment.this).popBackStack();
+//                    return;
+//                }
+//                FlightsAdapter adapter = new FlightsAdapter(searchJsModel);
+//                // Attach the adapter to the recyclerview to populate items
+//                binding.recycleFlightlist.setAdapter(adapter);
+//                // Set layout manager to position the items
+//                binding.recycleFlightlist.setLayoutManager(new LinearLayoutManager(getContext()));
+//
+//                int airSearchPosition = 0;
+//                List<Direction> totalDir = new ArrayList<>();
+////                List<Direction> deptDirections = searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition).getDirections().get(0);
+////                for (Direction direction : deptDirections) {
+////                    String ds = new Gson().toJson(direction);
+////                    Direction converted = new Gson().fromJson(ds, Direction.class);
+////                    List<Direction> retDirections = searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition).getDirections().get(1);
+////                    for (Direction retDirection : retDirections) {
+////                        converted.direction = retDirection;
+////                        totalDir.add(converted);
+////                    }
+////                }
+//
+//                adapter.addItems(searchJsModel.getItem1().getAirSearchResponses().get(3), totalDir);
+//
+//            }
+//
+//            @Override
+//            public void onErrorListener(String msg) {
+//
+//            }
+//        }).execute();
     }
 
     @Override

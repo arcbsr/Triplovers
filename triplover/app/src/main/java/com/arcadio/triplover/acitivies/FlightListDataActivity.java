@@ -22,12 +22,17 @@ import com.arcadio.triplover.adapter.FlightsTabAdapter;
 import com.arcadio.triplover.communication.TAsyntask;
 import com.arcadio.triplover.databinding.ActivityFlightListDataBinding;
 import com.arcadio.triplover.listeners.AdapterListener;
+import com.arcadio.triplover.models.FilterModule;
 import com.arcadio.triplover.models.reprice.request.RePriceReq;
 import com.arcadio.triplover.models.search.request.Route;
 import com.arcadio.triplover.models.search.response.Direction;
 import com.arcadio.triplover.models.search.response.PassengerCounts;
 import com.arcadio.triplover.models.search.response.SearchJsModel;
 import com.arcadio.triplover.utils.Constants;
+import com.arcadio.triplover.utils.CountryToPhonePrefix;
+import com.arcadio.triplover.utils.Dialogs;
+import com.arcadio.triplover.utils.Enums;
+import com.arcadio.triplover.utils.FilterDataDialog;
 import com.arcadio.triplover.utils.ImageLoader;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -46,6 +51,7 @@ public class FlightListDataActivity extends BaseActivity {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         prepareFlights();
+        setTitle("");
     }
 
     @Override
@@ -104,7 +110,13 @@ public class FlightListDataActivity extends BaseActivity {
             }
         }).execute();
 
-        binding.flightSelectedList.setVisibility(View.GONE);
+        binding.flightSelectedList.setVisibility(View.VISIBLE);
+        binding.sortby.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sortBy();
+            }
+        });
     }
 
     SearchJsModel searchJsModel;
@@ -140,7 +152,7 @@ public class FlightListDataActivity extends BaseActivity {
                         airSearchPosition = direction.searchPosition;
                         adapterIndex.updateItem(airFlightIndex, direction);
                         if (airFlightIndex == routes.size() - 1) {
-                            adapter.notifyDataSetChanged();
+                            adapter.updateDataSet();
                             binding.flightsNext.setVisibility(View.VISIBLE);
                             showDetails(adapterIndex.getAllDirection(), false);
                             return;
@@ -157,10 +169,20 @@ public class FlightListDataActivity extends BaseActivity {
             }
 
             @Override
+            public void onUpdateItemCount(int total) {
+                flightCounter(total);
+                if (total == 0) {
+                    binding.noData.setVisibility(View.VISIBLE);
+                } else {
+                    binding.noData.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
             public Context getContext() {
                 return FlightListDataActivity.this;
             }
-        });
+        }, filterModule);
         // Attach the adapter to the recyclerview to populate items
         binding.flightList.setAdapter(adapter);
         // Set layout manager to position the items
@@ -172,12 +194,13 @@ public class FlightListDataActivity extends BaseActivity {
                 showDetails(adapterIndex.getAllDirection(), true);
             }
         });
+        filterModule = new FilterModule(adapter.getMinPrice(), adapter.getMaxPrice());
     }
 
     private RePriceReq getPriceReqQuery(final List<Direction> directions) {
         RePriceReq rePriceReq = new RePriceReq();
-        rePriceReq.setItemCodeRef(searchJsModel.getItem1().getAirSearchResponses().get(0).getItemCodeRef());
-        rePriceReq.setUniqueTransID(searchJsModel.getItem1().getAirSearchResponses().get(0).getUniqueTransID());
+        rePriceReq.setItemCodeRef(searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition).getItemCodeRef());
+        rePriceReq.setUniqueTransID(searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition).getUniqueTransID());
 
         for (Direction direction : directions) {
             rePriceReq.getSegmentCodeRefs().add(direction.getSegments().get(0).getSegmentCodeRef());
@@ -241,13 +264,15 @@ public class FlightListDataActivity extends BaseActivity {
                 String det3 = directions.get(position).getSegments().get(0).getDeparture().split(" ")[1]
                         + "\n" + directions.get(position).getSegments().get(0).getDeparture().split(" ")[0];
                 det3 += "\n[" + directions.get(position).getSegments().get(0).getFrom() + "]";
-                det3 += "\nTerminal: " + directions.get(position).getSegments().get(0).getDetails().get(0).getOriginTerminal();
+                if (!directions.get(position).getSegments().get(0).getDetails().get(0).getOriginTerminal().isEmpty())
+                    det3 += "\nTerminal: " + directions.get(position).getSegments().get(0).getDetails().get(0).getOriginTerminal();
                 ((TextView) holder.itemView.findViewById(R.id.item_details_dep_details)).setText(det3);
 
                 String det4 = directions.get(position).getSegments().get(0).getArrival().split(" ")[1]
                         + "\n" + directions.get(position).getSegments().get(0).getArrival().split(" ")[0];
                 det4 += "\n[" + directions.get(position).getSegments().get(0).getTo() + "]";
-                det4 += "\nTerminal: " + directions.get(position).getSegments().get(0).getDetails().get(0).getDestinationTerminal();
+                if (!directions.get(position).getSegments().get(0).getDetails().get(0).getDestinationTerminal().isEmpty())
+                    det4 += "\nTerminal: " + directions.get(position).getSegments().get(0).getDetails().get(0).getDestinationTerminal();
                 ((TextView) holder.itemView.findViewById(R.id.item_details_ret_details)).setText(det4);
                 ImageLoader.loadImage(directions.get(position).getPlatingCarrierCode(),
                         ((ImageView) holder.itemView.findViewById(R.id.item_details_thumb)), getContext());
@@ -302,14 +327,27 @@ public class FlightListDataActivity extends BaseActivity {
         //List<Direction> totalDir = searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition).getDirections().get(airFlightIndex);
         //adapter.addItems(searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition), totalDir);
         adapter.addItems(airSearchPosition, airFlightIndex);
-        flightCounter(searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition).getDirections().get(airFlightIndex).size());
-        ;
+        //flightCounter(searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition).getDirections().get(airFlightIndex).size());
     }
 
+    FilterModule filterModule;
+
     private void showFilterUI() {
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setContentView(R.layout.layout_filter_items);
-        bottomSheetDialog.show();
+        if (filterModule == null) {
+            return;
+        }
+        //adapter.getItemCount()
+        new FilterDataDialog().showFilterUI(getContext(), filterModule, adapter.getAllAirLine(), new FilterDataDialog.FilterListener() {
+            @Override
+            public void onApply(FilterModule filterModule2) {
+                filterModule = filterModule2;
+                if (filterModule == null) {
+
+                    filterModule = new FilterModule(adapter.getMinPrice(), adapter.getMaxPrice());
+                }
+                adapter.filterList(filterModule);
+            }
+        });
 
     }
 
@@ -326,7 +364,38 @@ public class FlightListDataActivity extends BaseActivity {
         }
         binding.flightTotalFound.setText(total +
                 " " + getString(R.string.flight_found));
-        setTitle(searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition).getDirections().get(airFlightIndex).get(0).getFrom()
-                + " --> " + searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition).getDirections().get(airFlightIndex).get(0).getTo());
+//        setTitle(searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition).getDirections().get(airFlightIndex).get(0).getFrom()
+//                + " --> " + searchJsModel.getItem1().getAirSearchResponses().get(airSearchPosition).getDirections().get(airFlightIndex).get(0).getTo());
+    }
+
+    private void sortBy() {
+        String[] sortingBy = new String[4];
+        sortingBy[0] = Enums.Sorting.PRICEASC.getText();
+        sortingBy[1] = Enums.Sorting.PRICEDESC.getText();
+        sortingBy[2] = Enums.Sorting.TIMEASC.getText();
+        sortingBy[3] = Enums.Sorting.TIMEDESC.getText();
+        new Dialogs().ShowDialogGender("Sort By", getActivity(), new Dialogs.DialogListener() {
+            @Override
+            public void onItemSelected(String code, int position) {
+                if (code.equalsIgnoreCase(Enums.Sorting.PRICEASC.getText())) {
+                    adapter.sorting(Enums.Sorting.PRICEASC);
+
+                } else if (code.equalsIgnoreCase(Enums.Sorting.PRICEDESC.getText())) {
+                    adapter.sorting(Enums.Sorting.PRICEDESC);
+
+                } else if (code.equalsIgnoreCase(Enums.Sorting.TIMEASC.getText())) {
+                    adapter.sorting(Enums.Sorting.TIMEASC);
+
+                } else if (code.equalsIgnoreCase(Enums.Sorting.TIMEDESC.getText())) {
+                    adapter.sorting(Enums.Sorting.TIMEDESC);
+
+                }
+            }
+
+            @Override
+            public void onCountrySelected(CountryToPhonePrefix.CountryDetails code, int position) {
+
+            }
+        }, adapter.getSortType().getText(), sortingBy, true);
     }
 }

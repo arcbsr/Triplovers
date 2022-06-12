@@ -1,13 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <TextView
-        style="@style/TTextView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_300sdp"
-        android:gravity="center"
-        android:text="Filter" />
+        android:layout_height="@dimen/_32sdp"
+        android:layout_margin="@dimen/_3sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/filter_tab_price"
+            style="@style/TText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/home_button_backcolor"
+            android:enabled="false"
+            android:padding="0dp"
+            android:text="Price"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/filter_tab_stops"
+            style="@style/TText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/home_button_backcolor"
+            android:padding="0dp"
+            android:text="Stops"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/filter_tab_airline"
+            style="@style/TText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/home_button_backcolor"
+            android:padding="0dp"
+            android:text="Airline"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp" />
+
+        <TextView
+            android:id="@+id/filter_tab_time"
+            style="@style/TText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/home_button_backcolor"
+            android:padding="0dp"
+            android:text="Time"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp">
+
+        <RelativeLayout
+            android:id="@+id/layer_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/filter_minprice"
+                style="@style/TTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:text="0"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:id="@+id/filter_maxprice"
+                style="@style/TTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:text="100"
+                android:textSize="@dimen/_14sdp" />
+
+
+            <it.mirko.rangeseekbar.RangeSeekBar
+                android:background="@drawable/round_border_sel"
+                android:id="@+id/rangeSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="@dimen/_5sdp"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layer_stops"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <CheckBox
+                android:id="@+id/filter_stop_non"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Non-Stop" />
+
+            <CheckBox
+                android:id="@+id/filter_stop_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 Stop" />
+
+            <CheckBox
+                android:id="@+id/filter_stop_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2 or More Stops" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layer_airline"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/flight_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layer_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:orientation="vertical"
+            android:visibility="gone"></LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_32sdp"
+        android:layout_margin="@dimen/_3sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/filter_reset"
+            style="@style/TText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/home_button_backcolor"
+            android:padding="0dp"
+            android:text="Reset"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/filter_apply"
+            style="@style/TText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_1sdp"
+            android:layout_weight="1"
+            android:background="@drawable/home_button_backcolor"
+            android:padding="0dp"
+            android:text="Apply"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+    </LinearLayout>
 
 </LinearLayout>

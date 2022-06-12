@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/_3sdp"
+    android:paddingBottom="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_2sdp"
+    android:background="@drawable/dot_underline"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/tct_item_thumb"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/airline_thumb" />
+
+            <TextView
+                android:id="@+id/tct_item_airname"
+                style="@style/TTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Biman Bangladesh" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tct_item_from"
+                    style="@style/TTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" "
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/tct_item_from_det"
+                    style="@style/TTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:text="DAC"
+                    android:textSize="@dimen/_7sdp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    android:background="@color/rajon_hint" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_flight"
+                    android:tint="@color/rajon_hint" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tct_item_to"
+                    style="@style/TTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" "
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/tct_item_to_det"
+                    style="@style/TTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:text="CGP"
+                    android:textSize="@dimen/_7sdp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+<View
+    android:background="@color/rajon_hint"
+    android:layout_width=".5dp"
+    android:layout_marginRight="@dimen/_5sdp"
+    android:layout_height="match_parent"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tct_item_flightno"
+                style="@style/TTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SQ 0049"
+                android:textSize="@dimen/_10sdp" />
+
+            <TextView
+                android:id="@+id/tct_item_class"
+                style="@style/TTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="ECONOMY"
+                android:textSize="@dimen/_10sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tct_item_depart"
+                style="@style/TTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="DEPART"
+                android:textSize="@dimen/_7sdp" />
+
+            <TextView
+                android:id="@+id/tct_item_depart_det"
+                style="@style/TTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Dhaka, Shajalal"
+                android:textSize="@dimen/_7sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tct_item_arrives"
+                style="@style/TTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ARRIVES"
+                android:textSize="@dimen/_7sdp" />
+
+            <TextView
+                android:id="@+id/tct_item_arrives_det"
+                style="@style/TTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Dhaka, Shajalal"
+                android:textSize="@dimen/_7sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tct_item_baggages"
+                style="@style/TTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Baggage"
+                android:textAllCaps="true"
+                android:textSize="@dimen/_7sdp" />
+
+            <TextView
+                android:id="@+id/tct_item_baggages_det"
+                style="@style/TTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Dhaka, Shajalal"
+                android:textSize="@dimen/_7sdp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tct_item_pnr"
+                style="@style/TTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Airline Pnr"
+                android:textAllCaps="true"
+                android:textSize="@dimen/_7sdp" />
+
+            <TextView
+                android:id="@+id/tct_item_pnr_det"
+                style="@style/TTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Dhaka, Shajalal"
+                android:textSize="@dimen/_7sdp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

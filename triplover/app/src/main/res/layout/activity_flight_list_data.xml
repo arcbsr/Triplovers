@@ -22,6 +22,7 @@
                 android:layout_height="match_parent"
                 app:popupTheme="@style/Theme.TripLover.PopupOverlay" />
 
+
             <TextView
                 android:id="@+id/flights_next"
                 style="@style/TTextView"
@@ -37,7 +38,21 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sdp"
                 android:tint="@color/white"
-                android:visibility="gone" />
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_48sdp"
+                android:layout_toLeftOf="@+id/flights_next"
+                android:gravity="center_vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/flight_selected_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
+            </LinearLayout>
         </RelativeLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -129,12 +144,12 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_marginTop="@dimen/_3sdp"
             android:id="@+id/flight_details_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/flight_select_bottom"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_3sdp">
 
             <Button
                 android:id="@+id/flight_selected_btn"
@@ -145,18 +160,20 @@
                 android:drawableTint="@color/white_dark"
                 android:text="@string/flight_details" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:visibility="gone"
-                android:id="@+id/flight_selected_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/flight_selected_btn"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_5sdp" />
+
         </RelativeLayout>
+
+        <TextView
+            android:layout_above="@id/flight_details_panel"
+            android:visibility="gone"
+            android:id="@+id/no_data"
+            style="@style/TTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background"
+            android:gravity="center"
+            android:text="@string/no_flight_msg"
+            android:textSize="@dimen/_14sdp" />
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

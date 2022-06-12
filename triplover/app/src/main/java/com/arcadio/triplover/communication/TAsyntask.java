@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.arcadio.triplover.R;
-import com.arcadio.triplover.utils.Constants;
+import com.arcadio.triplover.config.BuildConfiguration;
 import com.arcadio.triplover.utils.KLog;
 
 import java.io.IOException;
@@ -61,7 +61,7 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
         dialog.setContentView(com.arcadio.triplover.R.layout.layout_loading_view);
 //        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
@@ -102,8 +102,8 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
                         dialog.findViewById(R.id.loading_image_anim).clearAnimation();
-                        dialog.dismiss();
                         asyncListener.onCompleteListener();
+                        dialog.dismiss();
                     }
                 });
 
@@ -132,13 +132,10 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
 
 //        OkHttpClient client = new OkHttpClient();
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(5, TimeUnit.MINUTES)
-                .readTimeout(5, TimeUnit.MINUTES)
-                .build();
+        OkHttpClient client = getHttpClient();
         RequestBody body = RequestBody.create(searchAuery, JSON);
         Request request = new Request.Builder()
-                .url(Constants.ROOT_URL + postUrl)
+                .url(BuildConfiguration.getBaseURL() + postUrl)
                 .post(body)
                 .build();
         ResponseResult responseResult = new ResponseResult();
@@ -153,16 +150,46 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
         return responseResult;
     }
 
+    private static OkHttpClient getHttpClient() {
+        return new OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.MINUTES)
+                .readTimeout(5, TimeUnit.MINUTES)
+                .build();
+    }
+
     public static ResponseResult postRequestHeader(String searchAuery, String postUrl, String authToken) {
         MediaType JSON
                 = MediaType.get("application/json; charset=utf-8");
 
-        OkHttpClient client = new OkHttpClient();
+//        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = getHttpClient();
         RequestBody body = RequestBody.create(searchAuery, JSON);
         Request request = new Request.Builder()
-                .url(Constants.ROOT_URL + postUrl)
+                .url(BuildConfiguration.getBaseURL() + postUrl)
                 .addHeader("Authorization", "Bearer " + authToken)
                 .post(body)
+                .build();
+        try (Response response = client.newCall(request).execute()) {
+            ResponseResult result = new ResponseResult();
+            result.code = response.code();
+            result.result = response.body().string();
+//            String result = response.body().string();
+            KLog.w(result.result);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ResponseResult getRequestHeader(String postUrl) {
+        MediaType JSON
+                = MediaType.get("application/json; charset=utf-8");
+
+//        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = getHttpClient();
+        Request request = new Request.Builder()
+                .url(BuildConfiguration.getBaseURL() + postUrl)
                 .build();
         try (Response response = client.newCall(request).execute()) {
             ResponseResult result = new ResponseResult();

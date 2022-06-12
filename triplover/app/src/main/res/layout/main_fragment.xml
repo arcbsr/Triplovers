@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_booking"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_5sdp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mybooking_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/booking_no_found"
+            style="@style/TTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="@string/no_data"
+            android:textColor="@color/rajon"
+            android:textSize="@dimen/_12sdp" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

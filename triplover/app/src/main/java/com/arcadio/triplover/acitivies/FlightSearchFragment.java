@@ -63,8 +63,12 @@ public class FlightSearchFragment extends BaseFragment {
 //        calendar.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH) + 3);
 //        dialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
 //        dialog.show();
+        long minDate = Calendar.getInstance().getTimeInMillis();
+        if (flightType == Enums.FlightType.ROUND && position == 1) {
+            minDate = adapter.getRoute(0).getTimeMilisecon();
+        }
         new Dialogs().showCalender(getContext(), searchReq.getRoutes().get(position).getTimeMilisecon(),
-                0, Calendar.getInstance().getTimeInMillis(), getString(R.string.date_format)
+                0, minDate, getString(R.string.date_format)
                 , new Dialogs.DialogListener2() {
                     @Override
                     public void onItemSelected(long miliSecond, String code) {
@@ -85,10 +89,17 @@ public class FlightSearchFragment extends BaseFragment {
         Route route = searchReq.getRoutes().get(position);
         route.setDepartureDate(Utils.getDateString(calendar.getTime()));
         route.setTimeMilisecon(calendar.getTimeInMillis());
+
         switch (flightType) {
             case ROUND:
                 if (type == Enums.CalenderType.DEPART) {
                     binding.deptTxtDate.setText(route.getDepartureDate());
+                    Route routeRetrn = searchReq.getRoutes().get(1);
+                    if (routeRetrn.getTimeMilisecon() < route.getTimeMilisecon()) {
+                        routeRetrn.setDepartureDate(Utils.getDateString(calendar.getTime()));
+                        routeRetrn.setTimeMilisecon(calendar.getTimeInMillis());
+                        binding.retnTxtDate.setText(routeRetrn.getDepartureDate());
+                    }
                 } else if (type == Enums.CalenderType.RETURN) {
                     binding.retnTxtDate.setText(route.getDepartureDate());
                 }
@@ -159,6 +170,7 @@ public class FlightSearchFragment extends BaseFragment {
                         showCalender(0, Enums.CalenderType.DEPART, Enums.FlightType.ROUND);
                     }
                 });
+
                 updateRoundTripList(adapter.getRoute(0));
                 updateMultiCityList(Enums.FlightType.ROUND);
             }
@@ -175,7 +187,8 @@ public class FlightSearchFragment extends BaseFragment {
                 binding.addMore.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        updateSearchList(new Route());
+                        updateSearchList(new Route("Select", "Select", Utils.getDate(System.currentTimeMillis(),
+                                Constants.DATE_FORMAT_SEARCH)));
                     }
                 });
                 updateMultiCityList(Enums.FlightType.MULTICITY);
@@ -319,8 +332,10 @@ public class FlightSearchFragment extends BaseFragment {
         route1.setDestination(route.getOrigin());
         route1.setDepartCityName(route.getDestinationcityname());
         route1.setDestinationcityname(route.getDepartCityName());
+        route1.setTimeMilisecon(route.getTimeMilisecon());
+        route1.setDepartureDate(route.getDepartureDate());
         searchReq.getRoutes().add(route1);
-
+        binding.retnTxtDate.setText(route1.getDepartureDate());
         ((FlightSearchAdapter) binding.recycleFlightSearch.getAdapter()).addItems(searchReq.getRoutes());
     }
 
@@ -344,6 +359,10 @@ public class FlightSearchFragment extends BaseFragment {
         binding.adultPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int totalPassenger = searchReq.getAdults() + searchReq.getChilds();
+                if (totalPassenger == 9) {
+                    return;
+                }
                 searchReq.setAdults(searchReq.getAdults() + 1);
                 passengerCounter();
             }
@@ -351,16 +370,25 @@ public class FlightSearchFragment extends BaseFragment {
         binding.adultMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (searchReq.getAdults() == 0) {
+
+                if (searchReq.getAdults() == 1) {
                     return;
                 }
                 searchReq.setAdults(searchReq.getAdults() - 1);
+                if (searchReq.getInfants() > searchReq.getAdults()) {
+                    searchReq.setInfants(searchReq.getAdults());
+                }
                 passengerCounter();
             }
         });
         binding.childPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                int totalPassenger = searchReq.getAdults() + searchReq.getChilds();
+                if (totalPassenger == 9) {
+                    return;
+                }
                 searchReq.setChilds(searchReq.getChilds() + 1);
                 passengerCounter();
             }
@@ -378,8 +406,10 @@ public class FlightSearchFragment extends BaseFragment {
         binding.infantPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchReq.setInfants(searchReq.getInfants() + 1);
-                passengerCounter();
+                if (searchReq.getInfants() < searchReq.getAdults()) {
+                    searchReq.setInfants(searchReq.getInfants() + 1);
+                    passengerCounter();
+                }
             }
         });
         binding.infantMinus.setOnClickListener(new View.OnClickListener() {

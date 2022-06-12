@@ -1,12 +1,15 @@
 package com.arcadio.triplover.acitivies;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,12 +20,16 @@ import com.arcadio.triplover.R;
 import com.arcadio.triplover.adapter.BasicAdapter;
 import com.arcadio.triplover.communication.TAsyntask;
 import com.arcadio.triplover.fragments.LoginDialogFragment;
+import com.arcadio.triplover.fragments.TicketViewerFragment;
 import com.arcadio.triplover.listeners.TextWatcherListener;
 import com.arcadio.triplover.models.passenger.request.ContactInfo;
 import com.arcadio.triplover.models.passenger.request.DocumentInfo;
 import com.arcadio.triplover.models.passenger.request.NameElement;
 import com.arcadio.triplover.models.passenger.request.PassengerInfo;
 import com.arcadio.triplover.models.passenger.request.PassengerReq;
+import com.arcadio.triplover.models.passenger.response.PreBookingResponse;
+import com.arcadio.triplover.models.payments.request.PaymentReq;
+import com.arcadio.triplover.models.payments.response.BookingConfirm;
 import com.arcadio.triplover.models.reprice.request.RePriceReq;
 import com.arcadio.triplover.models.reprice.response.PassengerCounts;
 import com.arcadio.triplover.models.reprice.response.RePriceResponse;
@@ -36,6 +43,8 @@ import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.arcadio.triplover.utils.Utils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.sslwireless.sslcommerzlibrary.model.response.SSLCTransactionInfoModel;
+import com.sslwireless.sslcommerzlibrary.viewmodel.listener.SSLCTransactionResponseListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,35 +71,9 @@ public class PassengerEntryActivity extends BaseActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(R.string.passenger_details);
-
-        findViewById(R.id.pas_login).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new LoginDialogFragment(new LoginDialogFragment.Listener() {
-                    @Override
-                    public void onLogIn(LoginResponse response) {
-                        KLog.w(response == null ? "Error in data" : getGson().toJson(response));
-                        gatherInfo(response.getToken());
-                    }
-
-                    @Override
-                    public void onLoginFailed() {
-                        new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
-                                .setTitle("Falied")
-                                .setMessage(getString(R.string.loginFailed))
-                                .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    }
-                                })
-                                .show();
-                    }
-                }).show(getSupportFragmentManager(), "LoginFrom");
-            }
-        });
+//        PreferencesHelpers.setToken(getContext(), "");
         passDataToSave = PreferencesHelpers.loadPassenger(this);
-        gatherInfo(PreferencesHelpers.loadStringData(this, Constants.USER_TOKEN, ""));
+        gatherInfo(PreferencesHelpers.getToken(getContext()));
     }
 
     private void gatherInfo(String token) {
@@ -99,7 +82,7 @@ public class PassengerEntryActivity extends BaseActivity {
             finish();
             return;
         }
-        KLog.w(getGson().toJson(priceReq));
+        KLog.w("My Token: " + PreferencesHelpers.getToken(getContext()));
         new TAsyntask(this, new TAsyntask.KAsyncListener() {
             TAsyntask.ResponseResult response;
 
@@ -110,6 +93,11 @@ public class PassengerEntryActivity extends BaseActivity {
 
             @Override
             public void onThreadListener(String data) {
+                if (token == null || token.isEmpty()) {
+                    response = new TAsyntask.ResponseResult();
+                    response.code = 401;
+                    return;
+                }
                 response =
                         TAsyntask.postRequestHeader(getGson().toJson(priceReq), Constants.ROOT_REPRICE_REQ,
                                 token);
@@ -133,7 +121,7 @@ public class PassengerEntryActivity extends BaseActivity {
                         }
                     } else if (response.code == 401) {
 
-                        new LoginDialogFragment(new LoginDialogFragment.Listener() {
+                        new LoginDialogFragment(new LoginDialogFragment.Listenerv2() {
                             @Override
                             public void onLogIn(LoginResponse response) {
                                 gatherInfo(response.getToken());
@@ -147,10 +135,15 @@ public class PassengerEntryActivity extends BaseActivity {
                                         .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-
+                                                finish();
                                             }
                                         })
                                         .show();
+                            }
+
+                            @Override
+                            public void onLoginDismissed() {
+                                onBackPressed();
                             }
                         }).show(getSupportFragmentManager(), "LoginFrom");
 
@@ -224,9 +217,11 @@ public class PassengerEntryActivity extends BaseActivity {
 
     private void setUpData(RePriceResponse response) {
 
+
         String countryCode = CountryToPhonePrefix.getLocalCode(getActivity());
         PassengerCounts passengerCounts = response.getItem1().getPassengerCounts();
         allPassengers = new PassengerReq();
+        allPassengers.setTotalPrice(response.getItem1().getTotalPrice());
         allPassengers.setItemCodeRef(response.getItem1().getItemCodeRef());
         allPassengers.setPriceCodeRef(response.getItem1().getPriceCodeRef());
         allPassengers.setUniqueTransID(response.getItem1().getUniqueTransID());
@@ -276,22 +271,257 @@ public class PassengerEntryActivity extends BaseActivity {
         findViewById(R.id.book_continue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bookingTicket(response);
+                String validationMsg = userFormValidation();
+                if (!validationMsg.isEmpty()) {
+                    new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
+                            .setTitle("Invalid Data")
+                            .setMessage(validationMsg)
+                            .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .show();
+                    return;
+                }
+                if (((CheckBox) findViewById(R.id.pas_agree)).isChecked())
+                    bookingTicket(response);
+                else {
+                    ((CheckBox) findViewById(R.id.pas_agree)).setChecked(true);
+                    ((CheckBox) findViewById(R.id.pas_agree)).setChecked(false);
+                }
+            }
+        });
+        findViewById(R.id.book_terms).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TERM_CONDITION));
+                startActivity(browserIntent);
             }
         });
     }
 
-    private void bookingTicket(RePriceResponse response) {
-        KLog.w(getGson().toJson(allPassengers));
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Title").setMessage(getGson().toJson(allPassengers));
-        AlertDialog alert = builder.create();
-        alert.show();
-        List<String> passDataToSave = new ArrayList<>();
-        for (PassengerInfo info : allPassengers.getPassengerInfoes()) {
-            passDataToSave.add(getGson().toJson(info));
+    private String userFormValidation() {
+        String error = "";
+        for (PassengerInfo passengerInfo : allPassengers.getPassengerInfoes()) {
+            NameElement nameElement = passengerInfo.getNameElement();
+            if (nameElement.getFirstName().isEmpty()) {
+                error = "Invalid " + passengerInfo.title + " Fast Name";
+                break;
+            }
+            if (nameElement.getLastName().isEmpty()) {
+                error = "Invalid " + passengerInfo.title + " Last Name";
+                break;
+            }
+            DocumentInfo documentInfo = passengerInfo.getDocumentInfo();
+            if (documentInfo.getDocumentNumber().isEmpty()) {
+                error = "Invalid " + passengerInfo.title + " Document Number";
+                break;
+            }
+            if (documentInfo.getIssuingCountry().isEmpty()) {
+                error = "Invalid " + passengerInfo.title + " Issued In";
+                break;
+            }
+            ContactInfo contactInfo = passengerInfo.getContactInfo();
+            if (contactInfo.getCityName().isEmpty()) {
+                error = "Invalid " + passengerInfo.title + " City Name";
+                break;
+            }
+            if (contactInfo.getEmail().isEmpty()) {
+                error = "Invalid " + passengerInfo.title + " Email Id";
+                break;
+            }
+            if (contactInfo.getPhone().isEmpty()) {
+                error = "Invalid " + passengerInfo.title + " Phone number";
+                break;
+            }
         }
+        return error;
+    }
+
+    private void processForPayment(String uniqueTransID) {
+        processPayment(uniqueTransID, allPassengers.getTotalPrice(), new SSLCTransactionResponseListener() {
+            @Override
+            public void transactionSuccess(SSLCTransactionInfoModel sslcTransactionInfoModel) {
+                confirmBookingTask(sslcTransactionInfoModel);
+            }
+
+            @Override
+            public void transactionFail(String s) {
+                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void merchantValidationError(String s) {
+
+            }
+        });
+    }
+
+    private void confirmBookingTask(SSLCTransactionInfoModel sslcTransactionInfoModel) {
+        new TAsyntask(this, new TAsyntask.KAsyncListener() {
+            TAsyntask.ResponseResult response;
+
+            @Override
+            public void onPreListener() {
+
+            }
+
+            @Override
+            public void onThreadListener(String data) {
+                PaymentReq paymentReq = new PaymentReq();
+                paymentReq.setUniqueTransID(sslcTransactionInfoModel.getTranId());
+                paymentReq.setSslResponse(sslcTransactionInfoModel);
+                String request = getGson().toJson(paymentReq);
+                KLog.w(request);
+                response =
+                        TAsyntask.postRequestHeader(request, Constants.ROOT_CONFIRM_BOOKING,
+                                PreferencesHelpers.getToken(getContext()));
+
+            }
+
+            @Override
+            public void onCompleteListener() {
+                if (response == null) {
+                    Toast.makeText(getContext(), getString(R.string.went_wrong), Toast.LENGTH_SHORT).show();
+                } else {
+                    if (response.code == 200) {
+                        BookingConfirm bookingConfirm = getGson().fromJson(response.result, BookingConfirm.class);
+                        PreferencesHelpers.saveStringData(getContext(), "book2", response.result);
+                        if (bookingConfirm != null && bookingConfirm.getIsSuccess()) {
+                            new TicketViewerFragment(new TicketViewerFragment.Listener() {
+                                @Override
+                                public void onCloseListener() {
+                                    finish();
+                                }
+                            }, bookingConfirm.getData().getItem1()).show(getSupportFragmentManager(), "TicketViewer");
+                            return;
+
+                        } else {
+
+                            new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
+                                    .setTitle("Failed")
+                                    .setMessage(response.result)
+                                    .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                                        }
+                                    })
+                                    .show();
+                            return;
+                        }
+
+                    } else if (response.code == 401) {
+
+                        new LoginDialogFragment(new LoginDialogFragment.Listener() {
+                            @Override
+                            public void onLogIn(LoginResponse response) {
+                                confirmBookingTask(sslcTransactionInfoModel);
+                            }
+
+                            @Override
+                            public void onLoginFailed() {
+                                new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
+                                        .setTitle("Failed")
+                                        .setMessage(getString(R.string.loginFailed))
+                                        .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                            }
+                                        })
+                                        .show();
+                            }
+                        }).show(getSupportFragmentManager(), "LoginFrom");
+
+                    }
+                }
+            }
+
+
+            @Override
+            public void onErrorListener(String msg) {
+                finish();
+            }
+        }).execute();
+
+    }
+
+    private void preBookingTask() {
+        new TAsyntask(this, new TAsyntask.KAsyncListener() {
+            TAsyntask.ResponseResult response;
+
+            @Override
+            public void onPreListener() {
+
+            }
+
+            @Override
+            public void onThreadListener(String data) {
+                response =
+                        TAsyntask.postRequestHeader(getGson().toJson(allPassengers), Constants.ROOT_PREPARE_BOOKING,
+                                PreferencesHelpers.getToken(getContext()));
+
+            }
+
+            @Override
+            public void onCompleteListener() {
+                if (response == null) {
+
+                } else {
+                    if (response.code == 200) {
+                        PreBookingResponse preBookingResponse = getGson().fromJson(response.result, PreBookingResponse.class);
+                        if (preBookingResponse != null && preBookingResponse.getIsSuccess()) {
+                            processForPayment(preBookingResponse.getUniqueTransID());
+
+                            return;
+
+                        } else {
+                            finish();
+                            return;
+                        }
+                    } else if (response.code == 401) {
+
+                        new LoginDialogFragment(new LoginDialogFragment.Listener() {
+                            @Override
+                            public void onLogIn(LoginResponse response) {
+                                preBookingTask();
+                            }
+
+                            @Override
+                            public void onLoginFailed() {
+                                new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
+                                        .setTitle("Failed")
+                                        .setMessage(getString(R.string.loginFailed))
+                                        .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                            }
+                                        })
+                                        .show();
+                            }
+                        }).show(getSupportFragmentManager(), "LoginFrom");
+
+                    }
+                }
+            }
+
+
+            @Override
+            public void onErrorListener(String msg) {
+                finish();
+            }
+        }).execute();
+
+    }
+
+    private void bookingTicket(RePriceResponse response) {
+        //TODO: add Validation....
         PreferencesHelpers.savePassemger(passDataToSave, this);
+        preBookingTask();
 
     }
 

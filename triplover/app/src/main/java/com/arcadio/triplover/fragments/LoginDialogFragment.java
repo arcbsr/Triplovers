@@ -1,5 +1,6 @@
 package com.arcadio.triplover.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,10 +37,23 @@ public class LoginDialogFragment extends DialogFragment {
         void onLoginFailed();
     }
 
+    public interface Listenerv2 {
+        void onLogIn(LoginResponse response);
+
+        void onLoginFailed();
+
+        void onLoginDismissed();
+    }
+
     private Listener mCallback;
+    private Listenerv2 mCallbackv2;
 
     public LoginDialogFragment(Listener mCallback) {
         this.mCallback = mCallback;
+    }
+
+    public LoginDialogFragment(Listenerv2 mCallbackv2) {
+        this.mCallbackv2 = mCallbackv2;
     }
 
     @Override
@@ -61,6 +75,8 @@ public class LoginDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 dismiss();
+                if (mCallbackv2 != null)
+                    mCallbackv2.onLoginDismissed();
             }
         });
         toolbar.setTitle(getString(R.string.menu_login));
@@ -79,15 +95,21 @@ public class LoginDialogFragment extends DialogFragment {
                         @Override
                         public void onSuccess(LoginResponse response) {
                             if (response.getToken() != null) {
-                                PreferencesHelpers.saveStringData(getContext(), Constants.USER_TOKEN, response.getToken());
-                                mCallback.onLogIn(response);
+                                PreferencesHelpers.setToken(getContext(), response.getToken());
+                                if (mCallback != null)
+                                    mCallback.onLogIn(response);
+                                if (mCallbackv2 != null)
+                                    mCallbackv2.onLogIn(response);
                                 dismiss();
                             }
                         }
 
                         @Override
                         public void onFail(int errorCode) {
-                            mCallback.onLoginFailed();
+                            if (mCallback != null)
+                                mCallback.onLoginFailed();
+                            if (mCallbackv2 != null)
+                                mCallbackv2.onLoginFailed();
                         }
                     });
                 }
@@ -112,6 +134,20 @@ public class LoginDialogFragment extends DialogFragment {
         forSignUP(maniView);
         searchIDPassLocal(maniView);
         return maniView;
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+//        if (mCallbackv2 != null)
+//            mCallbackv2.onLoginDismissed();
+    }
+
+    @Override
+    public void onCancel(@NonNull DialogInterface dialog) {
+        super.onCancel(dialog);
+        if (mCallbackv2 != null)
+            mCallbackv2.onLoginDismissed();
     }
 
     private boolean loginValidate(View mainView) {

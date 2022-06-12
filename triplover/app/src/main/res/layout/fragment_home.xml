@@ -70,6 +70,7 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/btn_tour"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawableTop="@drawable/ic_tour"
@@ -84,12 +85,12 @@
                 android:id="@+id/home_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <Button
+
+                    android:id="@+id/btn_login"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawableTop="@drawable/ic_baseline_lock_24"

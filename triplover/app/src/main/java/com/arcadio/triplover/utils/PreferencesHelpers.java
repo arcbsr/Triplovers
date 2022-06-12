@@ -29,6 +29,16 @@ public class PreferencesHelpers {
         return text;
     }
 
+    public static String getToken(Context context) {
+        KLog.w("get Pref Token: " + PreferencesHelpers.loadStringData(context, Constants.USER_TOKEN, ""));
+        return PreferencesHelpers.loadStringData(context, Constants.USER_TOKEN, "");
+    }
+
+    public static void setToken(Context context, String token) {
+        KLog.w("Pref Token: " + token);
+        saveStringData(context, Constants.USER_TOKEN, token);
+    }
+
     public static void saveBooleanData(Context context, String tag, boolean flag) {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);

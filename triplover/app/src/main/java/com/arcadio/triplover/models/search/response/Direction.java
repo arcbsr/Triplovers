@@ -11,7 +11,8 @@ import javax.annotation.Generated;
 @Generated("jsonschema2pojo")
 public class Direction {
     @Expose(serialize = false)
-    public boolean isSeleced = false;
+    public boolean isSeleced = false, isEnable = true;
+    @Expose(serialize = false)
     public Direction direction;
     @SerializedName("from")
     @Expose

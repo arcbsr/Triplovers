@@ -111,7 +111,7 @@ public class Dialogs {
     public void ShowDialogGender(String title, Activity activity, DialogListener listener, String defdam, String[] dataList, boolean forceShow) {
         if (!forceShow) {
             if (dataList.length < 2) {
-                KLog.w("Nodata for list");
+                KLog.w("No data for list");
                 return;
             }
         }

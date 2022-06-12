@@ -97,7 +97,7 @@ public class FlightSearchAdapter extends RecyclerView.Adapter<FlightSearchAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (flightType == Enums.FlightType.MULTICITY) {
-            if (routes.size() > 2) {
+            if (holder.getAdapterPosition() > 1) {
                 holder.itemView.findViewById(R.id.item_delete).setVisibility(View.VISIBLE);
             } else {
                 holder.itemView.findViewById(R.id.item_delete).setVisibility(View.GONE);
@@ -148,6 +148,9 @@ public class FlightSearchAdapter extends RecyclerView.Adapter<FlightSearchAdapte
 
     @Override
     public int getItemCount() {
+        if (flightType == Enums.FlightType.ROUND) {
+            return 1;
+        }
         return routes.size();
     }
 

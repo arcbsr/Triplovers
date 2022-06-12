@@ -8,8 +8,13 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.arcadio.triplover.config.BuildConfiguration;
 import com.arcadio.triplover.utils.Utils;
 import com.google.gson.Gson;
+import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCommerzInitialization;
+import com.sslwireless.sslcommerzlibrary.model.util.SSLCCurrencyType;
+import com.sslwireless.sslcommerzlibrary.view.singleton.IntegrateSSLCommerz;
+import com.sslwireless.sslcommerzlibrary.viewmodel.listener.SSLCTransactionResponseListener;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -44,5 +49,17 @@ public class BaseActivity extends AppCompatActivity {
 
     protected Gson getGson() {
         return Utils.getGson();
+    }
+
+    public void processPayment(String uniqueTransID, double totalPrice, SSLCTransactionResponseListener listener) {
+        final SSLCommerzInitialization sslCommerzInitialization = new SSLCommerzInitialization
+                ("tripl627f321a2eb5a", "tripl627f321a2eb5a@ssl",
+                        totalPrice, SSLCCurrencyType.BDT, uniqueTransID,
+                        "trip-lovers", BuildConfiguration.getSSLBuildType());
+
+        IntegrateSSLCommerz
+                .getInstance(getActivity())
+                .addSSLCommerzInitialization(sslCommerzInitialization)
+                .buildApiCall(listener);
     }
 }

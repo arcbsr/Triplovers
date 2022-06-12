@@ -45,7 +45,7 @@ public class Utils {
     }
 
     public static String getDateString(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("EEE, MMM dd, yyyy");
+        DateFormat dateFormat = new SimpleDateFormat(Constants.DATE_FORMAT_SEARCH);
         return dateFormat.format(date);
     }
 

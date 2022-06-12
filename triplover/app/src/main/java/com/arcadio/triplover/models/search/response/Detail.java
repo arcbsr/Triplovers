@@ -1,9 +1,10 @@
 
 package com.arcadio.triplover.models.search.response;
 
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import javax.annotation.Generated;
 
 @Generated("jsonschema2pojo")
 public class Detail {
@@ -16,7 +17,7 @@ public class Detail {
     private String originName;
     @SerializedName("originTerminal")
     @Expose
-    private Object originTerminal;
+    private String originTerminal;
     @SerializedName("destination")
     @Expose
     private String destination;
@@ -25,7 +26,7 @@ public class Detail {
     private String destinationName;
     @SerializedName("destinationTerminal")
     @Expose
-    private Object destinationTerminal;
+    private String destinationTerminal;
     @SerializedName("departure")
     @Expose
     private String departure;
@@ -58,11 +59,14 @@ public class Detail {
         this.originName = originName;
     }
 
-    public Object getOriginTerminal() {
+    public String getOriginTerminal() {
+        if (originTerminal == null) {
+            return "";
+        }
         return originTerminal;
     }
 
-    public void setOriginTerminal(Object originTerminal) {
+    public void setOriginTerminal(String originTerminal) {
         this.originTerminal = originTerminal;
     }
 
@@ -82,11 +86,14 @@ public class Detail {
         this.destinationName = destinationName;
     }
 
-    public Object getDestinationTerminal() {
+    public String getDestinationTerminal() {
+        if (destinationTerminal == null) {
+            return "";
+        }
         return destinationTerminal;
     }
 
-    public void setDestinationTerminal(Object destinationTerminal) {
+    public void setDestinationTerminal(String destinationTerminal) {
         this.destinationTerminal = destinationTerminal;
     }
 

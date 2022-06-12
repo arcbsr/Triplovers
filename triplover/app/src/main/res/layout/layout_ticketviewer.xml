@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/_10sdp">
+
+    <TextView
+        android:id="@+id/close"
+        style="@style/TTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:backgroundTint="@color/rajon"
+        android:drawableLeft="@drawable/ic_baseline_close_24"
+        android:drawablePadding="@dimen/_5sdp"
+        android:drawableTint="@android:color/holo_red_dark"
+        android:gravity="center"
+        android:text="@string/close"
+        android:textColor="@android:color/holo_red_dark" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/header" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp">
+
+                <TextView
+                    android:id="@+id/ticv_bref"
+                    style="@style/TTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/booking_ref"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/ticv_bref_p"
+                    style="@style/TTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_toRightOf="@id/ticv_bref"
+                    android:text=" 03AXB7"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp">
+
+                <TextView
+                    android:id="@+id/ticv_issue"
+                    style="@style/TTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/issue_date"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/ticv_issue_p"
+                    style="@style/TTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_toRightOf="@id/ticv_issue"
+                    android:text=" 03-mar-2022"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ticv_pas_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_ticketviewer_passenger" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/semi_trans_80"
+                android:padding="@dimen/_3sdp"
+                android:text="@string/flight_detail"
+                android:textColor="@color/rajon"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/ticv_flight_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/semi_trans_80"
+                android:padding="@dimen/_3sdp"
+                android:text="Fare Details"
+                android:textColor="@color/rajon"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/ticv_fare_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_ticketviewer_fare" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_1sdp"
+                            android:layout_weight=".5"
+                            android:background="@color/semi_trans_80"
+                            android:gravity="right"
+                            android:maxLines="1"
+                            android:padding="@dimen/_3sdp"
+                            android:text="Total"
+                            android:textColor="@color/rajon"
+                            android:textSize="@dimen/_8sdp" />
+
+                        <TextView
+                            android:id="@+id/item_tct_totalp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_1sdp"
+                            android:layout_weight=".5"
+                            android:background="@color/semi_trans_80"
+                            android:gravity="right"
+                            android:maxLines="1"
+                            android:padding="@dimen/_3sdp"
+                            android:text="75000.0"
+                            android:textColor="@color/rajon"
+                            android:textSize="@dimen/_8sdp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_1sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_1sdp"
+                            android:layout_weight=".5"
+                            android:background="@color/semi_trans_80"
+                            android:gravity="right"
+                            android:maxLines="1"
+                            android:padding="@dimen/_3sdp"
+                            android:text="(-) Discount"
+                            android:textColor="@color/rajon"
+                            android:textSize="@dimen/_8sdp" />
+
+                        <TextView
+                            android:id="@+id/item_tct_discount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_1sdp"
+                            android:layout_weight=".5"
+                            android:background="@color/semi_trans_80"
+                            android:gravity="right"
+                            android:maxLines="1"
+                            android:padding="@dimen/_3sdp"
+                            android:text="75000.0"
+                            android:textColor="@color/rajon"
+                            android:textSize="@dimen/_8sdp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_1sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_1sdp"
+                            android:layout_weight=".5"
+                            android:background="@color/semi_trans_80"
+                            android:gravity="right"
+                            android:maxLines="1"
+                            android:padding="@dimen/_3sdp"
+                            android:text="(+) AIT"
+                            android:textColor="@color/rajon"
+                            android:textSize="@dimen/_8sdp" />
+
+                        <TextView
+                            android:id="@+id/item_tct_ait"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_1sdp"
+                            android:layout_weight=".5"
+                            android:background="@color/semi_trans_80"
+                            android:gravity="right"
+                            android:maxLines="1"
+                            android:padding="@dimen/_3sdp"
+                            android:text="75000.0"
+                            android:textColor="@color/rajon"
+                            android:textSize="@dimen/_8sdp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_1sdp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_1sdp"
+                            android:layout_weight=".5"
+                            android:background="@color/semi_trans_80"
+                            android:gravity="right"
+                            android:maxLines="1"
+                            android:padding="@dimen/_3sdp"
+                            android:text="Grand Total"
+                            android:textColor="@color/rajon"
+                            android:textSize="@dimen/_8sdp" />
+
+                        <TextView
+                            android:id="@+id/item_tct_grandtotal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_1sdp"
+                            android:layout_weight=".5"
+                            android:background="@color/semi_trans_80"
+                            android:gravity="right"
+                            android:maxLines="1"
+                            android:padding="@dimen/_3sdp"
+                            android:text="75000.0"
+                            android:textColor="@color/rajon"
+                            android:textSize="@dimen/_8sdp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

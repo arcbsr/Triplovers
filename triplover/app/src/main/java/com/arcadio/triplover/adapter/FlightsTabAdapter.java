@@ -82,16 +82,16 @@ public class FlightsTabAdapter extends RecyclerView.Adapter<FlightsTabAdapter.Vi
             }
         });
         if (selectedPos == holder.getAdapterPosition()) {
-            holder.item_flight_to.setTextColor(Utils.getColorFromResource(context, R.color.colorPrimary));
-            holder.item_flight_from.setTextColor(Utils.getColorFromResource(context, R.color.colorPrimary));
-            holder.itemView.findViewById(R.id.item_back).setBackgroundResource(R.drawable.round_border_sel);
+//            holder.item_flight_to.setTextColor(Utils.getColorFromResource(context, R.color.colorPrimary));
+//            holder.item_flight_from.setTextColor(Utils.getColorFromResource(context, R.color.colorPrimary));
+            holder.itemView.findViewById(R.id.item_back).setBackgroundResource(R.drawable.home_button_normal);
         } else {
-            holder.item_flight_to.setTextColor(Utils.getColorFromResource(context, R.color.rajon));
-            holder.item_flight_from.setTextColor(Utils.getColorFromResource(context, R.color.rajon));
-            holder.itemView.findViewById(R.id.item_back).setBackgroundResource(R.drawable.round_border);
+//            holder.item_flight_to.setTextColor(Utils.getColorFromResource(context, R.color.rajon));
+//            holder.item_flight_from.setTextColor(Utils.getColorFromResource(context, R.color.rajon));
+            holder.itemView.findViewById(R.id.item_back).setBackgroundResource(R.drawable.home_button_normal_light);
         }
         if (route.getDirection() == null) {
-            holder.itemView.findViewById(R.id.item_flight_empty).setVisibility(View.VISIBLE);
+            holder.itemView.findViewById(R.id.item_flight_empty).setVisibility(View.GONE);
             holder.itemView.findViewById(R.id.item_flight_select).setVisibility(View.GONE);
         } else {
             Segment segment = route.getDirection().getSegments().get(0);
@@ -105,7 +105,7 @@ public class FlightsTabAdapter extends RecyclerView.Adapter<FlightsTabAdapter.Vi
             holder.item_dept_date.setText(detail.getDeparture().split(" ")[0]);
             holder.item_dep_stops.setText((route.getDirection().getStops() == 0 ?
                     "Non Stop" : route.getDirection().getStops() + " Stops"));
-            holder.itemView.findViewById(R.id.item_flight_select).setVisibility(View.VISIBLE);
+            holder.itemView.findViewById(R.id.item_flight_select).setVisibility(View.GONE);
             holder.itemView.findViewById(R.id.item_flight_empty).setVisibility(View.GONE);
         }
         holder.itemView.findViewById(R.id.item_flight_info).setOnClickListener(new View.OnClickListener() {
