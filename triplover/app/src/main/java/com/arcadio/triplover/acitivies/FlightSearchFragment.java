@@ -42,6 +42,7 @@ public class FlightSearchFragment extends BaseFragment {
 //        if (prevSearch != null) {
 //            searchReq = new Gson().fromJson(prevSearch, SearchReq.class);
 //        }
+
         return (view = binding.getRoot());
 
     }

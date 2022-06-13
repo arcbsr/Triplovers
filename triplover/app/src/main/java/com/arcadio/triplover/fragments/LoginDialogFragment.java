@@ -129,6 +129,7 @@ public class LoginDialogFragment extends DialogFragment {
                 maniView.findViewById(R.id.layout_signup).setVisibility(View.GONE);
             }
         });
+
         maniView.findViewById(R.id.layout_login).setVisibility(View.VISIBLE);
         maniView.findViewById(R.id.layout_signup).setVisibility(View.GONE);
         forSignUP(maniView);
@@ -164,25 +165,22 @@ public class LoginDialogFragment extends DialogFragment {
     }
 
     private void forSignUP(View mainView) {
-//        String[] country = new String[CountryToPhonePrefix.map.size()];
-//        int index = 0;
-//        for (String ccode : CountryToPhonePrefix.map.keySet()) {
-//            country[index] = CountryToPhonePrefix.prefixFor(ccode) + "(" + ccode + ")";
-//            index++;
-//        }
-//        TelephonyManager manager = (TelephonyManager) getContext().getSystemService(Context.TELEPHONY_SERVICE);
-//        String code = manager.getNetworkCountryIso();
-//        code = CountryToPhonePrefix.prefixFor(code.toUpperCase());
-//        ArrayAdapter aa = new ArrayAdapter(getContext(), android.R.layout.simple_dropdown_item_1line, country);
-//        AutoCompleteTextView countrycode = mainView.findViewById(R.id.signup_contrycode);
-//        countrycode.showDropDown();
-//        countrycode.setAdapter(aa);
-//        countrycode.setText(code);
         ((TextView) mainView.findViewById(R.id.signup_error)).setText("");
         mainView.findViewById(R.id.signup_submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signUp(mainView);
+                if (((CheckBox) mainView.findViewById(R.id.check_terms)).isChecked())
+                    signUp(mainView);
+                else {
+                    ((CheckBox) mainView.findViewById(R.id.check_terms)).setChecked(true);
+                    ((CheckBox) mainView.findViewById(R.id.check_terms)).setChecked(false);
+                }
+            }
+        });
+        mainView.findViewById(R.id.terms_condition).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.openTermAndCondition(getContext());
             }
         });
         mainView.findViewById(R.id.signup_contrycode).setOnClickListener(new View.OnClickListener() {

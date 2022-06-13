@@ -30,7 +30,7 @@
                 app:tint="@color/white_dark" />
             <TextView
                 style="@style/TTextView"
-                android:text="@string/menu_flight"
+                android:text="@string/app_name"
                 android:gravity="center"
                 android:textSize="@dimen/_12sdp"
                 android:textColor="@color/white"

@@ -8,15 +8,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.arcadio.triplover.communication.TAsyntask;
 import com.arcadio.triplover.databinding.FragmentLoginBinding;
 import com.arcadio.triplover.models.usermodel.LoginReq;
-import com.arcadio.triplover.models.usermodel.LoginResponse;
-import com.arcadio.triplover.models.usermodel.UserLoginController;
-import com.arcadio.triplover.utils.Constants;
-import com.arcadio.triplover.utils.KLog;
-import com.arcadio.triplover.utils.PreferencesHelpers;
-import com.google.gson.Gson;
+import com.arcadio.triplover.utils.Utils;
 
 public class LoginFragment extends Fragment {
 
@@ -42,6 +36,7 @@ public class LoginFragment extends Fragment {
                 binding.layoutLogin.setVisibility(View.VISIBLE);
             }
         });
+
         binding.loginSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

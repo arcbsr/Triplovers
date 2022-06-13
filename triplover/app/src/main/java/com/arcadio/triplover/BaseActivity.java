@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.arcadio.triplover.config.BuildConfiguration;
 import com.arcadio.triplover.utils.Utils;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCommerzInitialization;
 import com.sslwireless.sslcommerzlibrary.model.util.SSLCCurrencyType;
 import com.sslwireless.sslcommerzlibrary.view.singleton.IntegrateSSLCommerz;
@@ -49,6 +50,15 @@ public class BaseActivity extends AppCompatActivity {
 
     protected Gson getGson() {
         return Utils.getGson();
+    }
+
+    protected Object getObjectGson(String data, Class aClass) {
+        try {
+            return getGson().fromJson(data, aClass);
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void processPayment(String uniqueTransID, double totalPrice, SSLCTransactionResponseListener listener) {

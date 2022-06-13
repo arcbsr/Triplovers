@@ -31,7 +31,7 @@ public class Item2 {
     private Long timeTicks;
     @SerializedName("message")
     @Expose
-    private Object message;
+    private String message;
 
     public Integer getApiRef() {
         return apiRef;
@@ -89,11 +89,11 @@ public class Item2 {
         this.timeTicks = timeTicks;
     }
 
-    public Object getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(Object message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 

@@ -45,7 +45,7 @@ public class BuildConfiguration {
         if (buildType == BuildType.PRODUCTION) {
             return false;
         } else {
-            return true;
+            return false;
         }
     }
 

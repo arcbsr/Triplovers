@@ -38,7 +38,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sdp"
                 android:tint="@color/white"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"

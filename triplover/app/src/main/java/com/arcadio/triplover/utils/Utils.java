@@ -1,7 +1,10 @@
 package com.arcadio.triplover.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 
 import com.google.gson.Gson;
@@ -95,6 +98,10 @@ public class Utils {
         String[] timehhmm = time.split(":");
         return timehhmm[0] + ":" + timehhmm[1];
 
+    }
+    public static void openTermAndCondition(Context context){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TERM_CONDITION));
+        context.startActivity(browserIntent);
     }
 
     public static Gson getGson() {

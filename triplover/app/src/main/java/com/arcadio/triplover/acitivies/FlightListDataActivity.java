@@ -34,6 +34,7 @@ import com.arcadio.triplover.utils.Dialogs;
 import com.arcadio.triplover.utils.Enums;
 import com.arcadio.triplover.utils.FilterDataDialog;
 import com.arcadio.triplover.utils.ImageLoader;
+import com.arcadio.triplover.utils.KLog;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -74,13 +75,16 @@ public class FlightListDataActivity extends BaseActivity {
             @Override
             public void onThreadListener(String data) {
                 String searchAuery = getIntent().getStringExtra(Constants.QUERY_FLIGHT_SEARCH);
-
-
+                KLog.w(searchAuery);
                 TAsyntask.ResponseResult result = TAsyntask.postRequest(searchAuery, Constants.ROOT_URL_SEARCH);
                 if (result.code != 200) {
                     return;
                 }
-                searchJsModel = getGson().fromJson(result.result, SearchJsModel.class);
+                Object object = getObjectGson(result.result, SearchJsModel.class);
+                if (object != null) {
+                    searchJsModel = (SearchJsModel) object;
+                }
+                //searchJsModel = getGson().fromJson(result.result, SearchJsModel.class);
 
             }
 
@@ -208,6 +212,12 @@ public class FlightListDataActivity extends BaseActivity {
         return rePriceReq;
     }
 
+    private static FlightListDataActivity Instance = null;
+
+    public static FlightListDataActivity getInstance() {
+        return Instance;
+    }
+
     private void showDetails(final List<Direction> directions, boolean isViewOnly) {
         if (directions.size() == 0) {
             Toast.makeText(this, getString(R.string.nothing_show), Toast.LENGTH_SHORT).show();
@@ -223,6 +233,9 @@ public class FlightListDataActivity extends BaseActivity {
             bottomSheetDialog.findViewById(R.id.search_flight_confirm).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (Instance == null) {
+                        Instance = FlightListDataActivity.this;
+                    }
                     RePriceReq priceReq = getPriceReqQuery(directions);
                     PassengerCounts passengerCounts = searchJsModel.getItem1().getAirSearchResponses().get(0).getPassengerCounts();
                     Intent pasentry = new Intent(FlightListDataActivity.this, PassengerEntryActivity.class);

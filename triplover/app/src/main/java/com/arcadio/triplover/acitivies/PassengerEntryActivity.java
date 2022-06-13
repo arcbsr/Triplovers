@@ -78,11 +78,13 @@ public class PassengerEntryActivity extends BaseActivity {
 
     private void gatherInfo(String token) {
         final RePriceReq priceReq = (RePriceReq) getIntent().getSerializableExtra(Constants.PASS_REPRICE_REAUEST);
+
+        KLog.w(getGson().toJson(priceReq));
         if (priceReq == null) {
             finish();
             return;
         }
-        KLog.w("My Token: " + PreferencesHelpers.getToken(getContext()));
+        KLog.w(getGson().toJson(priceReq));
         new TAsyntask(this, new TAsyntask.KAsyncListener() {
             TAsyntask.ResponseResult response;
 
@@ -115,8 +117,33 @@ public class PassengerEntryActivity extends BaseActivity {
                             setUpData(priceResponse);
                             return;
 
+                        } else if (priceResponse != null && priceResponse.getItem2() != null) {
+                            if (priceResponse.getItem2().getMessage().contains("No eligible fare found")) {
+                                new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
+                                        .setCancelable(false)
+                                        .setTitle("Failed")
+                                        .setMessage("This fare is not available. please select another fare.")
+                                        .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                onBackPressed();
+                                            }
+                                        })
+                                        .show();
+                            }
                         } else {
-                            finish();
+                            new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
+                                    .setCancelable(false)
+                                    .setTitle("Failed")
+                                    .setMessage("Sorry for inconvenience, please try again")
+                                    .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            FlightListDataActivity.getInstance().finish();
+                                            onBackPressed();
+                                        }
+                                    })
+                                    .show();
                             return;
                         }
                     } else if (response.code == 401) {
@@ -130,7 +157,8 @@ public class PassengerEntryActivity extends BaseActivity {
                             @Override
                             public void onLoginFailed() {
                                 new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
-                                        .setTitle("Falied")
+                                        .setCancelable(false)
+                                        .setTitle("Failed")
                                         .setMessage(getString(R.string.loginFailed))
                                         .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
                                             @Override
@@ -296,8 +324,7 @@ public class PassengerEntryActivity extends BaseActivity {
         findViewById(R.id.book_terms).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TERM_CONDITION));
-                startActivity(browserIntent);
+                Utils.openTermAndCondition(getContext());
             }
         });
     }
