@@ -17,7 +17,7 @@
         android:padding="@dimen/_3sdp"
         android:text="Pax Type"
         android:maxLines="1"
-        android:textColor="@color/rajon"
+        android:textColor="@color/black_main"
         android:textSize="@dimen/_8sdp" />
 
     <TextView
@@ -31,7 +31,7 @@
         android:gravity="center"
         android:padding="@dimen/_3sdp"
         android:text="Base Fare"
-        android:textColor="@color/rajon"
+        android:textColor="@color/black_main"
         android:textSize="@dimen/_8sdp" />
 
     <TextView
@@ -45,7 +45,7 @@
         android:gravity="right"
         android:padding="@dimen/_3sdp"
         android:text="Tax"
-        android:textColor="@color/rajon"
+        android:textColor="@color/black_main"
         android:textSize="@dimen/_8sdp" />
 
     <TextView
@@ -59,7 +59,7 @@
         android:gravity="right"
         android:padding="@dimen/_3sdp"
         android:text="Fees"
-        android:textColor="@color/rajon"
+        android:textColor="@color/black_main"
         android:textSize="@dimen/_8sdp" />
 
     <TextView
@@ -73,7 +73,7 @@
         android:gravity="right"
         android:padding="@dimen/_3sdp"
         android:text="Person"
-        android:textColor="@color/rajon"
+        android:textColor="@color/black_main"
         android:textSize="@dimen/_8sdp" />
 
     <TextView
@@ -87,6 +87,6 @@
         android:gravity="right"
         android:padding="@dimen/_3sdp"
         android:text="Total"
-        android:textColor="@color/rajon"
+        android:textColor="@color/black_main"
         android:textSize="@dimen/_8sdp" />
 </LinearLayout>

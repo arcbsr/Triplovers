@@ -25,8 +25,10 @@ import com.arcadio.triplover.listeners.AdapterListener;
 import com.arcadio.triplover.models.FilterModule;
 import com.arcadio.triplover.models.reprice.request.RePriceReq;
 import com.arcadio.triplover.models.search.request.Route;
+import com.arcadio.triplover.models.search.response.Baggage;
 import com.arcadio.triplover.models.search.response.Direction;
 import com.arcadio.triplover.models.search.response.PassengerCounts;
+import com.arcadio.triplover.models.search.response.PassengerFares;
 import com.arcadio.triplover.models.search.response.SearchJsModel;
 import com.arcadio.triplover.utils.Constants;
 import com.arcadio.triplover.utils.CountryToPhonePrefix;
@@ -59,6 +61,7 @@ public class FlightListDataActivity extends BaseActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
+            return false;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -219,6 +222,7 @@ public class FlightListDataActivity extends BaseActivity {
     }
 
     private void showDetails(final List<Direction> directions, boolean isViewOnly) {
+        Enums.FlightDetailsType detailsType = Enums.FlightDetailsType.DETAILS;
         if (directions.size() == 0) {
             Toast.makeText(this, getString(R.string.nothing_show), Toast.LENGTH_SHORT).show();
             return;
@@ -227,7 +231,18 @@ public class FlightListDataActivity extends BaseActivity {
         bottomSheetDialog.setContentView(R.layout.layout_recycleview);
 //        ((TextView) bottomSheetDialog.findViewById(R.id.flight_details_price))
 //                .setText(directions.get(0).totalPrice.toString());
-
+        bottomSheetDialog.findViewById(R.id.flight_details_bag).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBaggageInfo(directions.get(0));
+            }
+        });
+        bottomSheetDialog.findViewById(R.id.flight_details_price).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPriceInfo(directions.get(0));
+            }
+        });
         if (!isViewOnly && ((FlightsTabAdapter) binding.flightSelectedList.getAdapter()).isAllFlightSelected()) {
             ((TextView) bottomSheetDialog.findViewById(R.id.search_flight_confirm)).setText(getString(R.string.confirm));
             bottomSheetDialog.findViewById(R.id.search_flight_confirm).setOnClickListener(new View.OnClickListener() {
@@ -289,10 +304,82 @@ public class FlightListDataActivity extends BaseActivity {
                 ((TextView) holder.itemView.findViewById(R.id.item_details_ret_details)).setText(det4);
                 ImageLoader.loadImage(directions.get(position).getPlatingCarrierCode(),
                         ((ImageView) holder.itemView.findViewById(R.id.item_details_thumb)), getContext());
+                holder.itemView.findViewById(R.id.item_details_layout).setVisibility(View.GONE);
+//                if (detailsType == Enums.FlightDetailsType.DETAILS) {
+//                    holder.itemView.findViewById(R.id.item_details_layout).setVisibility(View.GONE);
+//                } else {
+//                    if (detailsType == Enums.FlightDetailsType.BAGGAGE) {
+//                        Baggage baggage = directions.get(position).getSegments().get(0).
+//                                getBaggage().get(0);
+//                        ((TextView) holder.itemView.findViewById(R.id.item_details_bag_price)).setText(baggage.getAmount() + " " +
+//                                baggage.getUnits());
+//                        ((TextView) holder.itemView.findViewById(R.id.item_details_bag_price2)).setText("");
+//                    } else {
+//                        PassengerFares passengerFares = directions.get(position).passengerFares;
+//                        if (passengerFares != null) {
+//                            ((TextView) holder.itemView.findViewById(R.id.item_details_bag_price)).setText(det3);
+//                            ((TextView) holder.itemView.findViewById(R.id.item_details_bag_price2)).setText(det3);
+//                        } else {
+//                            ((TextView) holder.itemView.findViewById(R.id.item_details_bag_price)).setText("Unknown");
+//                            ((TextView) holder.itemView.findViewById(R.id.item_details_bag_price2)).setText("Unknown");
+//                        }
+//                    }
+//                    holder.itemView.findViewById(R.id.item_details_layout).setVisibility(View.VISIBLE);
+//                }
             }
         });
         recyclerView.setAdapter(adapter);
         bottomSheetDialog.show();
+    }
+
+    private void showBaggageInfo(Direction direction) {
+        if (direction.getSegments().get(0).getBaggage() == null ||
+                direction.getSegments().get(0).getBaggage().size() == 0) {
+            new MaterialAlertDialogBuilder(FlightListDataActivity.this)
+                    .setTitle(getString(R.string.baggage_det))
+                    .setMessage(getString(R.string.nothing_show))
+
+                    .setNegativeButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    })
+                    .show();
+            return;
+        }
+        Baggage baggage = direction.getSegments().get(0).
+                getBaggage().get(0);
+        new MaterialAlertDialogBuilder(FlightListDataActivity.this)
+                .setTitle(getString(R.string.baggage_det))
+                .setMessage(baggage.getAmount() + " " + baggage.getUnits())
+
+                .setNegativeButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .show();
+    }
+
+    private void showPriceInfo(Direction direction) {
+        PassengerFares passengerFares = direction.passengerFares;
+        String msg = "Unknown";
+        if (passengerFares.getAdt() != null) {
+            msg = "Base Price: " + passengerFares.getAdt().getBasePrice();
+            msg += "\nTax: " + passengerFares.getAdt().getTaxes();
+            msg += "\nDiscount: " + passengerFares.getAdt().getDiscountPrice();
+            msg += "\nTotal Price: " + passengerFares.getAdt().getTotalPrice();
+        }
+        new MaterialAlertDialogBuilder(FlightListDataActivity.this)
+                .setTitle(getString(R.string.price_det))
+                .setMessage(msg)
+
+                .setNegativeButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -325,6 +412,7 @@ public class FlightListDataActivity extends BaseActivity {
                 for (Direction direction : dirlist) {
                     direction.searchPosition = i;
                     direction.totalPrice = searchJsModel.getItem1().getAirSearchResponses().get(i).getTotalPrice();
+                    direction.passengerFares = searchJsModel.getItem1().getAirSearchResponses().get(i).getPassengerFares();
                     if (dlists == 0)
                         totalDir.add(direction);
                 }
@@ -349,7 +437,6 @@ public class FlightListDataActivity extends BaseActivity {
         if (filterModule == null) {
             return;
         }
-        //adapter.getItemCount()
         new FilterDataDialog().showFilterUI(getContext(), filterModule, adapter.getAllAirLine(), new FilterDataDialog.FilterListener() {
             @Override
             public void onApply(FilterModule filterModule2) {
@@ -366,7 +453,7 @@ public class FlightListDataActivity extends BaseActivity {
 
     private void flightCounter(int total) {
         if (total == 0) {
-            binding.filter.setOnClickListener(null);
+            //binding.filter.setOnClickListener(null);
         } else {
             binding.filter.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -14,30 +14,9 @@
         android:theme="@style/Theme.TripLover"
         android:usesCleartextTraffic="true">
         <activity
-            android:theme="@style/Theme.TripLover.NoActionBar"
-            android:name=".acitivies.MyBookingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".acitivies.PassengerEntryActivity"
-            android:exported="false"
-            android:theme="@style/Theme.TripLover.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".acitivies.CitySearchActivity"
-            android:exported="false" />
-        <activity
-            android:name=".acitivies.FlightListDataActivity"
-            android:exported="false"
-            android:theme="@style/Theme.TripLover.NoActionBar" />
-        <activity
-            android:name=".acitivies.FlightSearchActivity"
-            android:exported="false"
-            android:label="@string/title_activity_flight_search"
-            android:theme="@style/Theme.TripLover.NoActionBar" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".acitivies.SplashScreenActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.TripLover.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,6 +24,44 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".acitivies.MainTabActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.TripLover.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".acitivies.MyBookingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.TripLover.NoActionBar" />
+        <activity
+            android:name=".acitivies.PassengerEntryActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.TripLover.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".acitivies.CitySearchActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".acitivies.FlightListDataActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.TripLover.NoActionBar" />
+        <activity
+            android:name=".acitivies.FlightSearchActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.TripLover.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.TripLover.NoActionBar"></activity>
     </application>
 
 </manifest>

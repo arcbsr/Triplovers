@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/home_background"
     tools:context=".ui.home.HomeFragment">
 
     <LinearLayout
@@ -11,6 +12,7 @@
         android:layout_height="match_parent"
         android:layout_margin="@dimen/_10sdp"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +35,6 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_flight"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawableTop="@drawable/flight_departing_icon"
@@ -51,7 +52,6 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/btn_hotel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawableTop="@drawable/ic_hotel"
@@ -70,7 +70,6 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/btn_tour"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawableTop="@drawable/ic_tour"
@@ -106,4 +105,74 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/home_menu"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_100sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/btn_flight"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/menu_flight" />
+
+            <ImageView
+                android:id="@+id/btn_hotel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/menu_hotels" />
+
+            <ImageView
+                android:id="@+id/btn_tour"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/menu_tour" />
+
+            <ImageView
+                android:id="@+id/btn_visa"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/menu_visa" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/home_menu"
+            android:orientation="vertical">
+
+            <ImageView
+                android:padding="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/image_1" />
+
+            <ImageView
+                android:scaleType="fitStart"
+                android:padding="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/image_2" />
+        </LinearLayout>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

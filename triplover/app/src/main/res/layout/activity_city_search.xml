@@ -11,8 +11,10 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:background="@color/tab_bar"
-        android:theme="@style/Theme.TripLover.AppBarOverlay">
+        android:background="@color/transparent"
+        android:elevation="0dp"
+        android:theme="@style/Theme.TripLover.AppBarOverlay"
+        app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"

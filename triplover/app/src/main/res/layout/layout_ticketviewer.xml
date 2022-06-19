@@ -2,32 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/_10sdp">
+    android:background="@drawable/home_background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/close"
-        style="@style/TTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:backgroundTint="@color/rajon"
-        android:drawableLeft="@drawable/ic_baseline_close_24"
-        android:drawablePadding="@dimen/_5sdp"
-        android:drawableTint="@android:color/holo_red_dark"
-        android:gravity="center"
-        android:text="@string/close"
-        android:textColor="@android:color/holo_red_dark" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:padding="@dimen/_10sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/close"
+                style="@style/TTH5"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_gravity="left"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:gravity="center"
+                android:textSize="@dimen/_12sdp"
+                android:drawableLeft="@drawable/ic_baseline_arrow_back_24"
+                android:drawablePadding="@dimen/_10sdp"
+                android:text="@string/back" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -37,7 +39,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp">
+                android:layout_marginTop="@dimen/_40sdp">
 
                 <TextView
                     android:id="@+id/ticv_bref"
@@ -103,7 +105,7 @@
                 android:background="@color/semi_trans_80"
                 android:padding="@dimen/_3sdp"
                 android:text="@string/flight_detail"
-                android:textColor="@color/rajon"
+                android:textColor="@color/black_main"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -123,7 +125,7 @@
                 android:background="@color/semi_trans_80"
                 android:padding="@dimen/_3sdp"
                 android:text="Fare Details"
-                android:textColor="@color/rajon"
+                android:textColor="@color/black_main"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
 
@@ -169,7 +171,7 @@
                             android:maxLines="1"
                             android:padding="@dimen/_3sdp"
                             android:text="Total"
-                            android:textColor="@color/rajon"
+                            android:textColor="@color/black_main"
                             android:textSize="@dimen/_8sdp" />
 
                         <TextView
@@ -183,7 +185,7 @@
                             android:maxLines="1"
                             android:padding="@dimen/_3sdp"
                             android:text="75000.0"
-                            android:textColor="@color/rajon"
+                            android:textColor="@color/black_main"
                             android:textSize="@dimen/_8sdp" />
                     </LinearLayout>
 
@@ -203,7 +205,7 @@
                             android:maxLines="1"
                             android:padding="@dimen/_3sdp"
                             android:text="(-) Discount"
-                            android:textColor="@color/rajon"
+                            android:textColor="@color/black_main"
                             android:textSize="@dimen/_8sdp" />
 
                         <TextView
@@ -217,7 +219,7 @@
                             android:maxLines="1"
                             android:padding="@dimen/_3sdp"
                             android:text="75000.0"
-                            android:textColor="@color/rajon"
+                            android:textColor="@color/black_main"
                             android:textSize="@dimen/_8sdp" />
                     </LinearLayout>
 
@@ -237,7 +239,7 @@
                             android:maxLines="1"
                             android:padding="@dimen/_3sdp"
                             android:text="(+) AIT"
-                            android:textColor="@color/rajon"
+                            android:textColor="@color/black_main"
                             android:textSize="@dimen/_8sdp" />
 
                         <TextView
@@ -251,7 +253,7 @@
                             android:maxLines="1"
                             android:padding="@dimen/_3sdp"
                             android:text="75000.0"
-                            android:textColor="@color/rajon"
+                            android:textColor="@color/black_main"
                             android:textSize="@dimen/_8sdp" />
                     </LinearLayout>
 
@@ -271,7 +273,7 @@
                             android:maxLines="1"
                             android:padding="@dimen/_3sdp"
                             android:text="Grand Total"
-                            android:textColor="@color/rajon"
+                            android:textColor="@color/black_main"
                             android:textSize="@dimen/_8sdp" />
 
                         <TextView
@@ -285,7 +287,7 @@
                             android:maxLines="1"
                             android:padding="@dimen/_3sdp"
                             android:text="75000.0"
-                            android:textColor="@color/rajon"
+                            android:textColor="@color/black_main"
                             android:textSize="@dimen/_8sdp" />
                     </LinearLayout>
                 </LinearLayout>

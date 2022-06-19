@@ -3,7 +3,8 @@ package com.arcadio.triplover.utils;
 public class Enums {
     public enum CalenderType {
         RETURN,
-        DEPART
+        DEPART,
+        BOTH
     }
 
     public enum FlightType {
@@ -43,9 +44,41 @@ public class Enums {
         }
     }
 
+    public enum Classes {
+        Economy(1),
+        Premium(2),
+        Business(3),
+        Fast(4);
+        private int index;
+
+        Classes(int text) {
+            this.index = text;
+        }
+
+
+        public int getText() {
+            return this.index;
+        }
+
+        public static Classes fromString(int text) {
+            for (Classes b : Classes.values()) {
+                if (b.index == text) {
+                    return b;
+                }
+            }
+            return null;
+        }
+    }
+
     public enum CodeSearchType {
         CountryCodes,
         Countries,
         PhoneCodes
+    }
+
+    public enum FlightDetailsType {
+        DETAILS,
+        BAGGAGE,
+        PRICE
     }
 }

@@ -1,5 +1,6 @@
 package com.arcadio.triplover.fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,7 +24,7 @@ import com.arcadio.triplover.models.SingleToneData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CitySearchFragment extends DialogFragment {
+public class CitySearchFragment extends BaseDialog {
     public interface Listener {
         void onCitySelected(CityModels cityModels);
     }
@@ -34,10 +35,6 @@ public class CitySearchFragment extends DialogFragment {
         this.mCallback = mCallback;
     }
 
-    @Override
-    public int getTheme() {
-        return R.style.DialogTheme;
-    }
 
     Toolbar toolbar;
     // creating variables for
@@ -53,7 +50,7 @@ public class CitySearchFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
+        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.activity_city_search, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);

@@ -6,11 +6,11 @@
     android:layout_marginLeft="@dimen/_10sdp"
     android:layout_marginTop="@dimen/_5sdp"
     android:layout_marginRight="@dimen/_10sdp"
-    android:backgroundTint="@color/white_dark"
+    android:backgroundTint="@color/white"
     android:clickable="true"
     android:elevation="8dp"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -47,7 +47,8 @@
             android:layout_height="@dimen/_32sdp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_next" />
+            android:tint="@color/black"
+            android:src="@drawable/ic_baseline_navigate_next_24" />
 
     </RelativeLayout>
 

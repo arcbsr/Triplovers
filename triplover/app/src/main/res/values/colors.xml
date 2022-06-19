@@ -2,14 +2,13 @@
 <resources>
     <!--   color for the app bar and other primary UI elements -->
     <color name="colorPrimary">#293452</color>
-    <color name="tab_bar">#567CDD</color>
 
     <!--   a darker variant of the primary color, used for
            the status bar (on Android 5.0+) and contextual app bars -->
     <color name="colorPrimaryDark">#BF6C35</color>
     <color name="colorBgBottom">#F8DEB3</color>
     <!--   a secondary color for controls like checkboxes and text fields -->
-    <color name="colorAccent">#BF6C35</color>
+    <color name="colorAccent">#293452</color>
 
     <color name="purple_200">#000000</color>
     <color name="purple_500">#EC1C1C</color>
@@ -32,7 +31,19 @@
     <color name="green">#1A451C</color>
     <color name="sky_blue">#717EA8</color>
     <color name="sepe_color">#482D2D2D</color>
-    <color name="rajon">#2D2D2D</color>
-    <color name="rajon_hint">#662D2D2D</color>
+    <color name="black_main">#2D2D2D</color>
+    <color name="black_hint">#662D2D2D</color>
     <color name="y_cream">#DDB756</color>
+    <!--    New Design Color Codes...-->
+    <color name="bg_start">#6CB6F6</color>
+    <color name="bg_center">#AED3F3</color>
+    <color name="bg_end">#7BBBF3</color>
+    <color name="tab_bar">#6CB6F6</color>
+    <color name="actoin_bar">#6CB6F6</color>
+    <color name="title_main">#2D2D2D</color>
+    <color name="title_secondary">#393838</color>
+    <color name="title_third">#B92D2D2D</color>
+    <color name="transparent">#00000000</color>
+
+
 </resources>

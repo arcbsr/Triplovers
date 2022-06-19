@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/home_background"
+    android:fitsSystemWindows="true"
     tools:context=".ui.login.LoginFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:background="@color/tab_bar"
-        android:theme="@style/Theme.TripLover.AppBarOverlay">
+        android:background="@color/transparent"
+        android:elevation="0dp"
+        android:theme="@style/Theme.TripLover.AppBarOverlay"
+        app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -33,60 +36,90 @@
         <LinearLayout
             android:id="@+id/layout_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="@dimen/_20sdp"
+            android:layout_height="match_parent"
+            android:layout_above="@id/login_bottom_image"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@drawable/round_border_sel"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
+            android:padding="@dimen/_10sdp"
             android:visibility="gone">
 
             <TextView
+                style="@style/TTH5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:gravity="center"
                 android:letterSpacing=".1"
                 android:paddingLeft="@dimen/_5sdp"
-                android:text="@string/login_u"
-                android:textColor="@color/white_dark"
-                android:textSize="@dimen/_16sdp" />
+                android:text="@string/welcome" />
+
+            <TextView
+                style="@style/TTH4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:gravity="center"
+                android:paddingLeft="@dimen/_5sdp"
+                android:text="@string/welcome_msg"
+                android:textStyle="normal" />
 
             <EditText
                 android:id="@+id/login_email"
-                style="@style/TEdittext"
+                style="@style/TEH1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:drawableLeft="@drawable/ic_baseline_mail_outline_24"
-                android:drawableTint="@color/rajon_hint"
                 android:hint="Email"
                 android:text="apptestuser@triplover.com" />
 
-            <EditText
-                android:id="@+id/login_password"
-                style="@style/TEdittext"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:drawableLeft="@drawable/ic_baseline_lock_24"
-                android:drawableTint="@color/rajon_hint"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:text="Asdf123@" />
+                android:layout_marginTop="@dimen/_10sdp">
+
+
+                <EditText
+                    android:id="@+id/login_password"
+                    style="@style/TEH1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_baseline_lock_24"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:text="Asdf123@" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/toggle_login_password"
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:src="@drawable/password_show"
+                    app:tint="@color/black" />
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_margin="@dimen/_5sdp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:visibility="gone">
 
                 <CheckBox
                     android:id="@+id/login_remember"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:checked="true"
                     android:letterSpacing=".05"
                     android:text="Remember Me"
-                    android:textColor="@color/rajon"
+                    android:textColor="@color/black_main"
                     android:textSize="@dimen/_10sdp" />
 
                 <TextView
@@ -102,32 +135,45 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/login_submit"
-                style="@style/TDButton"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_48sdp"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
-                android:backgroundTint="@color/light_blue"
-                android:text="Login" />
+                android:background="@drawable/button_blue"
+                android:text="Log In"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                style="@style/TTH5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:letterSpacing=".05"
+                android:text="Forgot Password"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="normal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_40sdp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
+                    style="@style/TTH4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:letterSpacing=".05"
                     android:text="Don't have an account?"
-                    android:textColor="@color/rajon_hint"
                     android:textSize="@dimen/_10sdp" />
 
                 <TextView
                     android:id="@+id/create_new"
+                    style="@style/TTH5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -135,42 +181,55 @@
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:letterSpacing=".05"
                     android:text="@string/create_acc_u"
-                    android:textColor="@color/rajon"
                     android:textSize="@dimen/_10sdp" />
             </LinearLayout>
+
+
         </LinearLayout>
 
         <ScrollView
             android:id="@+id/layout_signup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/login_bottom_image"
             android:fillViewport="true"
             android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@drawable/round_border_sel"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/_20sdp"
-                android:paddingRight="@dimen/_20sdp">
+                android:padding="@dimen/_10sdp">
 
                 <TextView
+                    style="@style/TTH5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:gravity="center"
                     android:letterSpacing=".05"
                     android:paddingLeft="@dimen/_5sdp"
-                    android:text="@string/create_acc_u"
-                    android:textColor="@color/white_dark"
-                    android:textSize="@dimen/_16sdp" />
+                    android:text="@string/create_acc" />
+
+                <TextView
+                    style="@style/TTH4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:text="@string/welcome_msg"
+                    android:textStyle="normal" />
 
                 <TextView
                     android:id="@+id/signup_error"
                     style="@style/TTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:text=""
                     android:textColor="@android:color/holo_red_dark" />
 
@@ -180,7 +239,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:hint="First Name" />
+                    android:hint="Name" />
 
                 <EditText
                     android:id="@+id/signup_lname"
@@ -188,7 +247,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:hint="Last Name" />
+                    android:hint="Last Name"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/signup_email"
@@ -198,42 +258,75 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:hint="Email" />
 
-                <EditText
-                    android:id="@+id/signup_password"
-                    style="@style/TEdittext"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:hint="Password"
-                    android:inputType="textPassword" />
+                    android:layout_marginTop="@dimen/_10sdp">
 
-                <EditText
-                    android:id="@+id/signup_repassword"
-                    style="@style/TEdittext"
+                    <EditText
+                        android:id="@+id/signup_password"
+                        style="@style/TEdittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Password"
+                        android:inputType="textPassword" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/toggle_password"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:src="@drawable/password_show"
+                        app:tint="@color/black" />
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:hint="Re-Enter Password"
-                    android:inputType="textPassword" />
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <EditText
+                        android:id="@+id/signup_repassword"
+                        style="@style/TEdittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Re-Enter Password"
+                        android:inputType="textPassword" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/toggle_re_password"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:src="@drawable/password_show"
+                        app:tint="@color/black" />
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/round_border_edit"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/signup_contrycode"
-                        style="@style/TEdittext"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/round_border_edit"
-                        android:drawableRight="@drawable/ic_down"
                         android:gravity="center"
                         android:maxLines="1"
                         android:paddingLeft="@dimen/_5sdp"
                         android:text="+880" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/semi_trans" />
 
                     <EditText
                         android:id="@+id/signup_phone"
@@ -241,50 +334,59 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_weight="2"
+                        android:layout_weight="2.5"
+                        android:background="@color/transparent"
                         android:hint="Phone Number"
                         android:inputType="phone" />
                 </LinearLayout>
 
+                <TextView
+                    style="@style/TTH4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@string/signup_conditions" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <CheckBox
                         android:id="@+id/check_terms"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:letterSpacing=".05"
-                        android:text="I agree to the"
-                        android:textColor="@color/rajon"
-                        android:textSize="@dimen/_10sdp" />
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:text=""
+                        android:textColor="@color/black_main" />
 
                     <TextView
                         android:id="@+id/terms_condition"
+                        style="@style/TTH4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:letterSpacing=".05"
-                        android:text="@string/terms_condition"
-                        android:textColor="@color/rajon"
+                        android:text="@string/signup_terms_condition"
+                        android:textColor="@color/black_main"
                         android:textSize="@dimen/_10sdp" />
                 </LinearLayout>
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/signup_submit"
                     style="@style/TDButton"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_48sdp"
+                    android:layout_height="@dimen/_32sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginBottom="@dimen/_15sdp"
-                    android:backgroundTint="@color/light_blue"
-                    android:text="Create Account" />
+                    android:background="@drawable/button_orange"
+                    android:text="Create Account"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/_14sdp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -293,27 +395,34 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        style="@style/TTH4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
                         android:letterSpacing=".05"
                         android:text="Already have an account?"
-                        android:textColor="@color/rajon_hint" />
+                        android:textSize="@dimen/_10sdp" />
 
                     <TextView
                         android:id="@+id/login_back"
+                        style="@style/TTH4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:letterSpacing=".05"
                         android:text="@string/login_u"
-                        android:textColor="@color/rajon"
                         android:textSize="@dimen/_10sdp" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
+
+        <ImageView
+            android:id="@+id/login_bottom_image"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:src="@drawable/header" />
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

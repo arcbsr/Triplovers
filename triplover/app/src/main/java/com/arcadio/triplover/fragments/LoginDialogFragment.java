@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
 
 import com.arcadio.triplover.R;
 import com.arcadio.triplover.communication.TAsyntask;
@@ -25,12 +25,13 @@ import com.arcadio.triplover.utils.Dialogs;
 import com.arcadio.triplover.utils.Enums;
 import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.arcadio.triplover.utils.Utils;
+import com.arcadio.triplover.utils.ViewUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
 
-public class LoginDialogFragment extends DialogFragment {
+public class LoginDialogFragment extends BaseDialog {
     public interface Listener {
         void onLogIn(LoginResponse response);
 
@@ -56,10 +57,6 @@ public class LoginDialogFragment extends DialogFragment {
         this.mCallbackv2 = mCallbackv2;
     }
 
-    @Override
-    public int getTheme() {
-        return R.style.DialogTheme;
-    }
 
     Toolbar toolbar;
 
@@ -68,6 +65,7 @@ public class LoginDialogFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        super.onCreateView(inflater, container, savedInstanceState);
         View maniView = inflater.inflate(R.layout.fragment_login, container, false);
         toolbar = maniView.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
@@ -113,6 +111,14 @@ public class LoginDialogFragment extends DialogFragment {
                         }
                     });
                 }
+            }
+        });
+        maniView.findViewById(R.id.toggle_login_password).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean flag = ViewUtils.togglePasswordView(maniView.findViewById(R.id.login_password));
+                ((ImageView) maniView.findViewById(R.id.toggle_login_password)).setImageResource(flag ?
+                        R.drawable.password_show : R.drawable.password_hide);
             }
         });
         maniView.findViewById(R.id.create_new).setOnClickListener(new View.OnClickListener() {
@@ -200,11 +206,27 @@ public class LoginDialogFragment extends DialogFragment {
                         });
             }
         });
+        mainView.findViewById(R.id.toggle_password).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean flag = ViewUtils.togglePasswordView(mainView.findViewById(R.id.signup_password));
+                ((ImageView) mainView.findViewById(R.id.toggle_password)).setImageResource(flag ?
+                        R.drawable.password_show : R.drawable.password_hide);
+            }
+        });
+        mainView.findViewById(R.id.toggle_re_password).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean flag = ViewUtils.togglePasswordView(mainView.findViewById(R.id.signup_repassword));
+                ((ImageView) mainView.findViewById(R.id.toggle_re_password)).setImageResource(flag ?
+                        R.drawable.password_show : R.drawable.password_hide);
+            }
+        });
     }
 
     private void signUp(View mainView) {
         String signup_fname = ((EditText) mainView.findViewById(R.id.signup_fname)).getText().toString();
-        String signup_lname = ((EditText) mainView.findViewById(R.id.signup_lname)).getText().toString();
+//        String signup_lname = ((EditText) mainView.findViewById(R.id.signup_lname)).getText().toString();
         String signup_email = ((EditText) mainView.findViewById(R.id.signup_email)).getText().toString();
         String signup_password = ((EditText) mainView.findViewById(R.id.signup_password)).getText().toString();
         String signup_repassword = ((EditText) mainView.findViewById(R.id.signup_repassword)).getText().toString();
@@ -214,10 +236,10 @@ public class LoginDialogFragment extends DialogFragment {
             ((EditText) mainView.findViewById(R.id.signup_fname)).setError(getString(R.string.invalid));
             return;
         }
-        if (signup_lname.isEmpty()) {
-            ((EditText) mainView.findViewById(R.id.signup_lname)).setError(getString(R.string.invalid));
-            return;
-        }
+//        if (signup_lname.isEmpty()) {
+//            ((EditText) mainView.findViewById(R.id.signup_lname)).setError(getString(R.string.invalid));
+//            return;
+//        }
         if (signup_email.isEmpty()) {
             ((EditText) mainView.findViewById(R.id.signup_email)).setError(getString(R.string.invalid));
             return;
@@ -235,7 +257,7 @@ public class LoginDialogFragment extends DialogFragment {
             return;
         }
         UserData userData = new UserData();
-        userData.setFullName(signup_fname + " " + signup_lname);
+        userData.setFullName(signup_fname);
         userData.setMobile(signup_contrycode + signup_phone);
         userData.setEmail(signup_email);
         userData.setPassword(signup_password);
@@ -254,9 +276,6 @@ public class LoginDialogFragment extends DialogFragment {
                     TAsyntask.ResponseResult result = TAsyntask.postRequest(Utils.getGson().toJson(userData), Constants.ROOT_URL_REGISTER);
                     if (result.code == 200) {
                         response = Utils.getGson().fromJson(result.result, RegisterResult.class);
-                        if (response == null) {
-                            response = null;
-                        }
                     }
                 } catch (Exception e) {
                     response = null;

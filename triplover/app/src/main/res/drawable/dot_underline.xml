@@ -10,7 +10,7 @@
             <!--Give the dashed lines their property
                 like color, width, and dashGap-->
             <stroke
-                android:color="@color/rajon"
+                android:color="@color/black_main"
                 android:dashWidth="2dp"
                 android:dashGap="3dp"
                 android:width="1dp"/>

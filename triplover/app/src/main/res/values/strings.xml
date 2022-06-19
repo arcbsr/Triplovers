@@ -17,6 +17,7 @@
     <string name="menu_hotel">Hotel</string>
     <string name="menu_tour">Tours</string>
     <string name="menu_logins">Login</string>
+    <string name="signup_terms_condition">By creating this account you are agree to our <b><u>Terms &amp; Conditions</u></b></string>
     <string name="terms_condition"><b><u>Terms &amp; Conditions</u></b></string>
     <string name="login_u"><b><u>Login</u></b></string>
     <string name="login_u_details">If you have an account, <b><u><font fgcolor='#F16B2E'>Please Login</font></u></b>, or continue as a guest</string>
@@ -75,10 +76,28 @@
     <string name="done">Done</string>
     <string name="date_format">yyyy-MM-dd</string>
     <string name="went_wrong">Something went wrong, Please try again...</string>
-    <string name="comming_soon">comming soon</string>
+    <string name="comming_soon">This feature is comming soon...</string>
     <string name="booking_ref">Booking Reference:</string>
     <string name="issue_date">Issue Date:</string>
     <string name="no_data">No Data Found</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_inbox">Inbox</string>
+    <string name="menu_offer">Offer</string>
+    <string name="welcome">Welcome!</string>
+    <string name="welcome_msg">Let\'s continue your journey</string>
+    <string name="create_acc">Create Account!</string>
+    <string name="round_trip_msg">Save more on return</string>
+    <string name="click_to_change">Click to change</string>
+    <string name="signup_conditions">\u25CF&#160;Password must be 8 characters\n\u25CF&#160;Password must have 1 upper case(AB) &amp; lower case letter (ab)\n\u25CF&#160;Password must have one number</string>
+    <string name="baggage_det">Bag Details</string>
+    <string name="price_det">Price Details</string>
+    <string name="cancel">Cancel</string>
+    <string name="thanks">Thanks</string>
+    <string name="exit">Exit</string>
+    <string name="exit_msg">Are you sure want to EXIT!</string>
+    <string name="yes">yes</string>
+    <string name="no">No</string>
+    <string name="menu_visa">Visa</string>
     <string-array name="spinnerItems">
         <item>1</item>
         <item>2</item>

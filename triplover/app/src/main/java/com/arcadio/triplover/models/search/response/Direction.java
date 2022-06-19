@@ -36,6 +36,7 @@ public class Direction {
 
     public Integer totalPrice = 0;
     public Integer searchPosition = 0;
+    public PassengerFares passengerFares = null;
 
 
     @SerializedName("stops")

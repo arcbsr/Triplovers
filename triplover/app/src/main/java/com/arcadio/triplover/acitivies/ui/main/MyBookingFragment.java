@@ -33,8 +33,6 @@ import java.util.List;
 
 public class MyBookingFragment extends Fragment {
 
-    private MainViewModel mViewModel;
-
     public static MyBookingFragment newInstance() {
         return new MyBookingFragment();
     }
@@ -117,11 +115,20 @@ public class MyBookingFragment extends Fragment {
             @Override
             public void onErrorListener(String msg) {
             }
-        }).
-
-                execute();
+        }).customExecute(true);
     }
+    public static String dateFormat(String dateTime) {
+        try {
+            String date ="";// Utils.timeSeperator(dateTime);
+            String[] dateTimes = dateTime.split("T");
+            date += Utils.getDate(Utils.stringToMilliseconds(dateTimes[0], "yyyy-MM-dd"), Constants.DATE_FORMAT_NORMAL);
 
+            return date;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dateTime;
+    }
     private void setUpList(View view, List<MyBookingRes> myBookings) {
         if (myBookings.size() == 0) {
             view.findViewById(R.id.booking_no_found).setVisibility(View.VISIBLE);
@@ -143,9 +150,9 @@ public class MyBookingFragment extends Fragment {
             public void onBindViewHolder(BasicAdapter.ViewHolder holder, int position) {
                 MyBookingRes bookingRes = myBookings.get(position);
                 ((TextView) holder.itemView.findViewById(R.id.item_paxname)).setText(bookingRes.getPaxName());
-                String details = "Issue: " + TicketViewerFragment.dateFormat(bookingRes.getIssueDate());
-                details += "\nDepart: " + TicketViewerFragment.dateFormat(bookingRes.getTravellDate());
-                details += "\nTicket:" + bookingRes.getTicketNumber();
+                String details = "Issue: " + dateFormat(bookingRes.getIssueDate());
+                details += "\nDepart: " + dateFormat(bookingRes.getTravellDate());
+                //details += "\nTicket:" + bookingRes.getTicketNumber();
                 details += "\nPnr: " + bookingRes.getPnr();
                 details += "\nStatus: " + bookingRes.getStatus();
                 ((TextView) holder.itemView.findViewById(R.id.item_paxdes)).setText(details);

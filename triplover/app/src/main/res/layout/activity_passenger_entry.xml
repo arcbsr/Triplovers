@@ -4,13 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/home_background"
+    android:fitsSystemWindows="true"
     tools:context=".acitivies.PassengerEntryActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:background="@color/tab_bar"
-        android:theme="@style/Theme.TripLover.AppBarOverlay">
+        android:background="@color/transparent"
+        android:elevation="0dp"
+        android:theme="@style/Theme.TripLover.AppBarOverlay"
+        app:elevation="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -49,13 +53,13 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/pass_top_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"
             android:layout_marginBottom="@dimen/_3sdp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,12 +72,12 @@
                     android:id="@+id/pas_login"
                     style="@style/TTextView"
                     android:layout_width="match_parent"
-                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:gravity="center"
                     android:text="@string/login_u_details"
-                    android:textColor="@color/rajon"
+                    android:textColor="@color/black_main"
                     android:textSize="@dimen/_11sdp" />
 
 
@@ -109,7 +113,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="I agree to the"
-                android:textColor="@color/rajon"
+                android:textColor="@color/black_main"
                 android:textSize="@dimen/_10sdp" />
 
             <TextView
@@ -120,21 +124,24 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:text="@string/terms_condition"
-                android:textColor="@color/rajon"
+                android:textColor="@color/black_main"
                 android:textSize="@dimen/_10sdp" />
         </LinearLayout>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/book_continue"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_5sdp"
-            android:backgroundTint="@color/colorPrimary"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/button_blue"
             android:padding="5dp"
             android:text="@string/book_continue"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp" />
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

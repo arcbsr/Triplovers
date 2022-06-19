@@ -2,62 +2,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/background"
     android:layout_gravity="bottom"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
     <LinearLayout
         android:id="@+id/rc_bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:background="@color/tab_bar"
         android:orientation="horizontal"
         android:padding="@dimen/_5sdp">
 
         <TextView
-            style="@style/TTextView"
+            android:id="@+id/flight_details_bag"
+            style="@style/TTH4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Bag Details"
-            android:textColor="@color/white_dark" />
+            android:text="Bag Details" />
 
 
         <View
             android:layout_width=".5dp"
             android:layout_height="match_parent"
-            android:background="@color/rajon_hint" />
+            android:layout_marginRight="@dimen/_5sdp"
+            android:background="@color/black_hint" />
 
         <TextView
-            style="@style/TTextView"
+            android:id="@+id/flight_details_price"
+            style="@style/TTH4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="Price Details"
-            android:textColor="@color/white_dark" />
+            android:visibility="visible" />
 
         <View
             android:layout_width=".5dp"
             android:layout_height="match_parent"
-            android:background="@color/rajon_hint" />
+            android:background="@color/black_hint"
+            android:visibility="invisible" />
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/search_flight_confirm"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            style="@style/TTH4"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@drawable/button_blue"
             android:drawableRight="@drawable/ic_baseline_navigate_next_24"
             android:drawableTint="@color/white"
             android:gravity="center_vertical|right"
-            android:paddingLeft="@dimen/_3sdp"
+            android:paddingLeft="@dimen/_10sdp"
             android:paddingRight="@dimen/_3sdp"
             android:text="@string/confirm"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14sdp" />
+            android:textColor="@color/white" />
     </LinearLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -1,10 +1,12 @@
 
 package com.arcadio.triplover.models.payments.response;
 
-import java.util.List;
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+import javax.annotation.Generated;
 
 @Generated("jsonschema2pojo")
 public class Item1 {
@@ -42,6 +44,7 @@ public class Item1 {
     @SerializedName("uniqueTransID")
     @Expose
     private String uniqueTransID;
+    private String issueDate = "";
 
     public List<Object> getWarnings() {
         return warnings;

@@ -2,11 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/_3sdp"
-    android:paddingBottom="@dimen/_5sdp"
-    android:layout_marginBottom="@dimen/_2sdp"
     android:background="@drawable/dot_underline"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/_3sdp"
+    android:paddingBottom="@dimen/_5sdp">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -74,14 +73,14 @@
                     android:layout_height="1dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/_16sdp"
-                    android:background="@color/rajon_hint" />
+                    android:background="@color/black_hint" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/_16sdp"
                     android:layout_height="@dimen/_16sdp"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/ic_flight"
-                    android:tint="@color/rajon_hint" />
+                    android:tint="@color/black_hint" />
             </RelativeLayout>
 
             <LinearLayout
@@ -110,11 +109,13 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-<View
-    android:background="@color/rajon_hint"
-    android:layout_width=".5dp"
-    android:layout_marginRight="@dimen/_5sdp"
-    android:layout_height="match_parent"/>
+
+    <View
+        android:layout_width=".5dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:background="@color/black_hint" />
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"

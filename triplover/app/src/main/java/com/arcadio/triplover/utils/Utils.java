@@ -1,6 +1,5 @@
 package com.arcadio.triplover.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -94,12 +93,18 @@ public class Utils {
     }
 
     public static String timeSeperator(String totalTime) {
-        String time = totalTime.split(" ")[1];
-        String[] timehhmm = time.split(":");
-        return timehhmm[0] + ":" + timehhmm[1];
+        try {
+            String time = totalTime.split(" ")[1];
+            String[] timehhmm = time.split(":");
+            return timehhmm[0] + ":" + timehhmm[1];
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return totalTime;
 
     }
-    public static void openTermAndCondition(Context context){
+
+    public static void openTermAndCondition(Context context) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TERM_CONDITION));
         context.startActivity(browserIntent);
     }
@@ -107,5 +112,10 @@ public class Utils {
     public static Gson getGson() {
 
         return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().disableHtmlEscaping().create();
+    }
+
+    public static String convertNumberOrS(int number, String text, String ext) {
+        return number + " " + text + ((number < 2) ? "" : ext);
+
     }
 }

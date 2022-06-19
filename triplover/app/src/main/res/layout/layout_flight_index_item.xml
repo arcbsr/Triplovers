@@ -65,7 +65,7 @@
         android:layout_height="match_parent"
         android:layout_margin="@dimen/_5sdp"
         android:src="@drawable/ic_baseline_add_24"
-        android:tint="@color/rajon_hint"
+        android:tint="@color/black_hint"
         android:visibility="gone" />
 
     <LinearLayout
@@ -148,7 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/ic_flight"
-                    android:drawableTint="@color/rajon_hint"
+                    android:drawableTint="@color/black_hint"
                     android:gravity="center"
                     android:text="13:25"
                     android:textSize="@dimen/_8sdp"
@@ -164,13 +164,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_centerVertical="true"
-                        android:background="@color/rajon_hint" />
+                        android:background="@color/black_hint" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_6sdp"
                         android:layout_height="@dimen/_6sdp"
                         android:src="@drawable/ic_dotted"
-                        app:tint="@color/rajon" />
+                        app:tint="@color/black_main" />
 
 
                 </RelativeLayout>

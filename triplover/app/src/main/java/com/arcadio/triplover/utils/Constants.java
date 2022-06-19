@@ -22,6 +22,7 @@ public class Constants {
     public static final String USER_ID = "user_id";
     public static final String USER_PASS = "user_pass";
     public static final String DATE_FORMAT_SEARCH = "EEE, MMM dd, yyyy";
+    public static final String DATE_FORMAT_MMYY = "EEEE dd MMM,yy";
     public static final String DATE_FORMAT_NORMAL = "MMM dd, yyyy";
 
     public static final String TERM_CONDITION = "https://triplover.com/Terms.aspx";

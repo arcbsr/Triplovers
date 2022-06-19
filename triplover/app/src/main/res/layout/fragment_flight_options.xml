@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     tools:context=".acitivies.FlightSearchFragment">
 
     <RelativeLayout
@@ -20,147 +18,154 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/search_flight"
             android:fillViewport="true"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_5sdp">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:backgroundTint="@color/white"
-                        android:clipToPadding="false"
-                        app:cardElevation="10dp"
-                        card_view:cardCornerRadius="5dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/round_border"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/tab_oneway"
-                                style="@style/TTextView"
-                                android:layout_width="0dip"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:background="@color/semi_trans"
-                                android:clickable="true"
-                                android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                                android:gravity="center"
-                                android:text="One-Way"
-                                android:textColor="@color/black" />
-
-                            <View
-                                android:layout_width=".5dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/sky_blue" />
-
-                            <TextView
-                                android:id="@+id/tab_roundtip"
-                                style="@style/TTextView"
-                                android:layout_width="0dip"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:background="@color/semi90_trans"
-                                android:clickable="true"
-                                android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                                android:gravity="center"
-                                android:text="Round-Trip"
-                                android:textColor="@color/black" />
-
-                            <View
-                                android:layout_width=".5dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/sky_blue" />
-
-                            <TextView
-                                android:id="@+id/tab_multicity"
-                                style="@style/TTextView"
-                                android:layout_width="0dip"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:background="@color/semi_trans"
-                                android:clickable="true"
-                                android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                                android:gravity="center"
-                                android:text="Multi-City"
-                                android:textColor="@color/black" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:backgroundTint="@color/white"
+                    android:elevation="18dp"
+                    app:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:layout_margin="@dimen/_5sdp"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_5sdp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_10sdp">
+
+                            <TextView
+                                style="@style/TTH5"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center"
+                                android:text="Flights" />
+
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/card_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_marginBottom="@dimen/_5sdp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <TextView
+
+                                    android:id="@+id/tab_oneway"
+                                    style="@style/TTH4"
+                                    android:layout_width="0dip"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginRight="@dimen/_2sdp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/home_button_normal"
+                                    android:clickable="true"
+                                    android:drawableLeft="@drawable/circle_filled_icon_orange"
+                                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                                    android:gravity="center"
+                                    android:paddingLeft="@dimen/_5sdp"
+                                    android:text="One-Way"
+                                    android:textColor="@color/white" />
+
+                                <TextView
+                                    android:id="@+id/tab_roundtip"
+                                    style="@style/TTH4"
+                                    android:layout_width="0dip"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginRight="@dimen/_2sdp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/home_button_normal"
+                                    android:clickable="true"
+                                    android:drawableLeft="@drawable/circle_filled_icon"
+                                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                                    android:gravity="center"
+                                    android:paddingLeft="@dimen/_5sdp"
+                                    android:text="Round-Trip"
+                                    android:textColor="@color/white" />
+
+
+                                <TextView
+                                    android:id="@+id/tab_multicity"
+                                    style="@style/TTH4"
+                                    android:layout_width="0dip"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/home_button_normal"
+                                    android:clickable="true"
+                                    android:drawableLeft="@drawable/circle_filled_icon"
+                                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                                    android:gravity="center"
+                                    android:paddingLeft="@dimen/_5sdp"
+                                    android:text="Multi-City"
+                                    android:textColor="@color/white" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/add_more"
+                            style="@style/TTH4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:background="@drawable/round_border"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ic_baseline_add_24"
+                            android:drawableTint="@color/green"
+                            android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                            android:gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:text="Add More City"
+                            android:textColor="@color/green"
+                            android:visibility="visible" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="@dimen/_2sdp">
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/recycle_flight_search"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recycle_flight_search"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="bottom"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:orientation="vertical">
 
                         <RelativeLayout
                             android:id="@+id/date_panel_add"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_60sdp">
+                            android:layout_height="@dimen/_65sdp">
 
-                            <TextView
-                                android:id="@+id/add_more"
-                                style="@style/TTextView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:background="@drawable/round_border_sel"
-                                android:clickable="true"
-                                android:drawableLeft="@drawable/ic_baseline_add_24"
-                                android:drawableTint="@color/rajon_hint"
-                                android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                                android:gravity="center"
-                                android:padding="@dimen/_8sdp"
-                                android:text="Add More City"
-                                android:visibility="visible" />
 
                             <LinearLayout
                                 android:id="@+id/date_panel"
@@ -168,84 +173,241 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                                 <LinearLayout
                                     android:id="@+id/depart_date"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
+                                    android:layout_marginRight="@dimen/_3sdp"
                                     android:layout_weight="1"
+                                    android:background="@drawable/round_border_dark"
+                                    android:clickable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
                                     android:gravity="center"
                                     android:orientation="vertical"
-                                    android:padding="@dimen/_5sdp"
+                                    android:paddingLeft="@dimen/_5sdp"
+                                    android:paddingTop="@dimen/_5sdp"
                                     android:visibility="visible">
 
                                     <TextView
-                                        style="@style/TTextView"
+                                        style="@style/TTH9"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:padding="@dimen/_3sdp"
-                                        android:text="Departure Date" />
+                                        android:text="Journey Date"
+                                        android:textAllCaps="true"
+                                        android:textSize="@dimen/_10sdp" />
 
-                                    <TextView
-                                        android:id="@+id/dept_txt_date"
-                                        style="@style/TTextView"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/round_border"
-                                        android:drawableRight="@drawable/ic_down"
-                                        android:drawableTint="@color/rajon_hint"
-                                        android:gravity="center"
-                                        android:paddingLeft="@dimen/_3sdp"
-                                        android:paddingTop="@dimen/_8sdp"
-                                        android:paddingRight="@dimen/_3sdp"
-                                        android:paddingBottom="@dimen/_8sdp"
-                                        android:text="Mon, Nov 04, 2022" />
+                                        android:layout_height="match_parent"
+                                        android:gravity="center_vertical"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:id="@+id/dept_txt_dayn"
+                                                style="@style/TTH5"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="20  "
+                                                android:textSize="@dimen/_12sdp" />
+
+                                            <TextView
+                                                android:id="@+id/dept_txt_date"
+                                                style="@style/TTH9"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:text="Nov'22"
+                                                android:textSize="@dimen/_10sdp" />
+                                        </LinearLayout>
+
+                                        <TextView
+                                            android:id="@+id/dept_txt_day"
+                                            style="@style/TTH9"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Thursday"
+                                            android:textSize="@dimen/_10sdp" />
+                                    </LinearLayout>
+
                                 </LinearLayout>
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:layout_width="@dimen/_20sdp"
-                                    android:layout_height="@dimen/_20sdp"
-                                    android:layout_margin="@dimen/_5sdp"
-                                    android:scaleType="fitCenter"
-                                    android:src="@drawable/ic_calender" />
 
                                 <LinearLayout
                                     android:id="@+id/return_date"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
+                                    android:layout_marginLeft="@dimen/_3sdp"
                                     android:layout_weight="1"
+                                    android:background="@drawable/round_border_dark"
+                                    android:clickable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
                                     android:gravity="center"
                                     android:orientation="vertical"
-                                    android:padding="@dimen/_5sdp"
+                                    android:paddingLeft="@dimen/_5sdp"
+                                    android:paddingTop="@dimen/_5sdp"
                                     android:visibility="visible">
 
                                     <TextView
-                                        style="@style/TTextView"
+                                        style="@style/TTH9"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:padding="@dimen/_3sdp"
-                                        android:text="Return Date" />
+                                        android:text="Return Date"
+                                        android:textAllCaps="true"
+                                        android:textSize="@dimen/_10sdp" />
 
-                                    <TextView
-                                        android:id="@+id/retn_txt_date"
-                                        style="@style/TTextView"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/round_border"
-                                        android:drawableRight="@drawable/ic_down"
-                                        android:drawableTint="@color/rajon_hint"
-                                        android:gravity="center"
-                                        android:paddingLeft="@dimen/_3sdp"
-                                        android:paddingTop="@dimen/_8sdp"
-                                        android:paddingRight="@dimen/_3sdp"
-                                        android:paddingBottom="@dimen/_8sdp"
-                                        android:text="Mon, Nov 04, 2022" />
+                                        android:layout_height="match_parent"
+                                        android:gravity="center_vertical"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:id="@+id/retn_txt_dayn"
+                                                style="@style/TTH5"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text=""
+                                                android:textSize="@dimen/_12sdp" />
+
+                                            <TextView
+                                                android:id="@+id/retn_txt_date"
+                                                style="@style/TTH9"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:text="@string/round_trip_msg"
+                                                android:textSize="@dimen/_10sdp" />
+                                        </LinearLayout>
+
+                                        <TextView
+                                            android:id="@+id/retn_txt_day"
+                                            style="@style/TTH9"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text=""
+                                            android:textSize="@dimen/_10sdp" />
+                                    </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
                         </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_60sdp"
+                            android:layout_marginTop="@dimen/_5sdp">
+
+
+                            <LinearLayout
+                                android:id="@+id/passenger_sttings"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <LinearLayout
+                                    android:id="@+id/traveler_class"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginRight="@dimen/_3sdp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/round_border_dark"
+                                    android:clickable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:paddingLeft="@dimen/_5sdp"
+                                    android:paddingTop="@dimen/_5sdp"
+                                    android:visibility="visible">
+
+                                    <TextView
+                                        style="@style/TTH9"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Travel, Class"
+                                        android:textAllCaps="true"
+                                        android:textSize="@dimen/_10sdp" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center_vertical"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/traveler"
+                                            style="@style/TTH4"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="1 Traveler"
+                                            android:textSize="@dimen/_12sdp" />
+
+                                        <TextView
+                                            android:id="@+id/classes"
+                                            style="@style/TTH9"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Economy"
+                                            android:textSize="@dimen/_10sdp" />
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="@dimen/_3sdp"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:visibility="visible">
+
+                                    <androidx.appcompat.widget.AppCompatButton
+                                        android:id="@+id/search_flight"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/button_blue"
+                                        android:text="GO!"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_18sdp" />
+
+
+                                </LinearLayout>
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_120sdp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:src="@drawable/image_2" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
 
                         <View
@@ -530,10 +692,11 @@
                         style="@style/TTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_20sdp"
-                        android:layout_gravity="left"
                         android:layout_above="@+id/search_flight"
+                        android:layout_gravity="left"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:text="Direct Flight"
+                        android:visibility="gone"
                         app:switchPadding="@dimen/_20sdp" />
 
 
@@ -542,12 +705,13 @@
         </ScrollView>
 
         <Button
-            android:id="@+id/search_flight"
+            android:id="@+id/search_flight2"
             style="@style/TDButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_48sdp"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/search_flight" />
+            android:text="@string/search_flight"
+            android:visibility="invisible" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

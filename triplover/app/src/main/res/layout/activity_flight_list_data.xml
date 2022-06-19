@@ -3,14 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/home_background"
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:background="@color/tab_bar"
-        android:theme="@style/Theme.TripLover.AppBarOverlay">
+        android:background="@color/transparent"
+        android:elevation="0dp"
+        android:theme="@style/Theme.TripLover.AppBarOverlay"
+        app:elevation="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -35,9 +37,9 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/_5sdp"
                 android:text="@string/next"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
-                android:tint="@color/white"
+                android:tint="@color/black"
                 android:visibility="gone" />
 
             <LinearLayout
@@ -74,13 +76,18 @@
 
             <TextView
                 android:id="@+id/flight_total_found"
-                style="@style/TTextView"
-                android:layout_width="match_parent"
+                style="@style/TTH4"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/round_border_edit"
                 android:gravity="right"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_3sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_3sdp"
                 android:text="@string/no_flight"
-                android:textColor="@color/white_dark"
                 android:textSize="@dimen/_12sdp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -103,20 +110,20 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/_5sdp"
                 android:layout_weight="1"
-                android:background="@color/semi_trans"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
+                android:background="@drawable/button_blue"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    style="@style/TTextView"
+                    style="@style/TTH4"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:drawableLeft="@drawable/ic_baseline_filter_list_24"
                     android:drawablePadding="@dimen/_10sdp"
+                    android:drawableTint="@color/white"
                     android:gravity="center"
-                    android:text="@string/filter" />
+                    android:text="@string/filter"
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -125,20 +132,20 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_weight="1"
-                android:background="@color/semi_trans"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
+                android:background="@drawable/button_blue"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    style="@style/TTextView"
+                    style="@style/TTH4"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:drawableLeft="@drawable/ic_baseline_filter_list_24"
                     android:drawablePadding="@dimen/_10sdp"
+                    android:drawableTint="@color/white"
                     android:gravity="center"
-                    android:text="@string/sortby" />
+                    android:text="@string/sortby"
+                    android:textColor="@color/white" />
             </LinearLayout>
 
         </LinearLayout>
@@ -151,29 +158,31 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_3sdp">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/flight_selected_btn"
                 style="@style/TDButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button_blue"
                 android:drawableRight="@drawable/ic_down"
                 android:drawableTint="@color/white_dark"
-                android:text="@string/flight_details" />
+                android:paddingRight="@dimen/_20sdp"
+                android:text="@string/flight_detail" />
 
 
         </RelativeLayout>
 
         <TextView
-            android:layout_above="@id/flight_details_panel"
-            android:visibility="gone"
             android:id="@+id/no_data"
             style="@style/TTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/flight_details_panel"
             android:background="@drawable/background"
             android:gravity="center"
             android:text="@string/no_flight_msg"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_14sdp"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

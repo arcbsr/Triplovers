@@ -38,7 +38,7 @@
             android:layout_below="@id/item_cityname"
             android:padding="@dimen/_5sdp"
             android:text="City Name"
-            android:textColor="@color/rajon_hint"
+            android:textColor="@color/black_hint"
             android:textStyle="normal" />
 
     </RelativeLayout>

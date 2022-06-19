@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -41,14 +40,20 @@ public class HomeFragment extends Fragment {
         binding.btnHotel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), getString(R.string.comming_soon), Toast.LENGTH_SHORT).show();
+                comingSoonMsg(getString(R.string.menu_hotel));
 
             }
         });
         binding.btnTour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), getString(R.string.comming_soon), Toast.LENGTH_SHORT).show();
+                comingSoonMsg(getString(R.string.menu_tour));
+            }
+        });
+        binding.btnVisa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                comingSoonMsg(getString(R.string.menu_visa));
             }
         });
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +84,18 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    private void comingSoonMsg(String title) {
+        new MaterialAlertDialogBuilder(getContext())
+                .setTitle(title)
+                .setMessage(getString(R.string.comming_soon))
+
+                .setNegativeButton(getString(R.string.thanks), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .show();
+    }
 
     @Override
     public void onDestroyView() {

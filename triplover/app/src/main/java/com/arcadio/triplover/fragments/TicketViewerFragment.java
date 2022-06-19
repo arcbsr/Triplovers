@@ -1,5 +1,6 @@
 package com.arcadio.triplover.fragments;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -33,7 +34,7 @@ import com.arcadio.triplover.utils.Utils;
 
 import java.util.List;
 
-public class TicketViewerFragment extends DialogFragment {
+public class TicketViewerFragment extends BaseDialog {
     public interface Listener {
         void onCloseListener();
     }
@@ -46,22 +47,17 @@ public class TicketViewerFragment extends DialogFragment {
         this.item1 = item1;
     }
 
-    @Override
-    public int getTheme() {
-        return R.style.DialogTheme;
-    }
-
     Toolbar toolbar;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
+        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.layout_ticketviewer, container, false);
 
         toolbar = view.findViewById(R.id.toolbar);
-
         view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

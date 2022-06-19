@@ -1,28 +1,29 @@
 
 package com.arcadio.triplover.models.passenger.request;
 
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import javax.annotation.Generated;
 
 @Generated("jsonschema2pojo")
 public class ContactInfo {
 
     @SerializedName("email")
     @Expose
-    private String email;
+    private String email = "";
     @SerializedName("phone")
     @Expose
-    private String phone;
+    private String phone = "";
     @SerializedName("phoneCountryCode")
     @Expose
-    private String phoneCountryCode;
+    private String phoneCountryCode = "";
     @SerializedName("countryCode")
     @Expose
-    private String countryCode;
+    private String countryCode = "";
     @SerializedName("cityName")
     @Expose
-    private String cityName;
+    private String cityName = "";
 
     public String getEmail() {
         return email;

@@ -137,6 +137,12 @@ public class FlightSearchAdapter extends RecyclerView.Adapter<FlightSearchAdapte
         holder.item_dept_date.setText(route.getDepartureDate());
         holder.item_dept_city.setText(route.getDepartCityName());
         holder.item_return_city.setText(route.getDestinationcityname());
+        if (flightType == Enums.FlightType.ROUND) {
+            holder.itemView.findViewById(R.id.logo_roundtrip).setVisibility(View.VISIBLE);
+        } else {
+            holder.itemView.findViewById(R.id.logo_roundtrip).setVisibility(View.GONE);
+
+        }
     }
 
     private String timeSeperator(String totalTime) {

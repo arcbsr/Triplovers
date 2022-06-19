@@ -8,19 +8,29 @@ import com.google.gson.annotations.SerializedName;
 
 @Generated("jsonschema2pojo")
 public class Adt {
+    public Double getDiscountPrice() {
+        return discountPrice;
+    }
 
+    public void setDiscountPrice(Double discountPrice) {
+        this.discountPrice = discountPrice;
+    }
+
+    @SerializedName("discountPrice")
+    @Expose
+    private Double discountPrice = 0d;
     @SerializedName("totalPrice")
     @Expose
-    private Double totalPrice;
+    private Double totalPrice = 0d;
     @SerializedName("basePrice")
     @Expose
-    private Double basePrice;
+    private Double basePrice = 0d;
     @SerializedName("equivalentBasePrice")
     @Expose
-    private Double equivalentBasePrice;
+    private Double equivalentBasePrice = 0d;
     @SerializedName("taxes")
     @Expose
-    private Double taxes;
+    private Double taxes = 0d;
     @SerializedName("taxesBreakdown")
     @Expose
     private List<TaxesBreakdown> taxesBreakdown = null;

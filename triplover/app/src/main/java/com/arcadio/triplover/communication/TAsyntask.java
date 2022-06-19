@@ -41,6 +41,12 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
     private KAsyncListener asyncListener;
     private Activity activity;
     Dialog dialog;
+    private boolean dialogWait = false;
+
+    public void customExecute(boolean dialogWait) {
+        this.dialogWait = dialogWait;
+        execute();
+    }
 
     public TAsyntask(Activity activity, KAsyncListener kAsyncListener) {
         this.activity = activity;
@@ -56,7 +62,10 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        dialog = new Dialog(activity, R.style.DialogTheme);
+        dialog = new Dialog(activity, R.style.FullScreenDialog);
+        dialog.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 //        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(com.arcadio.triplover.R.layout.layout_loading_view);
 //        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -102,8 +111,12 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
                         dialog.findViewById(R.id.loading_image_anim).clearAnimation();
+                        if (!dialogWait)
+                            dialog.dismiss();
                         asyncListener.onCompleteListener();
-                        dialog.dismiss();
+                        if (dialogWait) {
+                            dialog.dismiss();
+                        }
                     }
                 });
 

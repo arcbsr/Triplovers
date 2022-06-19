@@ -43,37 +43,6 @@ public class LoginFragment extends Fragment {
                 String mail = binding.loginEmail.getText().toString();
                 String password = binding.loginPassword.getText().toString();
                 final LoginReq loginReq = new LoginReq(mail, password);
-//                new TAsyntask(getActivity(), new TAsyntask.KAsyncListener() {
-//                    String error = "";
-//
-//                    @Override
-//                    public void onPreListener() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onThreadListener(String data) {
-//                        String result = TAsyntask.postRequest(new Gson().toJson(loginReq), Constants.ROOT_URL_AUTH);
-//                        if (result != null) {
-//                            PreferencesHelpers.saveStringData(getContext(), result, Constants.RESULT_USER_AUTH);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCompleteListener() {
-//                        if (error.equalsIgnoreCase(TAsyntask.ERROR_CANCEL)) {
-//                            return;
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onErrorListener(String msg) {
-//                        error = msg;
-//                    }
-//                }).execute();
-
-
             }
         });
         return root;
