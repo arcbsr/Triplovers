@@ -25,11 +25,11 @@
                 android:layout_height="@dimen/_20sdp"
                 android:layout_gravity="left"
                 android:layout_marginBottom="@dimen/_15sdp"
-                android:gravity="center"
-                android:textSize="@dimen/_12sdp"
                 android:drawableLeft="@drawable/ic_baseline_arrow_back_24"
                 android:drawablePadding="@dimen/_10sdp"
-                android:text="@string/back" />
+                android:gravity="center"
+                android:text="@string/back"
+                android:textSize="@dimen/_12sdp" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_toRightOf="@id/ticv_bref"
-                    android:text=" 03AXB7"
+                    android:text=" "
                     android:textStyle="bold" />
 
             </RelativeLayout>

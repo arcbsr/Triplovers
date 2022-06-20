@@ -21,6 +21,7 @@ import com.arcadio.triplover.utils.Constants;
 import com.arcadio.triplover.utils.CountryToPhonePrefix;
 import com.arcadio.triplover.utils.Dialogs;
 import com.arcadio.triplover.utils.Enums;
+import com.arcadio.triplover.utils.KLog;
 import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.arcadio.triplover.utils.Utils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -108,12 +109,6 @@ public class FlightSearchFragment extends BaseFragment {
     }
 
     private void TabBarSetup(View view) {
-//        binding.tabOneway.setBackgroundColor(getColorFromResource(R.color.colorPrimary));
-//        binding.tabOneway.setTextColor(getColorFromResource(R.color.white));
-//        binding.tabRoundtip.setBackgroundColor(getColorFromResource(R.color.colorPrimary));
-//        binding.tabRoundtip.setTextColor(getColorFromResource(R.color.white));
-//        binding.tabMulticity.setBackgroundColor(getColorFromResource(R.color.colorPrimary));
-//        binding.tabMulticity.setTextColor(getColorFromResource(R.color.white));
         binding.tabOneway.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_filled_icon, 0, 0, 0);
         binding.tabRoundtip.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_filled_icon, 0, 0, 0);
         binding.tabMulticity.setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_filled_icon, 0, 0, 0);
@@ -126,9 +121,6 @@ public class FlightSearchFragment extends BaseFragment {
         updateMultiCityList(Enums.FlightType.ONE_WAY);
 
         if (view != null) {
-//            view.setBackgroundColor(getColorFromResource(R.color.white));
-//            ((TextView) view).setTextColor(getColorFromResource(R.color.black));
-
             ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(R.drawable.circle_filled_icon_orange, 0, 0, 0);
             return;
         }
@@ -318,14 +310,19 @@ public class FlightSearchFragment extends BaseFragment {
         binding.searchFlight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                NavController controller = NavHostFragment.findNavController(FlightSearchFragment.this);
-//                Bundle bundle = new Bundle();
-
                 String data = Utils.getGson().toJson(searchReq);
+                boolean isDomestic = true;
+                for (Route route : searchReq.getRoutes()) {
+                    if (!route.departCountryName.equalsIgnoreCase(route.desCountryName)) {
+                        isDomestic = false;
+                        break;
+                    }
+                }
                 PreferencesHelpers.saveStringData(getContext(), PreferencesHelpers.SEARCH_QUERY, data);
-//                bundle.putString(Constants.QUERY_FLIGHT_SEARCH, data);
-//                controller.navigate(R.id.FlightList, bundle);
-                startActivity(new Intent(getContext(), FlightListDataActivity.class).putExtra(Constants.QUERY_FLIGHT_SEARCH, data));
+
+                KLog.w("isDomestic>>" + isDomestic);
+                startActivity(new Intent(getContext(), FlightListDataActivity.class).putExtra(Constants.QUERY_FLIGHT_SEARCH, data)
+                        .putExtra(Constants.IS_DOMESTIC, isDomestic));
             }
         });
         binding.travelerClass.setOnClickListener(new View.OnClickListener() {
@@ -521,6 +518,8 @@ public class FlightSearchFragment extends BaseFragment {
         Route route1 = new Route();
         route1.setOrigin(route.getDestination());
         route1.setDestination(route.getOrigin());
+        route1.departCountryName = route.departCountryName;
+        route1.desCountryName = route.desCountryName;
         route1.setDepartCityName(route.getDestinationcityname());
         route1.setDestinationcityname(route.getDepartCityName());
         route1.setTimeMilisecon(route.getTimeMilisecon());

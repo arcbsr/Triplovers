@@ -117,18 +117,8 @@ public class MyBookingFragment extends Fragment {
             }
         }).customExecute(true);
     }
-    public static String dateFormat(String dateTime) {
-        try {
-            String date ="";// Utils.timeSeperator(dateTime);
-            String[] dateTimes = dateTime.split("T");
-            date += Utils.getDate(Utils.stringToMilliseconds(dateTimes[0], "yyyy-MM-dd"), Constants.DATE_FORMAT_NORMAL);
 
-            return date;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return dateTime;
-    }
+
     private void setUpList(View view, List<MyBookingRes> myBookings) {
         if (myBookings.size() == 0) {
             view.findViewById(R.id.booking_no_found).setVisibility(View.VISIBLE);
@@ -150,8 +140,8 @@ public class MyBookingFragment extends Fragment {
             public void onBindViewHolder(BasicAdapter.ViewHolder holder, int position) {
                 MyBookingRes bookingRes = myBookings.get(position);
                 ((TextView) holder.itemView.findViewById(R.id.item_paxname)).setText(bookingRes.getPaxName());
-                String details = "Issue: " + dateFormat(bookingRes.getIssueDate());
-                details += "\nDepart: " + dateFormat(bookingRes.getTravellDate());
+                String details = "Issue: " + bookingRes.getIssueDate();
+                details += "\nDepart: " + bookingRes.getTravellDate();
                 //details += "\nTicket:" + bookingRes.getTicketNumber();
                 details += "\nPnr: " + bookingRes.getPnr();
                 details += "\nStatus: " + bookingRes.getStatus();
@@ -159,7 +149,7 @@ public class MyBookingFragment extends Fragment {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showTicketDetail(bookingRes.getUniqueTransID());
+                        showTicketDetail(bookingRes);
                     }
                 });
             }
@@ -167,7 +157,7 @@ public class MyBookingFragment extends Fragment {
 
     }
 
-    private void showTicketDetail(String tansId) {
+    private void showTicketDetail(MyBookingRes bookingRes) {
 
         new TAsyntask(getActivity(), new TAsyntask.KAsyncListener() {
             TAsyntask.ResponseResult response;
@@ -180,22 +170,31 @@ public class MyBookingFragment extends Fragment {
             @Override
             public void onThreadListener(String data) {
                 response =
-                        TAsyntask.getRequestHeader(Constants.ROOT_MY_BOOKING_DETAIL + tansId);
+                        TAsyntask.getRequestHeader(Constants.ROOT_MY_BOOKING_DETAIL + bookingRes.getUniqueTransID());
             }
 
             @Override
             public void onCompleteListener() {
                 if (response.code == 200) {
-                    Item1 item1 = Utils.getGson().fromJson(response.result, Item1.class);
-                    new TicketViewerFragment(new TicketViewerFragment.Listener() {
-                        @Override
-                        public void onCloseListener() {
+                    Item1 item1 = null;
+                    try {
+                        item1 = Utils.getGson().fromJson(response.result, Item1.class);
+                        item1.issueDate = bookingRes.getIssueDate();
+                    } catch (Exception e) {
 
-                        }
-                    }, item1).show(getParentFragmentManager(), "TicketViewer");
-                } else {
-                    Toast.makeText(getContext(), getString(R.string.went_wrong), Toast.LENGTH_SHORT).show();
+                    }
+                    if (item1 != null) {
+                        new TicketViewerFragment(new TicketViewerFragment.Listener() {
+                            @Override
+                            public void onCloseListener() {
+
+                            }
+                        }, item1).show(getParentFragmentManager(), "TicketViewer");
+                    }
+                    return;
                 }
+                Toast.makeText(getContext(), getString(R.string.went_wrong), Toast.LENGTH_SHORT).show();
+
             }
 
             @Override

@@ -1,8 +1,6 @@
 package com.arcadio.triplover.acitivies;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,7 +50,8 @@ import java.util.List;
 
 
 public class PassengerEntryActivity extends BaseActivity {
-    PassengerReq allPassengers;
+    private PassengerReq allPassengers;
+    private boolean isDomestic = false;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -73,6 +72,7 @@ public class PassengerEntryActivity extends BaseActivity {
         setTitle(R.string.passenger_details);
 //        PreferencesHelpers.setToken(getContext(), "");
         passDataToSave = PreferencesHelpers.loadPassenger(this);
+        isDomestic = getIntent().getBooleanExtra(Constants.IS_DOMESTIC, false);
         gatherInfo(PreferencesHelpers.getToken(getContext()));
     }
 
@@ -130,22 +130,23 @@ public class PassengerEntryActivity extends BaseActivity {
                                             }
                                         })
                                         .show();
+                                return;
                             }
-                        } else {
-                            new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
-                                    .setCancelable(false)
-                                    .setTitle("Failed")
-                                    .setMessage("Sorry for inconvenience, please try again")
-                                    .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            FlightListDataActivity.getInstance().finish();
-                                            onBackPressed();
-                                        }
-                                    })
-                                    .show();
-                            return;
                         }
+                        new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
+                                .setCancelable(false)
+                                .setTitle("Failed")
+                                .setMessage("Sorry for inconvenience, please try again")
+                                .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        FlightListDataActivity.getInstance().finish();
+                                        onBackPressed();
+                                    }
+                                })
+                                .show();
+                        return;
+
                     } else if (response.code == 401) {
 
                         new LoginDialogFragment(new LoginDialogFragment.Listenerv2() {
@@ -276,26 +277,15 @@ public class PassengerEntryActivity extends BaseActivity {
                         showPassengerDetails(position);
                     }
                 });
+                holder.itemView.findViewById(R.id.layout_international_flight).setVisibility(isDomestic ? View.GONE : View.VISIBLE);
                 int pos = holder.getAdapterPosition();
                 PassengerInfo passenger = allPassengers.getPassengerInfoes().get(pos);
                 setupPassengerInfo(pos, holder.itemView, false);
-//                holder.itemView.findViewById(R.id.item_pas_edit).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        passengerEditForm(pos);
-//                    }
-//                });
                 dropDownListview(pos, holder.itemView, true);
             }
         }));
         passengerRCView.setLayoutManager(new LinearLayoutManager(this));
 
-//        ((CheckBox)findViewById(R.id.pas_agree)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                findViewById(R.id.book_continue).setEnabled(b);
-//            }
-//        });
         findViewById(R.id.book_continue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -341,14 +331,16 @@ public class PassengerEntryActivity extends BaseActivity {
                 error = "Invalid " + passengerInfo.title + " Last Name";
                 break;
             }
-            DocumentInfo documentInfo = passengerInfo.getDocumentInfo();
-            if (documentInfo.getDocumentNumber().isEmpty()) {
-                error = "Invalid " + passengerInfo.title + " Document Number";
-                break;
-            }
-            if (documentInfo.getIssuingCountry().isEmpty()) {
-                error = "Invalid " + passengerInfo.title + " Issued In";
-                break;
+            if (!isDomestic) {
+                DocumentInfo documentInfo = passengerInfo.getDocumentInfo();
+                if (documentInfo.getDocumentNumber().isEmpty()) {
+                    error = "Invalid " + passengerInfo.title + " Document Number";
+                    break;
+                }
+                if (documentInfo.getIssuingCountry().isEmpty()) {
+                    error = "Invalid " + passengerInfo.title + " Issued In";
+                    break;
+                }
             }
             ContactInfo contactInfo = passengerInfo.getContactInfo();
             if (contactInfo.getCityName().isEmpty()) {

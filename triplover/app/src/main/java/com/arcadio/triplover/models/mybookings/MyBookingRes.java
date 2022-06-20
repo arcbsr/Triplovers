@@ -1,5 +1,7 @@
 package com.arcadio.triplover.models.mybookings;
 
+import com.arcadio.triplover.utils.Constants;
+import com.arcadio.triplover.utils.Utils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -38,8 +40,21 @@ public class MyBookingRes {
         this.paxName = paxName;
     }
 
+    public String dateFormat(String dateTime) {
+        try {
+            String date = "";// Utils.timeSeperator(dateTime);
+            String[] dateTimes = dateTime.split("T");
+            date += Utils.getDate(Utils.stringToMilliseconds(dateTimes[0], "yyyy-MM-dd"), Constants.DATE_FORMAT_NORMAL);
+
+            return date;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dateTime;
+    }
+
     public String getIssueDate() {
-        return issueDate;
+        return dateFormat(issueDate);
     }
 
     public void setIssueDate(String issueDate) {
@@ -47,7 +62,7 @@ public class MyBookingRes {
     }
 
     public String getTravellDate() {
-        return travellDate;
+        return dateFormat(travellDate);
     }
 
     public void setTravellDate(String travellDate) {

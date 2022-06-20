@@ -1,6 +1,5 @@
 package com.arcadio.triplover.fragments;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
 
 import com.arcadio.triplover.R;
 import com.arcadio.triplover.models.payments.response.Adt;
@@ -64,8 +62,6 @@ public class TicketViewerFragment extends BaseDialog {
                 dismiss();
             }
         });
-        KLog.w(Utils.getGson().toJson(item1));
-        //Item1 allData = bookingConfirm.getData().getItem1();
         setUpPassengerInfo(view, item1.getTicketInfoes());
         for (List<Direction> directions : item1.getFlightInfo().getDirections()) {
             flightDetailsSetup(view, directions,
@@ -73,6 +69,15 @@ public class TicketViewerFragment extends BaseDialog {
         }
         fareDetailsSetup(view, item1.getFlightInfo().getPassengerFares(), item1.getFlightInfo().getPassengerCounts(),
                 item1.getFlightInfo().getBookingComponents().get(0));
+        if (item1.issueDate.isEmpty()) {
+            view.findViewById(R.id.ticv_issue_p).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.ticv_issue).setVisibility(View.INVISIBLE);
+        }
+        ((TextView) view.findViewById(R.id.ticv_issue_p)).setText(item1.issueDate);
+        //((TextView) view.findViewById(R.id.ticv_bref_p)).setText(item1.getBookingCodeRef());
+        view.findViewById(R.id.ticv_bref_p).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.ticv_bref).setVisibility(View.INVISIBLE);
+
         return view;
     }
 

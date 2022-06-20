@@ -53,7 +53,10 @@ public class FlightSearchAdapter extends RecyclerView.Adapter<FlightSearchAdapte
         if (routes.size() > 0) {
             return routes.get(pos);
         } else {
-            return new Route("DAC", "CGP", Utils.getDateString(Calendar.getInstance().getTime()));
+            Route route = new Route("DAC", "CGP", Utils.getDateString(Calendar.getInstance().getTime()));
+            route.departCountryName = "Bangladesh";
+            route.desCountryName = "Bangladesh";
+            return route;
 
 
         }
@@ -68,14 +71,18 @@ public class FlightSearchAdapter extends RecyclerView.Adapter<FlightSearchAdapte
         if (calenderType == Enums.CalenderType.DEPART) {
             routes.get(position).setOrigin(cityModels.getIata());
             routes.get(position).setDepartCityName(cityModels.getName() + ", " + cityModels.getCountry());
+            routes.get(position).departCountryName = cityModels.getCountry();
         } else {
             routes.get(position).setDestination(cityModels.getIata());
             routes.get(position).setDestinationcityname(cityModels.getName() + ", " + cityModels.getCountry());
+            routes.get(position).desCountryName = cityModels.getCountry();
         }
         if (flightType == Enums.FlightType.ROUND) {
             Route routeauto = position == 0 ? routes.get(1) : routes.get(0);
             Route routeori = position == 0 ? routes.get(0) : routes.get(1);
             routeauto.setOrigin(routeori.getDestination());
+            routeauto.departCountryName = routeori.departCountryName;
+            routeauto.desCountryName = routeori.desCountryName;
             routeauto.setDepartCityName(routeori.getDestinationcityname());
             routeauto.setDestination(routeori.getOrigin());
             routeauto.setDestinationcityname(routeori.getDepartCityName());

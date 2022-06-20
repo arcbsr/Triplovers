@@ -13,6 +13,7 @@ import javax.annotation.Generated;
 public class PassengerReq {
     @Expose(serialize = false)
     private Double totalPrice;
+
     @SerializedName("passengerInfoes")
     @Expose
     private List<PassengerInfo> passengerInfoes = new ArrayList<>();
@@ -41,6 +42,7 @@ public class PassengerReq {
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
+
     public List<PassengerInfo> getPassengerInfoes() {
         return passengerInfoes;
     }
@@ -48,6 +50,7 @@ public class PassengerReq {
     public void addPassengerInfoe(PassengerInfo passengerInfo) {
         this.passengerInfoes.add(passengerInfo);
     }
+
     public void setPassengerInfoes(List<PassengerInfo> passengerInfoes) {
         this.passengerInfoes = passengerInfoes;
     }

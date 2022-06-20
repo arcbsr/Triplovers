@@ -15,6 +15,8 @@ public class Route {
 
     @Expose(serialize = false)
     private String destinationcityname = "Click to search";
+    @Expose(serialize = false)
+    public String departCountryName = "", desCountryName = "";
 
     public long getTimeMilisecon() {
         return timeMilisecon;

@@ -10,7 +10,8 @@ import javax.annotation.Generated;
 
 @Generated("jsonschema2pojo")
 public class Item1 {
-
+    @Expose(serialize = false)
+    public String issueDate = "";
     @SerializedName("warnings")
     @Expose
     private List<Object> warnings = null;
@@ -44,7 +45,6 @@ public class Item1 {
     @SerializedName("uniqueTransID")
     @Expose
     private String uniqueTransID;
-    private String issueDate = "";
 
     public List<Object> getWarnings() {
         return warnings;

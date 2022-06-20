@@ -251,9 +251,11 @@ public class FlightListDataActivity extends BaseActivity {
                     if (Instance == null) {
                         Instance = FlightListDataActivity.this;
                     }
+                    KLog.w("isDomestic>>" + getIntent().getBooleanExtra(Constants.IS_DOMESTIC, false));
                     RePriceReq priceReq = getPriceReqQuery(directions);
                     PassengerCounts passengerCounts = searchJsModel.getItem1().getAirSearchResponses().get(0).getPassengerCounts();
                     Intent pasentry = new Intent(FlightListDataActivity.this, PassengerEntryActivity.class);
+                    pasentry.putExtra(Constants.IS_DOMESTIC, getIntent().getBooleanExtra(Constants.IS_DOMESTIC, false));
                     pasentry.putExtra(Constants.PASS_PASSENGER_COUNTER, passengerCounts);
                     pasentry.putExtra(Constants.PASS_REPRICE_REAUEST, priceReq);
                     startActivity(pasentry);

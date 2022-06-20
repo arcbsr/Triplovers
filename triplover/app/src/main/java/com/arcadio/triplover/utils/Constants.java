@@ -15,6 +15,8 @@ public class Constants {
     public static final String RESULT_CITY_DESTINATION = "DESTINATION";
     public static final String RESULT_CITY_ACTION = "FLIGHT_TYPE";
     public static final String QUERY_FLIGHT_SEARCH = "SEARCH_QUERY";
+    public static final String IS_DOMESTIC = "is_domestic";
+    public static final String TICKET_ISSUE_DATE = "issue_date";
     public static final String RESULT_USER_AUTH = "user_auth";
     public static final String PASS_PASSENGER_COUNTER = "pas_count";
     public static final String PASS_REPRICE_REAUEST = "price_req";
