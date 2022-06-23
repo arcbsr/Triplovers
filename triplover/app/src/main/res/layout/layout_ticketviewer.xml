@@ -2,10 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/home_background"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/close"
+        style="@style/TTH4"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_gravity="left"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:drawableLeft="@drawable/ic_baseline_arrow_back_24"
+        android:drawablePadding="@dimen/_10sdp"
+        android:gravity="center"
+        android:text="@string/back"
+        android:textSize="@dimen/_12sdp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,18 +31,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/close"
-                style="@style/TTH5"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_20sdp"
-                android:layout_gravity="left"
-                android:layout_marginBottom="@dimen/_15sdp"
-                android:drawableLeft="@drawable/ic_baseline_arrow_back_24"
-                android:drawablePadding="@dimen/_10sdp"
-                android:gravity="center"
-                android:text="@string/back"
-                android:textSize="@dimen/_12sdp" />
 
             <ImageView
                 android:layout_width="wrap_content"

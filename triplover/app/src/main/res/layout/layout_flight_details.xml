@@ -4,8 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_10sdp"
-    android:background="@color/colorPrimary"
+    android:layout_marginBottom="@dimen/_5sdp"
     android:orientation="vertical"
     android:padding="@dimen/_5sdp">
 
@@ -17,120 +16,181 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="2dp"
+            app:cardElevation="8dp"
             card_view:cardCornerRadius="5dp">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/_5sdp">
-
-                <ImageView
-                    android:id="@+id/item_details_thumb"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_60sdp"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:background="@color/white"
-                    android:src="@drawable/airline_thumb" />
+                android:padding="@dimen/_10sdp">
 
                 <LinearLayout
-                    android:id="@+id/item_details_airlines"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/item_details_thumb"
-                    android:orientation="horizontal"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_22sdp"
+                        android:layout_height="@dimen/_22sdp"
+                        android:src="@drawable/ic_flight"
+                        android:tint="@color/light_blue" />
 
                     <TextView
-                        android:id="@+id/item_details_airline"
-                        style="@style/TTextView"
-                        android:layout_width="0dp"
+                        android:id="@+id/item_flight_info"
+                        style="@style/TTH5"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:layout_weight="1"
-                        android:text="Airlines name\ninfo" />
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:text="DAC - CGP"
+                        android:textColor="@color/light_blue"
+                        android:textSize="@dimen/_14sdp" />
 
-                    <View
-                        android:layout_width=".5dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/y_cream" />
-
-                    <TextView
-                        android:id="@+id/item_details_codetime"
-                        style="@style/TTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_weight="1"
-                        android:text="code name\ntime" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/item_details_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_above="@+id/item_details_airlines"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:visibility="gone">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/item_flight_icon"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:src="@drawable/airline_thumb"
+                        android:tint="@color/black" />
 
                     <TextView
-                        android:id="@+id/item_details_bag_price"
-                        style="@style/TTextView"
-                        android:layout_width="0dp"
+                        android:id="@+id/item_flight_name"
+                        style="@style/TTH4"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:layout_weight="1"
-                        android:text="Airlines name\ninfo" />
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:text="17:15 jun 23, 2022\nHazrat Shahjalal Internation Airport" />
 
-                    <View
-                        android:layout_width=".5dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/y_cream" />
-
-                    <TextView
-                        android:id="@+id/item_details_bag_price2"
-                        style="@style/TTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_weight="1"
-                        android:text="code name\ntime" />
                 </LinearLayout>
-            </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:src="@drawable/sit_icon"
+                        app:tint="@color/black_hint" />
+
+                    <TextView
+                        android:id="@+id/item_flight_class"
+                        style="@style/TTH4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:text="Economy" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:src="@drawable/land_flight_ic_icon"
+                        app:tint="@color/black_hint" />
+
+                    <TextView
+                        android:id="@+id/item_flight_planename"
+                        style="@style/TTH4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:text="Boeing 787-8" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:src="@drawable/schedule_time_icon"
+                        app:tint="@color/black_hint" />
+
+                    <TextView
+                        android:id="@+id/item_flight_duration"
+                        style="@style/TTH4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:text="00h 45m" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
+                        android:src="@drawable/land_flight_ic_icon"
+                        app:tint="@color/black_hint"  />
+
+                    <TextView
+                        android:id="@+id/item_flight_to"
+                        style="@style/TTH4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:text="17:15 jun 23, 2022\nHazrat Shahjalal Internation Airport" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:src="@drawable/baggage_icon"
+                        app:tint="@color/black_hint"  />
+
+                    <TextView
+                        android:id="@+id/item_flight_baggeg"
+                        style="@style/TTH4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:text="20.0 kilogram" />
+
+                </LinearLayout>
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:orientation="horizontal"
-            android:padding="@dimen/_5sdp">
-
-            <TextView
-                android:id="@+id/item_details_dep_details"
-                style="@style/TTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Airlines name\ninfo"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/item_details_ret_details"
-                style="@style/TTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="code name\ntime"
-                android:textColor="@color/white" />
-        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

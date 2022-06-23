@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +20,7 @@ import com.arcadio.triplover.adapter.FlightsAdapter;
 import com.arcadio.triplover.adapter.FlightsTabAdapter;
 import com.arcadio.triplover.communication.TAsyntask;
 import com.arcadio.triplover.databinding.ActivityFlightListDataBinding;
+import com.arcadio.triplover.fragments.FlightsViewerFragment;
 import com.arcadio.triplover.listeners.AdapterListener;
 import com.arcadio.triplover.models.FilterModule;
 import com.arcadio.triplover.models.reprice.request.RePriceReq;
@@ -35,7 +35,6 @@ import com.arcadio.triplover.utils.CountryToPhonePrefix;
 import com.arcadio.triplover.utils.Dialogs;
 import com.arcadio.triplover.utils.Enums;
 import com.arcadio.triplover.utils.FilterDataDialog;
-import com.arcadio.triplover.utils.ImageLoader;
 import com.arcadio.triplover.utils.KLog;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -55,6 +54,9 @@ public class FlightListDataActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         prepareFlights();
         setTitle("");
+        if (Instance == null) {
+            Instance = FlightListDataActivity.this;
+        }
     }
 
     @Override
@@ -222,6 +224,27 @@ public class FlightListDataActivity extends BaseActivity {
     }
 
     private void showDetails(final List<Direction> directions, boolean isViewOnly) {
+        if (true) {
+            boolean isAllFlightSelected = !isViewOnly && ((FlightsTabAdapter) binding.flightSelectedList.getAdapter()).isAllFlightSelected();
+            new FlightsViewerFragment(directions, isAllFlightSelected, new FlightsViewerFragment.Listener() {
+                @Override
+                public void onCloseListener() {
+
+                }
+
+                @Override
+                public void onConfirmListener() {
+                    RePriceReq priceReq = getPriceReqQuery(directions);
+                    PassengerCounts passengerCounts = searchJsModel.getItem1().getAirSearchResponses().get(0).getPassengerCounts();
+                    Intent pasentry = new Intent(FlightListDataActivity.this, PassengerEntryActivity.class);
+                    pasentry.putExtra(Constants.IS_DOMESTIC, getIntent().getBooleanExtra(Constants.IS_DOMESTIC, false));
+                    pasentry.putExtra(Constants.PASS_PASSENGER_COUNTER, passengerCounts);
+                    pasentry.putExtra(Constants.PASS_REPRICE_REAUEST, priceReq);
+                    startActivity(pasentry);
+                }
+            }).show(getSupportFragmentManager(),"FlightDetails");
+            return;
+        }
         Enums.FlightDetailsType detailsType = Enums.FlightDetailsType.DETAILS;
         if (directions.size() == 0) {
             Toast.makeText(this, getString(R.string.nothing_show), Toast.LENGTH_SHORT).show();
@@ -229,20 +252,15 @@ public class FlightListDataActivity extends BaseActivity {
         }
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.layout_recycleview);
-//        ((TextView) bottomSheetDialog.findViewById(R.id.flight_details_price))
-//                .setText(directions.get(0).totalPrice.toString());
-        bottomSheetDialog.findViewById(R.id.flight_details_bag).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showBaggageInfo(directions.get(0));
-            }
-        });
-        bottomSheetDialog.findViewById(R.id.flight_details_price).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPriceInfo(directions.get(0));
-            }
-        });
+
+        PassengerFares passengerFares = directions.get(0).passengerFares;
+        if (passengerFares.getAdt() != null) {
+            ((TextView) bottomSheetDialog.findViewById(R.id.baseprice)).setText(passengerFares.getAdt().getBasePrice() + "");
+            ((TextView) bottomSheetDialog.findViewById(R.id.tax)).setText(passengerFares.getAdt().getTaxes() + "");
+            ((TextView) bottomSheetDialog.findViewById(R.id.discount)).setText(passengerFares.getAdt().getDiscountPrice() + "");
+            ((TextView) bottomSheetDialog.findViewById(R.id.process_fee)).setText(0 + "");
+            ((TextView) bottomSheetDialog.findViewById(R.id.total_price)).setText(passengerFares.getAdt().getTotalPrice() + "");
+        }
         if (!isViewOnly && ((FlightsTabAdapter) binding.flightSelectedList.getAdapter()).isAllFlightSelected()) {
             ((TextView) bottomSheetDialog.findViewById(R.id.search_flight_confirm)).setText(getString(R.string.confirm));
             bottomSheetDialog.findViewById(R.id.search_flight_confirm).setOnClickListener(new View.OnClickListener() {
@@ -281,7 +299,7 @@ public class FlightListDataActivity extends BaseActivity {
 
             @Override
             public void onBindViewHolder(BasicAdapter.ViewHolder holder, int position) {
-                String det1 = directions.get(position).getPlatingCarrierName();
+               /* String det1 = directions.get(position).getPlatingCarrierName();
                 det1 += "\n" + directions.get(position).getPlatingCarrierCode() + "-" +
                         directions.get(position).getSegments().get(0).getFlightNumber();
                 det1 += "," + directions.get(position).getSegments().get(0).getServiceClass();
@@ -306,7 +324,7 @@ public class FlightListDataActivity extends BaseActivity {
                 ((TextView) holder.itemView.findViewById(R.id.item_details_ret_details)).setText(det4);
                 ImageLoader.loadImage(directions.get(position).getPlatingCarrierCode(),
                         ((ImageView) holder.itemView.findViewById(R.id.item_details_thumb)), getContext());
-                holder.itemView.findViewById(R.id.item_details_layout).setVisibility(View.GONE);
+                holder.itemView.findViewById(R.id.item_details_layout).setVisibility(View.GONE);*/
 //                if (detailsType == Enums.FlightDetailsType.DETAILS) {
 //                    holder.itemView.findViewById(R.id.item_details_layout).setVisibility(View.GONE);
 //                } else {
@@ -328,6 +346,20 @@ public class FlightListDataActivity extends BaseActivity {
 //                    }
 //                    holder.itemView.findViewById(R.id.item_details_layout).setVisibility(View.VISIBLE);
 //                }
+                ((TextView) holder.itemView.findViewById(R.id.item_flight_info)).setText(directions.get(position).getFrom() + " - " + directions.get(position).getTo());
+                ((TextView) holder.itemView.findViewById(R.id.item_flight_planename)).setText(directions.get(position).getPlatingCarrierCode() + "-" +
+                        directions.get(position).getSegments().get(0).getFlightNumber());
+                ((TextView) holder.itemView.findViewById(R.id.item_flight_duration)).setText(directions.get(position).getSegments().get(0).getDuration().get(0));
+                ((TextView) holder.itemView.findViewById(R.id.item_flight_class)).setText(directions.get(position).getSegments().get(0).getServiceClass());
+                if (directions.get(position).getSegments().get(0).getBaggage() == null ||
+                        directions.get(position).getSegments().get(0).getBaggage().size() == 0) {
+//                    ((TextView) holder.itemView.findViewById(R.id.item_flight_baggeg)).setText( );
+                } else {
+                    Baggage baggage = directions.get(position).getSegments().get(0).
+                            getBaggage().get(0);
+                    ((TextView) holder.itemView.findViewById(R.id.item_flight_baggeg)).setText(baggage.getAmount() +
+                            baggage.getUnits());
+                }
             }
         });
         recyclerView.setAdapter(adapter);

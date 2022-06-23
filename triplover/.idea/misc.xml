@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/anim/drawable/airline_thumb.xml" value="0.195" />
+        <entry key="app/src/main/res/anim/drawable/baggage_icon.xml" value="0.195" />
         <entry key="app/src/main/res/anim/drawable/circle_filled_icon.xml" value="0.195" />
         <entry key="app/src/main/res/anim/drawable/ic_baseline_done_24.xml" value="0.1895" />
         <entry key="app/src/main/res/anim/drawable/ic_baseline_edit_24.xml" value="0.1895" />
@@ -11,9 +12,12 @@
         <entry key="app/src/main/res/anim/drawable/ic_baseline_navigate_next_24.xml" value="0.1895" />
         <entry key="app/src/main/res/anim/drawable/ic_round_trip.xml" value="0.195" />
         <entry key="app/src/main/res/anim/drawable/password_show.xml" value="0.195" />
+        <entry key="app/src/main/res/anim/drawable/schedule_time_icon.xml" value="0.195" />
+        <entry key="app/src/main/res/anim/drawable/sit_icon.xml" value="0.195" />
         <entry key="app/src/main/res/drawable-v24/background.xml" value="0.2095" />
         <entry key="app/src/main/res/drawable-v24/home_button_disable.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable-v24/thumb_circle.xml" value="0.1895" />
+        <entry key="app/src/main/res/drawable/airline_thumb.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/background.xml" value="0.2095" />
         <entry key="app/src/main/res/drawable/button_blue.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/button_blue_clicked.xml" value="0.195" />
