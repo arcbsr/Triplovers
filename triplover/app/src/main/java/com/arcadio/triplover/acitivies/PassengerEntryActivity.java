@@ -36,6 +36,7 @@ import com.arcadio.triplover.utils.Constants;
 import com.arcadio.triplover.utils.CountryToPhonePrefix;
 import com.arcadio.triplover.utils.Dialogs;
 import com.arcadio.triplover.utils.Enums;
+import com.arcadio.triplover.utils.ImageLoader;
 import com.arcadio.triplover.utils.KLog;
 import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.arcadio.triplover.utils.Utils;
@@ -74,6 +75,7 @@ public class PassengerEntryActivity extends BaseActivity {
         passDataToSave = PreferencesHelpers.loadPassenger(this);
         isDomestic = getIntent().getBooleanExtra(Constants.IS_DOMESTIC, false);
         gatherInfo(PreferencesHelpers.getToken(getContext()));
+        ImageLoader.loadImageBackground(findViewById(R.id.homebackground), getContext());
     }
 
     private void gatherInfo(String token) {

@@ -74,5 +74,6 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor")
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation(name: 'sslCommerzSdk', ext: 'aar')
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
     implementation 'com.github.Mirkoddd:Range-SeekBar:1.0.9'
 }

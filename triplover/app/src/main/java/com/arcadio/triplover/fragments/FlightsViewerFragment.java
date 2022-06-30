@@ -18,6 +18,9 @@ import com.arcadio.triplover.adapter.BasicAdapter;
 import com.arcadio.triplover.models.search.response.Baggage;
 import com.arcadio.triplover.models.search.response.Direction;
 import com.arcadio.triplover.models.search.response.PassengerFares;
+import com.arcadio.triplover.utils.ImageLoader;
+import com.arcadio.triplover.utils.KLog;
+import com.arcadio.triplover.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,18 +74,20 @@ public class FlightsViewerFragment extends BaseDialog {
 
     private void showDetails(View bottomSheetDialog, final List<Direction> directions, boolean isAllFlightSelected) {
         if (directions.size() == 0) {
-            Toast.makeText(getContext(), getString(R.string.nothing_show), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.select_flight), Toast.LENGTH_SHORT).show();
+            dismiss();
             return;
         }
 
 
         PassengerFares passengerFares = directions.get(0).passengerFares;
+        KLog.w(Utils.getGson().toJson(passengerFares));
         if (passengerFares.getAdt() != null) {
-            ((TextView) bottomSheetDialog.findViewById(R.id.baseprice)).setText(passengerFares.getAdt().getBasePrice() + "");
-            ((TextView) bottomSheetDialog.findViewById(R.id.tax)).setText(passengerFares.getAdt().getTaxes() + "");
+            ((TextView) bottomSheetDialog.findViewById(R.id.baseprice)).setText(directions.get(0).basePrice + "");
+            ((TextView) bottomSheetDialog.findViewById(R.id.tax)).setText(directions.get(0).tax + "");
             ((TextView) bottomSheetDialog.findViewById(R.id.discount)).setText(passengerFares.getAdt().getDiscountPrice() + "");
             ((TextView) bottomSheetDialog.findViewById(R.id.process_fee)).setText(0 + "");
-            ((TextView) bottomSheetDialog.findViewById(R.id.total_price)).setText(passengerFares.getAdt().getTotalPrice() + "");
+            ((TextView) bottomSheetDialog.findViewById(R.id.total_price)).setText(directions.get(0).totalPrice + "");
         }
         if (isAllFlightSelected) {
             bottomSheetDialog.findViewById(R.id.search_flight_confirm).setVisibility(View.VISIBLE);
@@ -119,6 +124,13 @@ public class FlightsViewerFragment extends BaseDialog {
                         directions.get(position).getSegments().get(0).getFlightNumber());
                 ((TextView) holder.itemView.findViewById(R.id.item_flight_duration)).setText(directions.get(position).getSegments().get(0).getDuration().get(0));
                 ((TextView) holder.itemView.findViewById(R.id.item_flight_class)).setText(directions.get(position).getSegments().get(0).getServiceClass());
+                ((TextView) holder.itemView.findViewById(R.id.item_flight_name)).
+                        setText(directions.get(position).getSegments().get(0).getDeparture() + "\n" +
+                                directions.get(position).getFromAirport());
+                ((TextView) holder.itemView.findViewById(R.id.item_flight_to)).
+                        setText(directions.get(position).getSegments().get(0).getArrival() + "\n" +
+                                directions.get(position).getToAirport());
+                ImageLoader.loadImage(directions.get(position).getPlatingCarrierCode(), holder.itemView.findViewById(R.id.item_flight_icon), getContext());
                 if (directions.get(position).getSegments().get(0).getBaggage() == null ||
                         directions.get(position).getSegments().get(0).getBaggage().size() == 0) {
 //                    ((TextView) holder.itemView.findViewById(R.id.item_flight_baggeg)).setText( );

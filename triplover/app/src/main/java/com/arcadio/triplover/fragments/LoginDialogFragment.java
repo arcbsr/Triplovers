@@ -23,6 +23,7 @@ import com.arcadio.triplover.utils.Constants;
 import com.arcadio.triplover.utils.CountryToPhonePrefix;
 import com.arcadio.triplover.utils.Dialogs;
 import com.arcadio.triplover.utils.Enums;
+import com.arcadio.triplover.utils.ImageLoader;
 import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.arcadio.triplover.utils.Utils;
 import com.arcadio.triplover.utils.ViewUtils;
@@ -77,6 +78,8 @@ public class LoginDialogFragment extends BaseDialog {
                     mCallbackv2.onLoginDismissed();
             }
         });
+
+        ImageLoader.loadImageBackground(maniView.findViewById(R.id.homebackground), getContext());
         toolbar.setTitle(getString(R.string.menu_login));
         maniView.findViewById(R.id.login_submit).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,6 +238,8 @@ public class LoginDialogFragment extends BaseDialog {
         if (signup_fname.isEmpty()) {
             ((EditText) mainView.findViewById(R.id.signup_fname)).setError(getString(R.string.invalid));
             return;
+        } else {
+            ((EditText) mainView.findViewById(R.id.signup_fname)).setError(null);
         }
 //        if (signup_lname.isEmpty()) {
 //            ((EditText) mainView.findViewById(R.id.signup_lname)).setError(getString(R.string.invalid));
@@ -243,18 +248,26 @@ public class LoginDialogFragment extends BaseDialog {
         if (signup_email.isEmpty()) {
             ((EditText) mainView.findViewById(R.id.signup_email)).setError(getString(R.string.invalid));
             return;
+        } else {
+            ((EditText) mainView.findViewById(R.id.signup_email)).setError(null);
         }
         if (signup_phone.isEmpty()) {
             ((EditText) mainView.findViewById(R.id.signup_phone)).setError(getString(R.string.invalid));
             return;
+        } else {
+            ((EditText) mainView.findViewById(R.id.signup_phone)).setError(null);
         }
         if (signup_password.isEmpty()) {
             ((EditText) mainView.findViewById(R.id.signup_password)).setError(getString(R.string.invalid));
             return;
+        } else {
+            ((EditText) mainView.findViewById(R.id.signup_password)).setError(null);
         }
         if (!signup_password.equalsIgnoreCase(signup_repassword)) {
             ((EditText) mainView.findViewById(R.id.signup_password)).setError(getString(R.string.password_not_match));
             return;
+        } else {
+            ((EditText) mainView.findViewById(R.id.signup_password)).setError(null);
         }
         UserData userData = new UserData();
         userData.setFullName(signup_fname);

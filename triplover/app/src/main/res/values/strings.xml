@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TripLover</string>
+    <string name="app_name">Triplover</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -98,6 +98,7 @@
     <string name="yes">yes</string>
     <string name="no">No</string>
     <string name="menu_visa">Visa</string>
+    <string name="select_flight">Please, Select a flight. No Flight is selected.</string>
     <string-array name="spinnerItems">
         <item>1</item>
         <item>2</item>

@@ -32,8 +32,8 @@
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_22sdp"
-                        android:layout_height="@dimen/_22sdp"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
                         android:src="@drawable/ic_flight"
                         android:tint="@color/light_blue" />
 
@@ -45,7 +45,7 @@
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:text="DAC - CGP"
                         android:textColor="@color/light_blue"
-                        android:textSize="@dimen/_14sdp" />
+                        android:textSize="@dimen/_12sdp" />
 
                 </LinearLayout>
 
@@ -60,8 +60,7 @@
                         android:id="@+id/item_flight_icon"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
-                        android:src="@drawable/airline_thumb"
-                        android:tint="@color/black" />
+                        android:src="@drawable/airline_thumb" />
 
                     <TextView
                         android:id="@+id/item_flight_name"
@@ -106,8 +105,8 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_16sdp"
                         android:layout_height="@dimen/_16sdp"
-                        android:src="@drawable/land_flight_ic_icon"
-                        app:tint="@color/black_hint" />
+                        android:src="@drawable/airline_thumb"
+                        app:tint="@color/black" />
 
                     <TextView
                         android:id="@+id/item_flight_planename"
@@ -153,7 +152,7 @@
                         android:layout_width="@dimen/_16sdp"
                         android:layout_height="@dimen/_16sdp"
                         android:src="@drawable/land_flight_ic_icon"
-                        app:tint="@color/black_hint"  />
+                        app:tint="@color/black_hint" />
 
                     <TextView
                         android:id="@+id/item_flight_to"
@@ -176,7 +175,7 @@
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:src="@drawable/baggage_icon"
-                        app:tint="@color/black_hint"  />
+                        app:tint="@color/black_hint" />
 
                     <TextView
                         android:id="@+id/item_flight_baggeg"

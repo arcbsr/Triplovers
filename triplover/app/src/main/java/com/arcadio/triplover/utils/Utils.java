@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -107,6 +108,19 @@ public class Utils {
     public static void openTermAndCondition(Context context) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TERM_CONDITION));
         context.startActivity(browserIntent);
+    }
+
+    public static void openExternalLink(Context context, String url) {
+        if (!url.contains("http://") && !url.contains("https://")) {
+            url = "http://" + url;
+        }
+        try {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            context.startActivity(browserIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, "Link is not valid", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static Gson getGson() {

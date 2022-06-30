@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="bottom"
-    android:background="@drawable/background"
+    android:background="@drawable/home_background"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -36,21 +36,29 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/rc_bottom_bar">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rc_view"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_above="@id/price_layout"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_above="@id/price_layout" />
+            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:gravity="center">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/price_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/_10sdp"
-            android:orientation="horizontal">
+            android:background="@color/semi_trans"
+            android:orientation="horizontal"
+            android:padding="@dimen/_10sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,12 +72,13 @@
                     style="@style/TTH5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/price_det" />
+                    android:text="@string/price_det"
+                    android:textSize="@dimen/_12sdp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:orientation="horizontal">
 
                     <TextView

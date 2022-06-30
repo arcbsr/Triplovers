@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/home_background"
     tools:context=".ui.home.HomeFragment">
 
     <LinearLayout
@@ -114,6 +113,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/home_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/background" />
+
         <LinearLayout
             android:id="@+id/home_menu"
             android:layout_width="match_parent"
@@ -153,25 +159,28 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="@dimen/_20sdp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/home_menu"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
-                android:padding="@dimen/_10sdp"
+                android:id="@+id/offer_place1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:padding="@dimen/_10sdp"
                 android:src="@drawable/image_1" />
 
             <ImageView
-                android:scaleType="fitStart"
-                android:padding="@dimen/_10sdp"
+                android:id="@+id/offer_place2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:padding="@dimen/_10sdp"
                 android:src="@drawable/image_2" />
         </LinearLayout>
     </RelativeLayout>

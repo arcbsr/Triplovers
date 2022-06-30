@@ -1,6 +1,5 @@
 package com.arcadio.triplover.fragments;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +18,7 @@ import com.arcadio.triplover.adapter.CityAdapter;
 import com.arcadio.triplover.listeners.AdapterListener;
 import com.arcadio.triplover.models.CityModels;
 import com.arcadio.triplover.models.SingleToneData;
+import com.arcadio.triplover.utils.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +82,7 @@ public class CitySearchFragment extends BaseDialog {
                 return false;
             }
         });
-
+        ImageLoader.loadImageBackground(view.findViewById(R.id.homebackground), getContext());
         return view;
     }
 

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.arcadio.triplover.models.uidecoration.UiDecoration;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +59,24 @@ public class PreferencesHelpers {
 
     }
 
+    public static void saveLongData(Context context, String tag, long val) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putLong(tag, val);
+        editor.apply();
+
+    }
+
+    public static long loadLongData(Context context, String tag, long defValue) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        long val = sharedPreferences.getLong(tag, defValue);
+        return val;
+
+    }
+
     public static void savePassemger(List<String> sKey, Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor mEdit1 = sp.edit();
@@ -77,6 +97,43 @@ public class PreferencesHelpers {
             sKey.add(mSharedPreference1.getString("Status_" + i, null));
         }
         return sKey;
+    }
+
+    public static void saveUiDecorationData(Context context, String data) {
+        //KLog.w(data);
+        saveStringData(context, "ui_decoration", data);
+        saveLongData(context, "ui_decoration_time", System.currentTimeMillis());
+    }
+
+    public static boolean isUiDecorationIsExpired(Context context) {
+        long lastSaved = loadLongData(context, "ui_decoration_time", 0);
+        long twentyFourHours = 24 * 60 * 60 * 1000;
+        if (lastSaved == 0 || (System.currentTimeMillis() - lastSaved) >= twentyFourHours) {
+            return true;
+        }
+        return false;
+    }
+
+    public static UiDecoration loadUiDecoration(Context context) {
+        String val = loadStringData(context, "ui_decoration", "");
+        if (val != null && !val.isEmpty()) {
+            try {
+                return Utils.getGson().fromJson(val, UiDecoration.class);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        }
+        return new UiDecoration();
+
+    }
+
+    public static void removeData(Context context, String tag) {
+        SharedPreferences settings = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        settings.edit().remove(tag).commit();
+        // clear all pref data...
+//        SharedPreferences settings = context.getSharedPreferences("PreferencesName", Context.MODE_PRIVATE);
+//        settings.edit().clear().commit();
     }
 
 }

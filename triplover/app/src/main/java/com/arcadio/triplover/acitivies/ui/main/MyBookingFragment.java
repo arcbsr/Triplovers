@@ -25,7 +25,7 @@ import com.arcadio.triplover.models.mybookings.MyBookings;
 import com.arcadio.triplover.models.payments.response.Item1;
 import com.arcadio.triplover.models.usermodel.LoginResponse;
 import com.arcadio.triplover.utils.Constants;
-import com.arcadio.triplover.utils.KLog;
+import com.arcadio.triplover.utils.ImageLoader;
 import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.arcadio.triplover.utils.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -45,6 +45,7 @@ public class MyBookingFragment extends Fragment {
         View view = inflater.inflate(R.layout.main_fragment, container, false);
         myBookingSetup(view);
 
+        ImageLoader.loadImageBackground(view.findViewById(R.id.homebackground), getContext());
         return view;
     }
 
@@ -170,9 +171,9 @@ public class MyBookingFragment extends Fragment {
 
             @Override
             public void onThreadListener(String data) {
-                KLog.w(Constants.ROOT_MY_BOOKING_DETAIL + bookingRes.getUniqueTransID());
                 response =
-                        TAsyntask.getRequestHeader(Constants.ROOT_MY_BOOKING_DETAIL + bookingRes.getUniqueTransID());
+                        TAsyntask.getRequestHeader(Constants.ROOT_MY_BOOKING_DETAIL + bookingRes.getUniqueTransID(),
+                                PreferencesHelpers.getToken(getContext()));
             }
 
             @Override

@@ -3,10 +3,11 @@ package com.arcadio.triplover.models.usermodel;
 import android.app.Activity;
 
 import com.arcadio.triplover.communication.TAsyntask;
+import com.arcadio.triplover.models.SingleToneData;
+import com.arcadio.triplover.models.uidecoration.UiDecoration;
 import com.arcadio.triplover.utils.Constants;
+import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.arcadio.triplover.utils.Utils;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 public class UserLoginController {
     public interface onLoginListener {
@@ -37,8 +38,26 @@ public class UserLoginController {
                             response = null;
                         }
                     }
-                } catch (JsonSyntaxException e) {
+                } catch (Exception e) {
                     response = null;
+                }
+
+                try {
+                    if (PreferencesHelpers.isUiDecorationIsExpired(activity)) {
+//                    String jsonFileString = Utils.getJsonFromAssets(activity, "ui_decoration.json");
+                        TAsyntask.ResponseResult responseResult =
+                                TAsyntask.getRequestUrl("https://triplover-app-data.s3.ap-southeast-1.amazonaws.com/ui_decoration.json");
+                        if (responseResult.code == 200 && responseResult.result != null) {
+                            UiDecoration uiDecoration = Utils.getGson().fromJson(responseResult.result, UiDecoration.class);
+                            if (uiDecoration != null) {
+                                SingleToneData.setUiDecorationData(uiDecoration);
+                                PreferencesHelpers.saveUiDecorationData(activity, responseResult.result);
+                            }
+                        }
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 

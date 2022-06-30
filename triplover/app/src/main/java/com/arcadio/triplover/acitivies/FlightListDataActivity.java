@@ -6,16 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.arcadio.triplover.BaseActivity;
 import com.arcadio.triplover.R;
-import com.arcadio.triplover.adapter.BasicAdapter;
 import com.arcadio.triplover.adapter.FlightsAdapter;
 import com.arcadio.triplover.adapter.FlightsTabAdapter;
 import com.arcadio.triplover.communication.TAsyntask;
@@ -25,18 +21,16 @@ import com.arcadio.triplover.listeners.AdapterListener;
 import com.arcadio.triplover.models.FilterModule;
 import com.arcadio.triplover.models.reprice.request.RePriceReq;
 import com.arcadio.triplover.models.search.request.Route;
-import com.arcadio.triplover.models.search.response.Baggage;
 import com.arcadio.triplover.models.search.response.Direction;
 import com.arcadio.triplover.models.search.response.PassengerCounts;
-import com.arcadio.triplover.models.search.response.PassengerFares;
 import com.arcadio.triplover.models.search.response.SearchJsModel;
 import com.arcadio.triplover.utils.Constants;
 import com.arcadio.triplover.utils.CountryToPhonePrefix;
 import com.arcadio.triplover.utils.Dialogs;
 import com.arcadio.triplover.utils.Enums;
 import com.arcadio.triplover.utils.FilterDataDialog;
+import com.arcadio.triplover.utils.ImageLoader;
 import com.arcadio.triplover.utils.KLog;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
@@ -57,6 +51,14 @@ public class FlightListDataActivity extends BaseActivity {
         if (Instance == null) {
             Instance = FlightListDataActivity.this;
         }
+        binding.shimmerLayout.startShimmer();
+        ImageLoader.loadImageBackground(binding.homebackground, getContext());
+    }
+
+    @Override
+    protected void onDestroy() {
+        Instance = null;
+        super.onDestroy();
     }
 
     @Override
@@ -89,7 +91,6 @@ public class FlightListDataActivity extends BaseActivity {
                 if (object != null) {
                     searchJsModel = (SearchJsModel) object;
                 }
-                //searchJsModel = getGson().fromJson(result.result, SearchJsModel.class);
 
             }
 
@@ -204,6 +205,9 @@ public class FlightListDataActivity extends BaseActivity {
             }
         });
         filterModule = new FilterModule(adapter.getMinPrice(), adapter.getMaxPrice());
+
+        binding.shimmerLayout.stopShimmer();
+        binding.shimmerLayout.setVisibility(View.GONE);
     }
 
     private RePriceReq getPriceReqQuery(final List<Direction> directions) {
@@ -224,196 +228,25 @@ public class FlightListDataActivity extends BaseActivity {
     }
 
     private void showDetails(final List<Direction> directions, boolean isViewOnly) {
-        if (true) {
-            boolean isAllFlightSelected = !isViewOnly && ((FlightsTabAdapter) binding.flightSelectedList.getAdapter()).isAllFlightSelected();
-            new FlightsViewerFragment(directions, isAllFlightSelected, new FlightsViewerFragment.Listener() {
-                @Override
-                public void onCloseListener() {
-
-                }
-
-                @Override
-                public void onConfirmListener() {
-                    RePriceReq priceReq = getPriceReqQuery(directions);
-                    PassengerCounts passengerCounts = searchJsModel.getItem1().getAirSearchResponses().get(0).getPassengerCounts();
-                    Intent pasentry = new Intent(FlightListDataActivity.this, PassengerEntryActivity.class);
-                    pasentry.putExtra(Constants.IS_DOMESTIC, getIntent().getBooleanExtra(Constants.IS_DOMESTIC, false));
-                    pasentry.putExtra(Constants.PASS_PASSENGER_COUNTER, passengerCounts);
-                    pasentry.putExtra(Constants.PASS_REPRICE_REAUEST, priceReq);
-                    startActivity(pasentry);
-                }
-            }).show(getSupportFragmentManager(),"FlightDetails");
-            return;
-        }
-        Enums.FlightDetailsType detailsType = Enums.FlightDetailsType.DETAILS;
-        if (directions.size() == 0) {
-            Toast.makeText(this, getString(R.string.nothing_show), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setContentView(R.layout.layout_recycleview);
-
-        PassengerFares passengerFares = directions.get(0).passengerFares;
-        if (passengerFares.getAdt() != null) {
-            ((TextView) bottomSheetDialog.findViewById(R.id.baseprice)).setText(passengerFares.getAdt().getBasePrice() + "");
-            ((TextView) bottomSheetDialog.findViewById(R.id.tax)).setText(passengerFares.getAdt().getTaxes() + "");
-            ((TextView) bottomSheetDialog.findViewById(R.id.discount)).setText(passengerFares.getAdt().getDiscountPrice() + "");
-            ((TextView) bottomSheetDialog.findViewById(R.id.process_fee)).setText(0 + "");
-            ((TextView) bottomSheetDialog.findViewById(R.id.total_price)).setText(passengerFares.getAdt().getTotalPrice() + "");
-        }
-        if (!isViewOnly && ((FlightsTabAdapter) binding.flightSelectedList.getAdapter()).isAllFlightSelected()) {
-            ((TextView) bottomSheetDialog.findViewById(R.id.search_flight_confirm)).setText(getString(R.string.confirm));
-            bottomSheetDialog.findViewById(R.id.search_flight_confirm).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (Instance == null) {
-                        Instance = FlightListDataActivity.this;
-                    }
-                    KLog.w("isDomestic>>" + getIntent().getBooleanExtra(Constants.IS_DOMESTIC, false));
-                    RePriceReq priceReq = getPriceReqQuery(directions);
-                    PassengerCounts passengerCounts = searchJsModel.getItem1().getAirSearchResponses().get(0).getPassengerCounts();
-                    Intent pasentry = new Intent(FlightListDataActivity.this, PassengerEntryActivity.class);
-                    pasentry.putExtra(Constants.IS_DOMESTIC, getIntent().getBooleanExtra(Constants.IS_DOMESTIC, false));
-                    pasentry.putExtra(Constants.PASS_PASSENGER_COUNTER, passengerCounts);
-                    pasentry.putExtra(Constants.PASS_REPRICE_REAUEST, priceReq);
-                    startActivity(pasentry);
-                    bottomSheetDialog.dismiss();
-                }
-            });
-        } else {
-            ((TextView) bottomSheetDialog.findViewById(R.id.search_flight_confirm)).setText(getString(R.string.close));
-            bottomSheetDialog.findViewById(R.id.search_flight_confirm).setOnClickListener(view -> bottomSheetDialog.dismiss());
-        }
-        RecyclerView recyclerView = bottomSheetDialog.findViewById(R.id.rc_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(FlightListDataActivity.this));
-        BasicAdapter adapter = new BasicAdapter(new BasicAdapter.BasicListener() {
+        boolean isAllFlightSelected = !isViewOnly && ((FlightsTabAdapter) binding.flightSelectedList.getAdapter()).isAllFlightSelected();
+        new FlightsViewerFragment(directions, isAllFlightSelected, new FlightsViewerFragment.Listener() {
             @Override
-            public int getItem() {
-                return directions.size();
+            public void onCloseListener() {
+
             }
 
             @Override
-            public int getLayoutId() {
-                return R.layout.layout_flight_details;
+            public void onConfirmListener() {
+                RePriceReq priceReq = getPriceReqQuery(directions);
+                PassengerCounts passengerCounts = searchJsModel.getItem1().getAirSearchResponses().get(0).getPassengerCounts();
+                Intent pasentry = new Intent(FlightListDataActivity.this, PassengerEntryActivity.class);
+                pasentry.putExtra(Constants.IS_DOMESTIC, getIntent().getBooleanExtra(Constants.IS_DOMESTIC, false));
+                pasentry.putExtra(Constants.PASS_PASSENGER_COUNTER, passengerCounts);
+                pasentry.putExtra(Constants.PASS_REPRICE_REAUEST, priceReq);
+                startActivity(pasentry);
             }
-
-            @Override
-            public void onBindViewHolder(BasicAdapter.ViewHolder holder, int position) {
-               /* String det1 = directions.get(position).getPlatingCarrierName();
-                det1 += "\n" + directions.get(position).getPlatingCarrierCode() + "-" +
-                        directions.get(position).getSegments().get(0).getFlightNumber();
-                det1 += "," + directions.get(position).getSegments().get(0).getServiceClass();
-                ((TextView) holder.itemView.findViewById(R.id.item_details_airline)).setText(det1);
-
-                String det2 = directions.get(position).getFrom() + " - " + directions.get(position).getTo();
-                det2 += "\n" + directions.get(position).getSegments().get(0).getDuration().get(0);
-                ((TextView) holder.itemView.findViewById(R.id.item_details_codetime)).setText(det2);
-
-                String det3 = directions.get(position).getSegments().get(0).getDeparture().split(" ")[1]
-                        + "\n" + directions.get(position).getSegments().get(0).getDeparture().split(" ")[0];
-                det3 += "\n[" + directions.get(position).getSegments().get(0).getFrom() + "]";
-                if (!directions.get(position).getSegments().get(0).getDetails().get(0).getOriginTerminal().isEmpty())
-                    det3 += "\nTerminal: " + directions.get(position).getSegments().get(0).getDetails().get(0).getOriginTerminal();
-                ((TextView) holder.itemView.findViewById(R.id.item_details_dep_details)).setText(det3);
-
-                String det4 = directions.get(position).getSegments().get(0).getArrival().split(" ")[1]
-                        + "\n" + directions.get(position).getSegments().get(0).getArrival().split(" ")[0];
-                det4 += "\n[" + directions.get(position).getSegments().get(0).getTo() + "]";
-                if (!directions.get(position).getSegments().get(0).getDetails().get(0).getDestinationTerminal().isEmpty())
-                    det4 += "\nTerminal: " + directions.get(position).getSegments().get(0).getDetails().get(0).getDestinationTerminal();
-                ((TextView) holder.itemView.findViewById(R.id.item_details_ret_details)).setText(det4);
-                ImageLoader.loadImage(directions.get(position).getPlatingCarrierCode(),
-                        ((ImageView) holder.itemView.findViewById(R.id.item_details_thumb)), getContext());
-                holder.itemView.findViewById(R.id.item_details_layout).setVisibility(View.GONE);*/
-//                if (detailsType == Enums.FlightDetailsType.DETAILS) {
-//                    holder.itemView.findViewById(R.id.item_details_layout).setVisibility(View.GONE);
-//                } else {
-//                    if (detailsType == Enums.FlightDetailsType.BAGGAGE) {
-//                        Baggage baggage = directions.get(position).getSegments().get(0).
-//                                getBaggage().get(0);
-//                        ((TextView) holder.itemView.findViewById(R.id.item_details_bag_price)).setText(baggage.getAmount() + " " +
-//                                baggage.getUnits());
-//                        ((TextView) holder.itemView.findViewById(R.id.item_details_bag_price2)).setText("");
-//                    } else {
-//                        PassengerFares passengerFares = directions.get(position).passengerFares;
-//                        if (passengerFares != null) {
-//                            ((TextView) holder.itemView.findViewById(R.id.item_details_bag_price)).setText(det3);
-//                            ((TextView) holder.itemView.findViewById(R.id.item_details_bag_price2)).setText(det3);
-//                        } else {
-//                            ((TextView) holder.itemView.findViewById(R.id.item_details_bag_price)).setText("Unknown");
-//                            ((TextView) holder.itemView.findViewById(R.id.item_details_bag_price2)).setText("Unknown");
-//                        }
-//                    }
-//                    holder.itemView.findViewById(R.id.item_details_layout).setVisibility(View.VISIBLE);
-//                }
-                ((TextView) holder.itemView.findViewById(R.id.item_flight_info)).setText(directions.get(position).getFrom() + " - " + directions.get(position).getTo());
-                ((TextView) holder.itemView.findViewById(R.id.item_flight_planename)).setText(directions.get(position).getPlatingCarrierCode() + "-" +
-                        directions.get(position).getSegments().get(0).getFlightNumber());
-                ((TextView) holder.itemView.findViewById(R.id.item_flight_duration)).setText(directions.get(position).getSegments().get(0).getDuration().get(0));
-                ((TextView) holder.itemView.findViewById(R.id.item_flight_class)).setText(directions.get(position).getSegments().get(0).getServiceClass());
-                if (directions.get(position).getSegments().get(0).getBaggage() == null ||
-                        directions.get(position).getSegments().get(0).getBaggage().size() == 0) {
-//                    ((TextView) holder.itemView.findViewById(R.id.item_flight_baggeg)).setText( );
-                } else {
-                    Baggage baggage = directions.get(position).getSegments().get(0).
-                            getBaggage().get(0);
-                    ((TextView) holder.itemView.findViewById(R.id.item_flight_baggeg)).setText(baggage.getAmount() +
-                            baggage.getUnits());
-                }
-            }
-        });
-        recyclerView.setAdapter(adapter);
-        bottomSheetDialog.show();
-    }
-
-    private void showBaggageInfo(Direction direction) {
-        if (direction.getSegments().get(0).getBaggage() == null ||
-                direction.getSegments().get(0).getBaggage().size() == 0) {
-            new MaterialAlertDialogBuilder(FlightListDataActivity.this)
-                    .setTitle(getString(R.string.baggage_det))
-                    .setMessage(getString(R.string.nothing_show))
-
-                    .setNegativeButton(getString(R.string.close), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    })
-                    .show();
-            return;
-        }
-        Baggage baggage = direction.getSegments().get(0).
-                getBaggage().get(0);
-        new MaterialAlertDialogBuilder(FlightListDataActivity.this)
-                .setTitle(getString(R.string.baggage_det))
-                .setMessage(baggage.getAmount() + " " + baggage.getUnits())
-
-                .setNegativeButton(getString(R.string.close), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                })
-                .show();
-    }
-
-    private void showPriceInfo(Direction direction) {
-        PassengerFares passengerFares = direction.passengerFares;
-        String msg = "Unknown";
-        if (passengerFares.getAdt() != null) {
-            msg = "Base Price: " + passengerFares.getAdt().getBasePrice();
-            msg += "\nTax: " + passengerFares.getAdt().getTaxes();
-            msg += "\nDiscount: " + passengerFares.getAdt().getDiscountPrice();
-            msg += "\nTotal Price: " + passengerFares.getAdt().getTotalPrice();
-        }
-        new MaterialAlertDialogBuilder(FlightListDataActivity.this)
-                .setTitle(getString(R.string.price_det))
-                .setMessage(msg)
-
-                .setNegativeButton(getString(R.string.close), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                })
-                .show();
+        }).show(getSupportFragmentManager(), "FlightDetails");
+        return;
     }
 
     @Override
@@ -446,6 +279,9 @@ public class FlightListDataActivity extends BaseActivity {
                 for (Direction direction : dirlist) {
                     direction.searchPosition = i;
                     direction.totalPrice = searchJsModel.getItem1().getAirSearchResponses().get(i).getTotalPrice();
+                    direction.totalPriceD = searchJsModel.getItem1().getAirSearchResponses().get(i).getTotalPriceD();
+                    direction.basePrice = searchJsModel.getItem1().getAirSearchResponses().get(i).getBasePrice();
+                    direction.tax = searchJsModel.getItem1().getAirSearchResponses().get(i).getTaxes();
                     direction.passengerFares = searchJsModel.getItem1().getAirSearchResponses().get(i).getPassengerFares();
                     if (dlists == 0)
                         totalDir.add(direction);

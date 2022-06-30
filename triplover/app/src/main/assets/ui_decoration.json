@@ -1,0 +1,20 @@
+{
+  "init": {
+    "last_updated": "2022-06-07",
+    "last_version": "1.00.02",
+    "emergency": {
+      "notification": "true",
+      "url": ""
+    },
+    "home": {
+      "background": "",
+      "flight_icon": "https://cdn5.vectorstock.com/i/1000x1000/65/54/airplane-button-on-white-vector-10476554.jpg",
+      "hotel_icon": "https://cdn5.vectorstock.com/i/1000x1000/65/54/airplane-button-on-white-vector-10476554.jpg",
+      "tour_icon": "https://cdn5.vectorstock.com/i/1000x1000/65/54/airplane-button-on-white-vector-10476554.jpg",
+      "visa_icon": "https://cdn5.vectorstock.com/i/1000x1000/65/54/airplane-button-on-white-vector-10476554.jpg",
+      "home_offer_place1": "",
+      "home_offer_place2": "",
+      "search_offer_place3": ""
+    }
+  }
+}

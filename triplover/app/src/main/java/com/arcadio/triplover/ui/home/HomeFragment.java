@@ -15,8 +15,11 @@ import com.arcadio.triplover.R;
 import com.arcadio.triplover.acitivies.FlightSearchActivity;
 import com.arcadio.triplover.databinding.FragmentHomeBinding;
 import com.arcadio.triplover.fragments.LoginDialogFragment;
+import com.arcadio.triplover.models.SingleToneData;
 import com.arcadio.triplover.models.usermodel.LoginResponse;
+import com.arcadio.triplover.utils.ImageLoader;
 import com.arcadio.triplover.utils.KLog;
+import com.arcadio.triplover.utils.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 
@@ -81,6 +84,35 @@ public class HomeFragment extends Fragment {
                 }).show(getParentFragmentManager(), "LoginFrom");
             }
         });
+        ImageLoader.loadImageUrl(SingleToneData.getInstance().getUiDecorationData(getContext()).getInit().getHome().getFlightIcon()
+                , binding.btnFlight, getContext(), R.drawable.menu_flight);
+        ImageLoader.loadImageUrl(SingleToneData.getInstance().getUiDecorationData(getContext()).getInit().getHome().getHotelIcon()
+                , binding.btnHotel, getContext(), R.drawable.menu_hotels);
+        ImageLoader.loadImageUrl(SingleToneData.getInstance().getUiDecorationData(getContext()).getInit().getHome().getTourIcon()
+                , binding.btnTour, getContext(), R.drawable.menu_tour);
+        ImageLoader.loadImageUrl(SingleToneData.getInstance().getUiDecorationData(getContext()).getInit().getHome().getVisaIcon()
+                , binding.btnVisa, getContext(), R.drawable.menu_visa);
+
+        ImageLoader.loadImageUrl(SingleToneData.getInstance().getUiDecorationData(getContext()).getInit().getHome().getHomeOfferPlace1().getImage()
+                , binding.offerPlace1, getContext(), R.drawable.image_1);
+
+        ImageLoader.loadImageUrl(SingleToneData.getInstance().getUiDecorationData(getContext()).getInit().getHome().getHomeOfferPlace2().getImage()
+                , binding.offerPlace2, getContext(), R.drawable.image_2);
+        binding.offerPlace1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.openExternalLink(getContext(), SingleToneData.getInstance().getUiDecorationData(getContext()).getInit().getHome().getHomeOfferPlace1().
+                        getLink());
+            }
+        });
+        binding.offerPlace2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.openExternalLink(getContext(), SingleToneData.getInstance().getUiDecorationData(getContext()).getInit().getHome().getHomeOfferPlace2().
+                        getLink());
+            }
+        });
+        ImageLoader.loadImageBackground(binding.homeBackground, getContext());
         return root;
     }
 

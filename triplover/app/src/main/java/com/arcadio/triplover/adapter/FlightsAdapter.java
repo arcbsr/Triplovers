@@ -66,11 +66,11 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
     }
 
     public void addItems(int searchPosition, int airFlightIndex) {
-        KLog.w(searchJsModel.getItem1().getAirSearchResponses().get(searchPosition).getDirections().size() +"<="+ airFlightIndex);
+        KLog.w(searchJsModel.getItem1().getAirSearchResponses().get(searchPosition).getDirections().size() + "<=" + airFlightIndex);
         if (searchJsModel.getItem1().getAirSearchResponses().get(searchPosition).getDirections().size() > airFlightIndex) {
             this.directions =
                     searchJsModel.getItem1().getAirSearchResponses().get(searchPosition).getDirections().get(airFlightIndex);
-        }else {
+        } else {
 
             this.directions.clear();
         }
@@ -262,19 +262,7 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsAdapter.ViewHold
         holder.flightPrice.setText(searchJsModel.getItem1().getAirSearchResponses().get(direction.searchPosition).getTotalPrice() + "");
         holder.flight_refundable.setText(searchJsModel.getItem1().getAirSearchResponses().get(direction.searchPosition)
                 .getRefundable() ? "Refundable" : "Non-Refundable");
-//        if (directionsr.size() > 0) {
-//            holder.itemView.findViewById(R.id.item_return_layout).setVisibility(View.VISIBLE);
-//            Direction rDirection = directionsr.get(position);
-//            Segment rsegment = rDirection.getSegments().get(0);
-//            Detail rdetail = rsegment.getDetails().get(0);
-//            holder.item_ret_airname.setText(rsegment.getAirline());
-//            holder.item_ret_stime.setText(timeSeperator(rsegment.getDeparture()));
-//            holder.item_ret_etime.setText(timeSeperator(rsegment.getArrival()));
-//            holder.item_ret_sairport.setText(rsegment.getFrom());
-//            holder.item_ret_eairport.setText(rsegment.getTo());
-//            holder.item_ret_duration.setText(rdetail.getFlightTime());
-//            holder.item_ret_stops.setText((rDirection.getStops() == 0 ? "Non Stop" : rDirection.getStops() + " Stops"));
-//        } else {        }
+
         holder.itemView.findViewById(R.id.item_return_layout).setVisibility(View.GONE);
         if (direction.isSeleced) {
             ((Button) holder.itemView.findViewById(R.id.flight_book)).setText(listener.getContext().getString(R.string.next) + ">>");

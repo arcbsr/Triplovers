@@ -2,8 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/my_booking"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/home_background">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/homebackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/background" />
 
     <RelativeLayout
         android:layout_width="match_parent"

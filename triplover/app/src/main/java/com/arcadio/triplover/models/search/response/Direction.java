@@ -33,8 +33,8 @@ public class Direction {
     @Expose
     private String platingCarrierName;
 
-
-    public Integer totalPrice = 0;
+    public int totalPrice = 0;
+    public double totalPriceD = 0, basePrice = 0, tax = 0, discount = 0, ait = 0;
     public Integer searchPosition = 0;
     public PassengerFares passengerFares = null;
 

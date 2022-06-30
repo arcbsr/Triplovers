@@ -2,187 +2,220 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/home_background"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <ImageView
+        android:id="@+id/homebackground"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:background="@color/transparent"
-        android:elevation="0dp"
-        android:theme="@style/Theme.TripLover.AppBarOverlay"
-        app:elevation="0dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:popupTheme="@style/Theme.TripLover.PopupOverlay" />
-
-
-            <TextView
-                android:id="@+id/flights_next"
-                style="@style/TTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:drawableRight="@drawable/ic_baseline_navigate_next_24"
-                android:gravity="center"
-                android:paddingLeft="@dimen/_5sdp"
-                android:text="@string/next"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                android:tint="@color/black"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/_48sdp"
-                android:layout_toLeftOf="@+id/flights_next"
-                android:gravity="center_vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/flight_selected_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible" />
-            </LinearLayout>
-        </RelativeLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/background" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@color/transparent"
+            android:elevation="0dp"
+            android:theme="@style/Theme.TripLover.AppBarOverlay"
+            app:elevation="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:popupTheme="@style/Theme.TripLover.PopupOverlay" />
 
 
-        <LinearLayout
+                <TextView
+                    android:id="@+id/flights_next"
+                    style="@style/TTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:drawableRight="@drawable/ic_baseline_navigate_next_24"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:text="@string/next"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:tint="@color/black"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_48sdp"
+                    android:layout_toLeftOf="@+id/flights_next"
+                    android:gravity="center_vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/flight_selected_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible" />
+                </LinearLayout>
+            </RelativeLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/flight_details_panel"
-            android:layout_marginLeft="@dimen/_3sdp"
+            android:layout_below="@id/appbar"
             android:gravity="center"
             android:orientation="vertical">
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/flight_details_panel"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/flight_total_found"
+                    style="@style/TTH4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:background="@drawable/round_border_edit"
+                    android:gravity="right"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_3sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_3sdp"
+                    android:text="@string/no_flight"
+                    android:textSize="@dimen/_12sdp" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:shimmer_repeat_mode="restart"
+                    app:shimmer_shape="radial">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/layout_flightlist_item"></include>
+
+                        <include layout="@layout/layout_flightlist_item"></include>
+
+                        <include layout="@layout/layout_flightlist_item"></include>
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/flight_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/flight_select_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:padding="@dimen/_5sdp">
+
+                <LinearLayout
+                    android:id="@+id/filter"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_blue"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TTH4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/ic_baseline_filter_list_24"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawableTint="@color/white"
+                        android:gravity="center"
+                        android:text="@string/filter"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/sortby"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_blue"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TTH4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/ic_baseline_filter_list_24"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawableTint="@color/white"
+                        android:gravity="center"
+                        android:text="@string/sortby"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/flight_details_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/flight_select_bottom"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_3sdp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/flight_selected_btn"
+                    style="@style/TDButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_blue"
+                    android:drawableRight="@drawable/ic_down"
+                    android:drawableTint="@color/white_dark"
+                    android:paddingRight="@dimen/_20sdp"
+                    android:text="@string/flight_detail" />
+
+
+            </RelativeLayout>
+
             <TextView
-                android:id="@+id/flight_total_found"
-                style="@style/TTH4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_margin="@dimen/_5sdp"
-                android:background="@drawable/round_border_edit"
-                android:gravity="right"
-                android:paddingLeft="@dimen/_10sdp"
-                android:paddingTop="@dimen/_3sdp"
-                android:paddingRight="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_3sdp"
-                android:text="@string/no_flight"
-                android:textSize="@dimen/_12sdp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/flight_list"
+                android:id="@+id/no_data"
+                style="@style/TTextView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/flight_select_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            android:padding="@dimen/_5sdp">
-
-            <LinearLayout
-                android:id="@+id/filter"
-                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:layout_weight="1"
-                android:background="@drawable/button_blue"
+                android:layout_above="@id/flight_details_panel"
+                android:background="@drawable/background"
                 android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TTH4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:drawableLeft="@drawable/ic_baseline_filter_list_24"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:drawableTint="@color/white"
-                    android:gravity="center"
-                    android:text="@string/filter"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/sortby"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_weight="1"
-                android:background="@drawable/button_blue"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TTH4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:drawableLeft="@drawable/ic_baseline_filter_list_24"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:drawableTint="@color/white"
-                    android:gravity="center"
-                    android:text="@string/sortby"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/flight_details_panel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/flight_select_bottom"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_3sdp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/flight_selected_btn"
-                style="@style/TDButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_blue"
-                android:drawableRight="@drawable/ic_down"
-                android:drawableTint="@color/white_dark"
-                android:paddingRight="@dimen/_20sdp"
-                android:text="@string/flight_detail" />
-
-
+                android:text="@string/no_flight_msg"
+                android:textSize="@dimen/_14sdp"
+                android:visibility="gone" />
         </RelativeLayout>
-
-        <TextView
-            android:id="@+id/no_data"
-            style="@style/TTextView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/flight_details_panel"
-            android:background="@drawable/background"
-            android:gravity="center"
-            android:text="@string/no_flight_msg"
-            android:textSize="@dimen/_14sdp"
-            android:visibility="gone" />
     </RelativeLayout>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -15,12 +15,14 @@ import com.arcadio.triplover.adapter.FlightSearchAdapter;
 import com.arcadio.triplover.databinding.FragmentFlightOptionsBinding;
 import com.arcadio.triplover.fragments.CitySearchFragment;
 import com.arcadio.triplover.models.CityModels;
+import com.arcadio.triplover.models.SingleToneData;
 import com.arcadio.triplover.models.search.request.Route;
 import com.arcadio.triplover.models.search.request.SearchReq;
 import com.arcadio.triplover.utils.Constants;
 import com.arcadio.triplover.utils.CountryToPhonePrefix;
 import com.arcadio.triplover.utils.Dialogs;
 import com.arcadio.triplover.utils.Enums;
+import com.arcadio.triplover.utils.ImageLoader;
 import com.arcadio.triplover.utils.KLog;
 import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.arcadio.triplover.utils.Utils;
@@ -46,6 +48,15 @@ public class FlightSearchFragment extends BaseFragment {
     ) {
         binding = FragmentFlightOptionsBinding.inflate(inflater, container, false);
         searchReq = new SearchReq();
+        ImageLoader.loadImageUrl(SingleToneData.getInstance().getUiDecorationData(getContext()).getInit().getHome().getSearchOfferPlace3().getImage()
+                , binding.offerPlace3, getContext(), R.drawable.image_2);
+        binding.offerPlace3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.openExternalLink(getContext(), SingleToneData.getInstance().getUiDecorationData(getContext()).getInit().getHome().getSearchOfferPlace3().
+                        getLink());
+            }
+        });
         return (view = binding.getRoot());
 
     }

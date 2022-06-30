@@ -79,6 +79,12 @@ public class AirSearchResponse {
         }
     }
 
+    public double getTotalPriceD() {
+
+        return totalPrice;
+
+    }
+
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }

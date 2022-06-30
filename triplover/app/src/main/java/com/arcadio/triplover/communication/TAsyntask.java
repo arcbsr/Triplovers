@@ -12,6 +12,7 @@ import android.view.animation.LinearInterpolator;
 
 import com.arcadio.triplover.R;
 import com.arcadio.triplover.config.BuildConfiguration;
+import com.arcadio.triplover.utils.ImageLoader;
 import com.arcadio.triplover.utils.KLog;
 
 import java.io.IOException;
@@ -71,6 +72,7 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
 //        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
+        ImageLoader.loadImageSplash(dialog.findViewById(R.id.homebackground), activity);
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
@@ -195,23 +197,40 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    public static ResponseResult getRequestHeader(String postUrl) {
-        MediaType JSON
-                = MediaType.get("application/json; charset=utf-8");
+    public static ResponseResult getRequestHeader(String postUrl, String authToken) {
 
-//        OkHttpClient client = new OkHttpClient();
         OkHttpClient client = getHttpClient();
         Request request = new Request.Builder()
                 .url(BuildConfiguration.getBaseURL() + postUrl)
+                .addHeader("Authorization", "Bearer " + authToken)
+                .build();
+
+        KLog.w("My booking: rooturl+" + postUrl);
+        try (Response response = client.newCall(request).execute()) {
+            ResponseResult result = new ResponseResult();
+            result.code = response.code();
+            result.result = response.body().string();
+            KLog.w(result.result);
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ResponseResult();
+    }
+
+    public static ResponseResult getRequestUrl(String url) {
+
+        OkHttpClient client = getHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
                 .build();
         try (Response response = client.newCall(request).execute()) {
             ResponseResult result = new ResponseResult();
             result.code = response.code();
             result.result = response.body().string();
-//            String result = response.body().string();
             KLog.w(result.result);
             return result;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

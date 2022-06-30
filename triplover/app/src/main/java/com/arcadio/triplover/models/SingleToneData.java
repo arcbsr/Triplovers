@@ -1,8 +1,12 @@
 package com.arcadio.triplover.models;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.arcadio.triplover.communication.TAsyntask;
+import com.arcadio.triplover.models.uidecoration.UiDecoration;
+import com.arcadio.triplover.utils.KLog;
+import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.arcadio.triplover.utils.Utils;
 import com.google.gson.Gson;
 
@@ -59,5 +63,19 @@ public class SingleToneData {
             return;
         }
         listener.getCity(cityList);
+    }
+
+    private static UiDecoration uiDecoration;
+
+    public static void setUiDecorationData(UiDecoration uiDecoration2) {
+        uiDecoration = uiDecoration2;
+    }
+
+    public UiDecoration getUiDecorationData(Context context) {
+        if (uiDecoration == null)
+            uiDecoration = PreferencesHelpers.loadUiDecoration(context);
+        //KLog.w(Utils.getGson().toJson(uiDecoration));
+        return uiDecoration;
+
     }
 }

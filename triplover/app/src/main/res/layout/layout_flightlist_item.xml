@@ -34,18 +34,18 @@
                     <ImageView
                         android:id="@+id/item_dep_airthumb"
                         android:layout_width="match_parent"
-                        android:layout_above="@id/item_dep_airname"
                         android:layout_height="match_parent"
+                        android:layout_above="@id/item_dep_airname"
                         android:src="@drawable/airline_thumb" />
 
                     <TextView
-                        android:maxLines="1"
                         android:id="@+id/item_dep_airname"
                         style="@style/TTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:gravity="center"
+                        android:maxLines="1"
                         android:text=""
                         android:textSize="@dimen/_8sdp"
                         android:textStyle="normal" />
@@ -64,7 +64,7 @@
                         style="@style/TTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="13:25"
+                        android:text="xx:xx"
                         android:textStyle="normal" />
 
                     <TextView
@@ -72,7 +72,7 @@
                         style="@style/TTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="KWI"
+                        android:text="XXX"
                         android:textStyle="normal" />
                 </LinearLayout>
 
@@ -92,7 +92,7 @@
                         android:drawableRight="@drawable/ic_flight"
                         android:drawableTint="@color/orange"
                         android:gravity="center"
-                        android:text="13:25"
+                        android:text="xx:xx"
                         android:textSize="@dimen/_8sdp"
                         android:textStyle="normal" />
 
@@ -124,7 +124,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingRight="@dimen/_24sdp"
-                        android:text="Non-stop"
+                        android:text="xxxxxx"
                         android:textSize="@dimen/_8sdp"
                         android:textStyle="normal" />
                 </LinearLayout>
@@ -142,7 +142,7 @@
                         style="@style/TTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="13:25"
+                        android:text="xx:xx"
                         android:textStyle="normal" />
 
                     <TextView
@@ -150,7 +150,7 @@
                         style="@style/TTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="KWI"
+                        android:text="XXX"
                         android:textStyle="normal" />
                 </LinearLayout>
             </LinearLayout>
@@ -337,7 +337,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="BS-105"
+                android:text="XX-XXX"
                 android:textSize="@dimen/_10sdp" />
 
             <TextView
@@ -348,7 +348,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_toRightOf="@+id/flight_aircode"
                 android:gravity="center"
-                android:text="50000"
+                android:text="XXXX"
                 android:textColor="@color/orange"
                 android:textSize="@dimen/_10sdp" />
 
