@@ -5,7 +5,7 @@
     <item
         android:id="@+id/actionSearch"
         android:icon="@drawable/ic_baseline_search_24"
-        android:iconTint="@color/white"
+        android:iconTint="@color/black"
         android:title="@string/search_flight"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always" />

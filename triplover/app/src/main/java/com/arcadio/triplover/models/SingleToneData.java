@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.arcadio.triplover.communication.TAsyntask;
 import com.arcadio.triplover.models.uidecoration.UiDecoration;
-import com.arcadio.triplover.utils.KLog;
 import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.arcadio.triplover.utils.Utils;
 import com.google.gson.Gson;
@@ -36,6 +35,16 @@ public class SingleToneData {
             public void onPreListener() {
                 String jsonFileString = "{\"data\" : " + Utils.getJsonFromAssets(activity, "airports.json") + "}";
                 cityList = new Gson().fromJson(jsonFileString, CityList.class).getData();
+                ArrayList<CityModels> allBd = new ArrayList<>();
+                for (CityModels cityM : cityList) {
+                    if (cityM.getCountry().equalsIgnoreCase("Bangladesh")) {
+                        allBd.add(cityM);
+                    }
+                }
+                for (CityModels cityM : allBd) {
+                    cityList.remove(cityM);
+                    cityList.add(0, cityM);
+                }
                 listener.getCity(cityList);
             }
 

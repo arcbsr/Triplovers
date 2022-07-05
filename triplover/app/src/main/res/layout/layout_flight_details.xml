@@ -90,7 +90,7 @@
                         style="@style/TTH4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_14sdp"
                         android:text="Economy" />
 
                 </LinearLayout>
@@ -113,7 +113,7 @@
                         style="@style/TTH4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_14sdp"
                         android:text="Boeing 787-8" />
 
                 </LinearLayout>
@@ -136,7 +136,7 @@
                         style="@style/TTH4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_14sdp"
                         android:text="00h 45m" />
 
                 </LinearLayout>
@@ -159,7 +159,7 @@
                         style="@style/TTH4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_14sdp"
                         android:text="17:15 jun 23, 2022\nHazrat Shahjalal Internation Airport" />
 
                 </LinearLayout>
@@ -182,7 +182,7 @@
                         style="@style/TTH4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_14sdp"
                         android:text="20.0 kilogram" />
 
                 </LinearLayout>

@@ -68,6 +68,13 @@ public class CitySearchFragment extends BaseDialog {
         cityRV = view.findViewById(R.id.city_cursor);
         // DO whatever you need with menu items
         buildRecyclerView();
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                searchView.setBackgroundResource(!b ? 0 : R.drawable.round_border_edit);
+
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
