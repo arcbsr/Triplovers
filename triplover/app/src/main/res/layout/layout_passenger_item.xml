@@ -77,7 +77,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/_3sdp"
                 android:layout_weight=".5"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/TTextView"
@@ -156,6 +157,15 @@
 
             </LinearLayout>
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -181,46 +191,11 @@
                     android:padding="@dimen/_3sdp" />
 
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/item_pas_nationality_layout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_3sdp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/TTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_3sdp"
-                    android:text="@string/nationality" />
-
-                <TextView
-                    android:id="@+id/item_pas_nationality"
-                    style="@style/TEdittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_26sdp"
-                    android:drawableRight="@drawable/ic_down"
-                    android:enabled="true"
-                    android:gravity="center_vertical"
-                    android:hint="Bangladeshi"
-                    android:padding="@dimen/_3sdp" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_3sdp"
+                android:layout_marginLeft="@dimen/_3sdp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -282,6 +257,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/item_pas_nationality_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_3sdp"
@@ -293,20 +269,46 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_3sdp"
-                        android:text="@string/doc_number" />
+                        android:text="@string/nationality" />
 
-                    <EditText
-                        android:id="@+id/item_pas_docno"
+                    <TextView
+                        android:id="@+id/item_pas_nationality"
                         style="@style/TEdittext"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_26sdp"
-                        android:enabled="false"
+                        android:drawableRight="@drawable/ic_down"
+                        android:enabled="true"
                         android:gravity="center_vertical"
-                        android:hint="AAA123456"
+                        android:hint="BD"
                         android:padding="@dimen/_3sdp" />
 
                 </LinearLayout>
 
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:text="@string/doc_number" />
+
+                <EditText
+                    android:id="@+id/item_pas_docno"
+                    style="@style/TEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_26sdp"
+                    android:enabled="false"
+                    android:gravity="center_vertical"
+                    android:hint="AAA123456"
+                    android:padding="@dimen/_3sdp" />
 
             </LinearLayout>
 
@@ -421,7 +423,9 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_international_contact"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_5sdp"
             android:gravity="center"

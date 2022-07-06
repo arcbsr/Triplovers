@@ -99,6 +99,7 @@
     <string name="no">No</string>
     <string name="menu_visa">Visa</string>
     <string name="select_flight">Please, Select a flight. No Flight is selected.</string>
+    <string name="failed">Failed</string>
     <string-array name="spinnerItems">
         <item>1</item>
         <item>2</item>

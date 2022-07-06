@@ -110,6 +110,7 @@ public class PassengerEntryActivity extends BaseActivity {
 
             @Override
             public void onCompleteListener() {
+                String errorMsg = "Sorry for inconvenience, please try again";
                 if (response == null) {
 
                 } else {
@@ -117,37 +118,15 @@ public class PassengerEntryActivity extends BaseActivity {
                         RePriceResponse priceResponse = getGson().fromJson(response.result, RePriceResponse.class);
                         if (priceResponse != null && priceResponse.getItem1() != null) {
                             setUpData(priceResponse);
+
                             return;
 
                         } else if (priceResponse != null && priceResponse.getItem2() != null) {
                             if (priceResponse.getItem2().getMessage().contains("No eligible fare found")) {
-                                new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
-                                        .setCancelable(false)
-                                        .setTitle("Failed")
-                                        .setMessage("This fare is not available. please select another fare.")
-                                        .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                onBackPressed();
-                                            }
-                                        })
-                                        .show();
-                                return;
+                                errorMsg = "This fare is not available. please select another fare.";
                             }
+
                         }
-                        new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
-                                .setCancelable(false)
-                                .setTitle("Failed")
-                                .setMessage("Sorry for inconvenience, please try again")
-                                .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        FlightListDataActivity.getInstance().finish();
-                                        onBackPressed();
-                                    }
-                                })
-                                .show();
-                        return;
 
                     } else if (response.code == 401) {
 
@@ -177,9 +156,16 @@ public class PassengerEntryActivity extends BaseActivity {
                                 onBackPressed();
                             }
                         }).show(getSupportFragmentManager(), "LoginFrom");
-
+                        return;
                     }
+
                 }
+                new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
+                        .setCancelable(false)
+                        .setTitle(getString(R.string.failed))
+                        .setMessage(errorMsg)
+                        .setPositiveButton(getString(R.string.close), (dialogInterface, i) -> onBackPressed())
+                        .show();
             }
 
 
@@ -248,7 +234,6 @@ public class PassengerEntryActivity extends BaseActivity {
 
     private void setUpData(RePriceResponse response) {
 
-
         String countryCode = CountryToPhonePrefix.getLocalCode(getActivity());
         PassengerCounts passengerCounts = response.getItem1().getPassengerCounts();
         allPassengers = new PassengerReq();
@@ -280,6 +265,7 @@ public class PassengerEntryActivity extends BaseActivity {
                     }
                 });
                 holder.itemView.findViewById(R.id.layout_international_flight).setVisibility(isDomestic ? View.GONE : View.VISIBLE);
+                holder.itemView.findViewById(R.id.layout_international_contact).setVisibility(isDomestic ? View.GONE : View.VISIBLE);
                 int pos = holder.getAdapterPosition();
                 PassengerInfo passenger = allPassengers.getPassengerInfoes().get(pos);
                 setupPassengerInfo(pos, holder.itemView, false);
@@ -288,6 +274,8 @@ public class PassengerEntryActivity extends BaseActivity {
         }));
         passengerRCView.setLayoutManager(new LinearLayoutManager(this));
 
+        findViewById(R.id.entry_bottom).setVisibility(View.VISIBLE);
+        findViewById(R.id.book_continue).setVisibility(View.VISIBLE);
         findViewById(R.id.book_continue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

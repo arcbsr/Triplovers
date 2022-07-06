@@ -115,7 +115,8 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/book_continue"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="invisible">
 
                 <CheckBox
                     android:id="@+id/pas_agree"
@@ -153,7 +154,8 @@
                 android:text="@string/book_continue"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_14sdp"
+                android:visibility="invisible" />
         </RelativeLayout>
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
