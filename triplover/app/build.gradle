@@ -9,8 +9,8 @@ android {
         applicationId "com.arcadio.triplover"
         minSdk 21
         targetSdk 32
-        versionCode 1110
-        versionName "1.1.1.0"
+        versionCode 1111
+        versionName "1.1.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

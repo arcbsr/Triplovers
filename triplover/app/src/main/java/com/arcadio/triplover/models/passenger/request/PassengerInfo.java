@@ -24,6 +24,7 @@ public class PassengerInfo {
     @SerializedName("gender")
     @Expose
     private String gender = "Male";
+    private String genderDyn = "MR";
     @SerializedName("dateOfBirth")
     @Expose
     private String dateOfBirth;
@@ -94,7 +95,13 @@ public class PassengerInfo {
     public void setGender(String gender) {
         this.gender = gender;
     }
+    public String getGenderDyn() {
+        return genderDyn;
+    }
 
+    public void setGenderDyn(String genderDyn) {
+        this.genderDyn = genderDyn;
+    }
     public String getDateOfBirth() {
         return dateOfBirth;
     }

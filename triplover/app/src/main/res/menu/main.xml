@@ -4,8 +4,7 @@
     <!--item for our search view with its id-->
     <item
         android:id="@+id/actionSearch"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:iconTint="@color/black"
+        android:icon="@drawable/ic_search_icon"
         android:title="@string/search_flight"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always" />

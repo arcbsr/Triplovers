@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.arcadio.triplover.R;
 import com.arcadio.triplover.adapter.BasicAdapter;
+import com.arcadio.triplover.models.AppGatewayCharge;
 import com.arcadio.triplover.models.search.response.Baggage;
 import com.arcadio.triplover.models.search.response.Direction;
 import com.arcadio.triplover.models.search.response.PassengerFares;
@@ -33,11 +34,15 @@ public class FlightsViewerFragment extends BaseDialog {
     }
 
     private Listener mCallback;
+    double charge = 0;
 
-    public FlightsViewerFragment(final List<Direction> directions, boolean isAllFlightSelected, Listener mCallback) {
+    public FlightsViewerFragment(final List<Direction> directions, AppGatewayCharge appGatewayCharge, boolean isAllFlightSelected, Listener mCallback) {
         this.mCallback = mCallback;
         this.directions = directions;
         this.isAllFlightSelected = isAllFlightSelected;
+        if (appGatewayCharge != null) {
+            charge = appGatewayCharge.getCharge();
+        }
     }
 
     List<Direction> directions = new ArrayList<>();
@@ -51,6 +56,12 @@ public class FlightsViewerFragment extends BaseDialog {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.layout_recycleview, container, false);
         view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+        view.findViewById(R.id.close2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
@@ -86,7 +97,7 @@ public class FlightsViewerFragment extends BaseDialog {
             ((TextView) bottomSheetDialog.findViewById(R.id.baseprice)).setText(directions.get(0).basePrice + "");
             ((TextView) bottomSheetDialog.findViewById(R.id.tax)).setText(directions.get(0).tax + "");
             ((TextView) bottomSheetDialog.findViewById(R.id.discount)).setText(passengerFares.getAdt().getDiscountPrice() + "");
-            ((TextView) bottomSheetDialog.findViewById(R.id.process_fee)).setText(0 + "");
+            ((TextView) bottomSheetDialog.findViewById(R.id.process_fee)).setText((directions.get(0).totalPrice * charge / 100) + "");
             ((TextView) bottomSheetDialog.findViewById(R.id.total_price)).setText(directions.get(0).totalPrice + "");
         }
         if (isAllFlightSelected) {

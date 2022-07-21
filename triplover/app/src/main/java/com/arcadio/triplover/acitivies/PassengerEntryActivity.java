@@ -71,7 +71,6 @@ public class PassengerEntryActivity extends BaseActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(R.string.passenger_details);
-//        PreferencesHelpers.setToken(getContext(), "");
         passDataToSave = PreferencesHelpers.loadPassenger(this);
         isDomestic = getIntent().getBooleanExtra(Constants.IS_DOMESTIC, false);
         gatherInfo(PreferencesHelpers.getToken(getContext()));
@@ -313,6 +312,7 @@ public class PassengerEntryActivity extends BaseActivity {
         String error = "";
         for (PassengerInfo passengerInfo : allPassengers.getPassengerInfoes()) {
             NameElement nameElement = passengerInfo.getNameElement();
+            ContactInfo contactInfo = passengerInfo.getContactInfo();
             if (nameElement.getFirstName().isEmpty()) {
                 error = "Invalid " + passengerInfo.title + " Fast Name";
                 break;
@@ -331,10 +331,17 @@ public class PassengerEntryActivity extends BaseActivity {
                     error = "Invalid " + passengerInfo.title + " Issued In";
                     break;
                 }
+                if (contactInfo.getCityName().isEmpty()) {
+                    error = "Invalid " + passengerInfo.title + " City Name";
+                    break;
+                }
+                if (documentInfo.getExpireDate().isEmpty()) {
+                    error = "Invalid " + passengerInfo.title + " Passport expiry date.";
+                    break;
+                }
             }
-            ContactInfo contactInfo = passengerInfo.getContactInfo();
-            if (contactInfo.getCityName().isEmpty()) {
-                error = "Invalid " + passengerInfo.title + " City Name";
+            if (passengerInfo.getDateOfBirth().isEmpty()) {
+                error = "Invalid " + passengerInfo.title + " Date of Birth.";
                 break;
             }
             if (contactInfo.getEmail().isEmpty()) {
@@ -610,21 +617,63 @@ public class PassengerEntryActivity extends BaseActivity {
                         });
             }
         });
+        String[] genderDyn = getResources().getStringArray(R.array.gender);
+        Calendar calendar = Calendar.getInstance();
+        long maxDateTimeDob = calendar.getTimeInMillis();
+        long minDateTimeDob = 0;
+        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + 6);
+        long minDatePassportExpiry = calendar.getTimeInMillis();
+        switch (passenger.getPassengerType()) {
+            case "ADT":
+                genderDyn = getResources().getStringArray(R.array.gender);
+
+                calendar = Calendar.getInstance();
+                calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) - 12);
+                maxDateTimeDob = calendar.getTimeInMillis();
+                minDateTimeDob = 0;
+                break;
+            case "CNN":
+                genderDyn = getResources().getStringArray(R.array.gender_child);
+
+                calendar = Calendar.getInstance();
+                maxDateTimeDob = calendar.getTimeInMillis();
+                calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) - 12);
+                minDateTimeDob = calendar.getTimeInMillis();
+                break;
+            case "INF":
+                genderDyn = getResources().getStringArray(R.array.gender_inf);
+
+                calendar = Calendar.getInstance();
+                maxDateTimeDob = calendar.getTimeInMillis();
+                calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - 13);
+                minDateTimeDob = calendar.getTimeInMillis();
+                break;
+
+        }
+        passenger.setGenderDyn(genderDyn[0]);
+        getTextView(R.id.item_pas_gender, view, isEnable).setText(passenger.getGenderDyn());
+        passenger.setGender(passenger.getGenderDyn().split("-")[0]);
+        passenger.getNameElement().setTitle(passenger.getGenderDyn().split("-")[1]);
+        String[] finalDdd = genderDyn;
         view.findViewById(R.id.item_pas_gender).setOnClickListener(!isEnable ? null : new View.OnClickListener() {
             @Override
             public void onClick(View view2) {
                 new Dialogs().ShowDialogGender(getString(R.string.gender), getActivity(), new Dialogs.DialogListener() {
                     @Override
                     public void onItemSelected(String code, int position) {
-                        passenger.setGender(code);
-                        getTextView(R.id.item_pas_gender, view, isEnable).setText(passenger.getGender());
+                        passenger.setGenderDyn(code);
+                        getTextView(R.id.item_pas_gender, view, isEnable).setText(passenger.getGenderDyn());
+                        passenger.setGenderDyn(code);
+                        getTextView(R.id.item_pas_gender, view, isEnable).setText(passenger.getGenderDyn());
+                        passenger.setGender(passenger.getGenderDyn().split("-")[0]);
+                        passenger.getNameElement().setTitle(passenger.getGenderDyn().split("-")[1]);
                     }
 
                     @Override
                     public void onCountrySelected(CountryToPhonePrefix.CountryDetails code, int position) {
 
                     }
-                }, passenger.getGender(), getResources().getStringArray(R.array.gender));
+                }, passenger.getGenderDyn(), finalDdd);
             }
         });
         view.findViewById(R.id.item_pas_title).setOnClickListener(!isEnable ? null : new View.OnClickListener() {
@@ -684,13 +733,15 @@ public class PassengerEntryActivity extends BaseActivity {
                 }, documentInfo.getDocumentType(), getResources().getStringArray(R.array.doc_type));
             }
         });
+        long finalMaxDateTimeDob = maxDateTimeDob;
+        long finalMinDateTimeDob = minDateTimeDob;
         view.findViewById(R.id.item_pas_dob).setOnClickListener(!isEnable ? null : new View.OnClickListener() {
             @Override
             public void onClick(View view2) {
 
                 new Dialogs().showCalender(getContext(),
                         Utils.stringToMilliseconds(passenger.getDateOfBirth(), getString(R.string.date_format)),
-                        Calendar.getInstance().getTimeInMillis(), 0, getString(R.string.date_format)
+                        finalMaxDateTimeDob, finalMinDateTimeDob, getString(R.string.date_format)
                         , new Dialogs.DialogListener2() {
                             @Override
                             public void onItemSelected(long miliSecond, String code) {
@@ -706,7 +757,7 @@ public class PassengerEntryActivity extends BaseActivity {
 
                 new Dialogs().showCalender(getContext(),
                         Utils.stringToMilliseconds(documentInfo.getExpireDate(), getString(R.string.date_format)),
-                        0, 0, getString(R.string.date_format)
+                        0, minDatePassportExpiry, getString(R.string.date_format)
                         , new Dialogs.DialogListener2() {
                             @Override
                             public void onItemSelected(long miliSecond, String code) {

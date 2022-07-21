@@ -100,6 +100,7 @@
     <string name="menu_visa">Visa</string>
     <string name="select_flight">Please, Select a flight. No Flight is selected.</string>
     <string name="failed">Failed</string>
+    <string name="hide">Hide</string>
     <string-array name="spinnerItems">
         <item>1</item>
         <item>2</item>
@@ -107,8 +108,17 @@
         <item>4</item>
     </string-array>
     <string-array name="gender">
-        <item>Male</item>
-        <item>Female</item>
+        <item>Male-MR</item>
+        <item>Female-MRS</item>
+        <item>Female-MISS</item>
+    </string-array>
+    <string-array name="gender_child">
+        <item>Male-MSTR</item>
+        <item>Female-MSTRS</item>
+    </string-array>
+    <string-array name="gender_inf">
+        <item>Male-MR</item>
+        <item>Female-MS</item>
     </string-array>
     <string-array name="passenger_title">
         <item>MR</item>

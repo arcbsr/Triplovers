@@ -11,6 +11,7 @@ public class Constants {
     public static final String ROOT_CONFIRM_BOOKING = "api/BookB2C/AppBookingConfirm";
     public static final String ROOT_MY_BOOKINGS = "api/ReportB2C/AirTicketing";
     public static final String ROOT_MY_BOOKING_DETAIL = "api/ReportB2C/AirTicketingDetails/";//trans id
+    public static final String ROOT_URL_APPGATEWAYCHARGES = "api/PaymentGateway/AppGatewayCharges";
     public static final String RESULT_CITY_START = "DEPART";
     public static final String RESULT_CITY_DESTINATION = "DESTINATION";
     public static final String RESULT_CITY_ACTION = "FLIGHT_TYPE";

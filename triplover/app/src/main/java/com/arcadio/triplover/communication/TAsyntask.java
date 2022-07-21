@@ -175,7 +175,8 @@ public class TAsyntask extends AsyncTask<Void, Void, Void> {
     public static ResponseResult postRequestHeader(String searchAuery, String postUrl, String authToken) {
         MediaType JSON
                 = MediaType.get("application/json; charset=utf-8");
-
+        KLog.w(authToken);
+        KLog.w(searchAuery);
 //        OkHttpClient client = new OkHttpClient();
         OkHttpClient client = getHttpClient();
         RequestBody body = RequestBody.create(searchAuery, JSON);

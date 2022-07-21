@@ -18,6 +18,8 @@ import com.arcadio.triplover.communication.TAsyntask;
 import com.arcadio.triplover.databinding.ActivityFlightListDataBinding;
 import com.arcadio.triplover.fragments.FlightsViewerFragment;
 import com.arcadio.triplover.listeners.AdapterListener;
+import com.arcadio.triplover.models.AppGatewayCharge;
+import com.arcadio.triplover.models.AppGatewayCharges;
 import com.arcadio.triplover.models.FilterModule;
 import com.arcadio.triplover.models.reprice.request.RePriceReq;
 import com.arcadio.triplover.models.search.request.Route;
@@ -31,6 +33,7 @@ import com.arcadio.triplover.utils.Enums;
 import com.arcadio.triplover.utils.FilterDataDialog;
 import com.arcadio.triplover.utils.ImageLoader;
 import com.arcadio.triplover.utils.KLog;
+import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
@@ -38,6 +41,7 @@ import java.util.List;
 
 public class FlightListDataActivity extends BaseActivity {
     private ActivityFlightListDataBinding binding;
+    private AppGatewayCharge appGatewayCharge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +94,23 @@ public class FlightListDataActivity extends BaseActivity {
                 Object object = getObjectGson(result.result, SearchJsModel.class);
                 if (object != null) {
                     searchJsModel = (SearchJsModel) object;
+                    try {
+                        if (appGatewayCharge == null) {
+                            TAsyntask.ResponseResult paymentCharge = TAsyntask.getRequestHeader(Constants.ROOT_URL_APPGATEWAYCHARGES, PreferencesHelpers.getToken(getContext()));
+                            if (paymentCharge.code != 200) {
+                                return;
+                            }
+                            paymentCharge.result = "{\"data\":" + paymentCharge.result + "}";
+                            AppGatewayCharges charges = (AppGatewayCharges) getObjectGson(paymentCharge.result, AppGatewayCharges.class);
+                            for (AppGatewayCharge charge : charges.getData()) {
+                                if (charge.getName().equalsIgnoreCase("SSL")) {
+                                    appGatewayCharge = charge;
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }
@@ -229,7 +250,7 @@ public class FlightListDataActivity extends BaseActivity {
 
     private void showDetails(final List<Direction> directions, boolean isViewOnly) {
         boolean isAllFlightSelected = !isViewOnly && ((FlightsTabAdapter) binding.flightSelectedList.getAdapter()).isAllFlightSelected();
-        new FlightsViewerFragment(directions, isAllFlightSelected, new FlightsViewerFragment.Listener() {
+        new FlightsViewerFragment(directions, appGatewayCharge, isAllFlightSelected, new FlightsViewerFragment.Listener() {
             @Override
             public void onCloseListener() {
 
