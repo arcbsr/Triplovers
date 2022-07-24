@@ -29,6 +29,6 @@ public class FlightSearchActivity extends BaseActivity {
                     .commitNow();
         }
         setTitle(getString(R.string.app_name));
-        ImageLoader.loadImageBackground(binding.homebackground, getContext());
+        ImageLoader.loadImageBackground(binding.homebackground, getContext(),R.drawable.home_background);
     }
 }

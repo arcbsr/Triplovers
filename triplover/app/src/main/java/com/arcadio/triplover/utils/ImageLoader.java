@@ -30,11 +30,15 @@ public class ImageLoader {
     }
 
     public static void loadImageBackground(ImageView imageView, Context context) {
+        loadImageBackground(imageView, context, R.drawable.home_background);
+    }
+
+    public static void loadImageBackground(ImageView imageView, Context context, int defaultDrawable) {
 
         Glide
                 .with(context)
                 .load(SingleToneData.getInstance().getUiDecorationData(context).getInit().getHome().getBackground())
-                .placeholder(R.drawable.background)
+                .placeholder(defaultDrawable)
                 .into(imageView);
     }
 

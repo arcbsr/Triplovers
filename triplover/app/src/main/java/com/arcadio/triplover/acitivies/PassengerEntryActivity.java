@@ -416,17 +416,6 @@ public class PassengerEntryActivity extends BaseActivity {
 
                         } else {
 
-                            new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
-                                    .setTitle("Failed")
-                                    .setMessage(response.result)
-                                    .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                                        }
-                                    })
-                                    .show();
-                            return;
                         }
 
                     } else if (response.code == 401) {
@@ -451,9 +440,23 @@ public class PassengerEntryActivity extends BaseActivity {
                                         .show();
                             }
                         }).show(getSupportFragmentManager(), "LoginFrom");
-
+                        return;
                     }
                 }
+                String errorMsg = "Sorry for inconvenience, please contact with support center.\nTransection ID: " + sslcTransactionInfoModel.getTranId();
+                new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
+                        .setTitle("Failed")
+                        .setMessage(errorMsg)
+                        .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                                onBackPressed();
+                            }
+                        })
+                        .setCancelable(false)
+                        .show();
+                return;
             }
 
 

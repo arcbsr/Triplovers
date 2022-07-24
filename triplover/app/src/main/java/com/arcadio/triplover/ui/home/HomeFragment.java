@@ -112,7 +112,7 @@ public class HomeFragment extends Fragment {
                         getLink());
             }
         });
-        ImageLoader.loadImageBackground(binding.homeBackground, getContext());
+        ImageLoader.loadImageBackground(binding.homeBackground, getContext(), R.drawable.home_background);
         return root;
     }
 
