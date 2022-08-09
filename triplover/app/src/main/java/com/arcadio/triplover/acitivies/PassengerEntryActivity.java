@@ -414,8 +414,20 @@ public class PassengerEntryActivity extends BaseActivity {
                             }, bookingConfirm.getData().getItem1()).show(getSupportFragmentManager(), "TicketViewer");
                             return;
 
-                        } else {
-
+                        } else if(bookingConfirm.getMessage() !=null && !bookingConfirm.getMessage().isEmpty()){
+                            new MaterialAlertDialogBuilder(PassengerEntryActivity.this)
+                                    .setTitle("Info")
+                                    .setMessage(bookingConfirm.getMessage())
+                                    .setPositiveButton(getString(R.string.close), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            dialogInterface.dismiss();
+                                            onBackPressed();
+                                        }
+                                    })
+                                    .setCancelable(false)
+                                    .show();
+                            return;
                         }
 
                     } else if (response.code == 401) {
@@ -656,7 +668,11 @@ public class PassengerEntryActivity extends BaseActivity {
         passenger.setGenderDyn(genderDyn[0]);
         getTextView(R.id.item_pas_gender, view, isEnable).setText(passenger.getGenderDyn());
         passenger.setGender(passenger.getGenderDyn().split("-")[0]);
-        passenger.getNameElement().setTitle(passenger.getGenderDyn().split("-")[1]);
+        if(passenger.getGenderDyn().split("-").length <2){
+            passenger.getNameElement().setTitle("MR");
+        }else {
+            passenger.getNameElement().setTitle(passenger.getGenderDyn().split("-")[1]);
+        }
         String[] finalDdd = genderDyn;
         view.findViewById(R.id.item_pas_gender).setOnClickListener(!isEnable ? null : new View.OnClickListener() {
             @Override
@@ -666,10 +682,12 @@ public class PassengerEntryActivity extends BaseActivity {
                     public void onItemSelected(String code, int position) {
                         passenger.setGenderDyn(code);
                         getTextView(R.id.item_pas_gender, view, isEnable).setText(passenger.getGenderDyn());
-                        passenger.setGenderDyn(code);
-                        getTextView(R.id.item_pas_gender, view, isEnable).setText(passenger.getGenderDyn());
                         passenger.setGender(passenger.getGenderDyn().split("-")[0]);
-                        passenger.getNameElement().setTitle(passenger.getGenderDyn().split("-")[1]);
+                        if(passenger.getGenderDyn().split("-").length <2){
+                            passenger.getNameElement().setTitle("MR");
+                        }else {
+                            passenger.getNameElement().setTitle(passenger.getGenderDyn().split("-")[1]);
+                        }
                     }
 
                     @Override

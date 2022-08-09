@@ -16,6 +16,7 @@ import com.arcadio.triplover.models.usermodel.UserLoginController;
 import com.arcadio.triplover.utils.Constants;
 import com.arcadio.triplover.utils.ImageLoader;
 import com.arcadio.triplover.utils.PreferencesHelpers;
+import com.arcadio.triplover.utils.Utils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -41,7 +42,7 @@ public class SplashScreenActivity extends BaseActivity {
         }
         PreferencesHelpers.removeData(getContext(), "ui_decoration");
         PreferencesHelpers.removeData(getContext(), "ui_decoration_time");
-        final LoginReq loginReq = new LoginReq(userId, userPass);
+        final LoginReq loginReq = new LoginReq(userId, userPass, Utils.getDeviceID(getContext()));
         new UserLoginController().LoginData(getActivity(), loginReq, new UserLoginController.onLoginListener() {
             @Override
             public void onSuccess(LoginResponse response) {

@@ -42,7 +42,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 String mail = binding.loginEmail.getText().toString();
                 String password = binding.loginPassword.getText().toString();
-                final LoginReq loginReq = new LoginReq(mail, password);
+                final LoginReq loginReq = new LoginReq(mail, password, Utils.getDeviceID(getContext()));
             }
         });
         return root;

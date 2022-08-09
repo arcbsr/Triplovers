@@ -172,8 +172,8 @@
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
+                        android:layout_width="@dimen/_16sdp"
+                        android:layout_height="@dimen/_16sdp"
                         android:src="@drawable/baggage_icon"
                         app:tint="@color/black_hint" />
 

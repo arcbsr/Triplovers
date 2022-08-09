@@ -15,7 +15,7 @@ public class MyBookingRes {
     private String paxName;
     @SerializedName("issueDate")
     @Expose
-    private String issueDate;
+    private String issueDate ;
     @SerializedName("travellDate")
     @Expose
     private String travellDate;
@@ -24,7 +24,7 @@ public class MyBookingRes {
     private String uniqueTransID;
     @SerializedName("pnr")
     @Expose
-    private String pnr;
+    private String pnr="";
     @SerializedName("ticketNumber")
     @Expose
     private String ticketNumber;
@@ -41,6 +41,9 @@ public class MyBookingRes {
     }
 
     public String dateFormat(String dateTime) {
+        if(dateTime==null){
+            return "--";
+        }
         try {
             String date = "";// Utils.timeSeperator(dateTime);
             String[] dateTimes = dateTime.split("T");

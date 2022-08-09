@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -131,5 +132,15 @@ public class Utils {
     public static String convertNumberOrS(int number, String text, String ext) {
         return number + " " + text + ((number < 2) ? "" : ext);
 
+    }
+    public static String getDeviceID(Context context){
+        String deviceId = "Unknown";
+        try {
+            deviceId = android.provider.Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        KLog.w("myid>>"+deviceId);
+        return deviceId;
     }
 }

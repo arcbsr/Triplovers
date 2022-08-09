@@ -108,9 +108,9 @@
         <item>4</item>
     </string-array>
     <string-array name="gender">
-        <item>Male-MR</item>
+        <item>Male</item>
         <item>Female-MRS</item>
-        <item>Female-MISS</item>
+        <item>Female-MS</item>
     </string-array>
     <string-array name="gender_child">
         <item>Male-MSTR</item>

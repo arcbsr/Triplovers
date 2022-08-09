@@ -20,6 +20,7 @@
         <entry key="app/src/main/res/drawable-v24/thumb_circle.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/airline_thumb.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/background.xml" value="0.2095" />
+        <entry key="app/src/main/res/drawable/baggage_icon.xml" value="0.205" />
         <entry key="app/src/main/res/drawable/button_blue.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/button_blue_clicked.xml" value="0.195" />
         <entry key="app/src/main/res/drawable/button_blue_normal.xml" value="0.195" />
@@ -59,6 +60,7 @@
         <entry key="app/src/main/res/drawable/round_border_edit.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/round_border_sel.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/side_nav_bar.xml" value="0.2095" />
+        <entry key="app/src/main/res/drawable/sit_icon.xml" value="0.205" />
         <entry key="app/src/main/res/drawable/thumb_circle.xml" value="0.1895" />
         <entry key="app/src/main/res/layout/activity_city_search.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_flight_list.xml" value="0.4244791666666667" />

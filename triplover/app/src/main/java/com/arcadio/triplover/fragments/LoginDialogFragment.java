@@ -2,6 +2,7 @@ package com.arcadio.triplover.fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +92,8 @@ public class LoginDialogFragment extends BaseDialog {
                     PreferencesHelpers.saveBooleanData(getContext(), "isremember", isRemember);
                     PreferencesHelpers.saveStringData(getContext(), Constants.USER_ID, isRemember ? mail : "");
                     PreferencesHelpers.saveStringData(getContext(), Constants.USER_PASS, isRemember ? password : "");
-                    final LoginReq loginReq = new LoginReq(mail, password);
+
+                    final LoginReq loginReq = new LoginReq(mail, password, Utils.getDeviceID(getContext()));
                     new UserLoginController().LoginData(getActivity(), loginReq, new UserLoginController.onLoginListener() {
                         @Override
                         public void onSuccess(LoginResponse response) {
