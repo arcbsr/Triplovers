@@ -81,6 +81,9 @@ public class MyBookingRes {
     }
 
     public String getPnr() {
+        if(pnr == null){
+            pnr = "";
+        }
         return pnr;
     }
 

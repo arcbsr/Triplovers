@@ -1,6 +1,10 @@
 package com.arcadio.triplover.acitivies.ui.main;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +31,8 @@ import com.arcadio.triplover.models.mybookings.MyBookings;
 import com.arcadio.triplover.models.payments.response.Item1;
 import com.arcadio.triplover.models.usermodel.LoginResponse;
 import com.arcadio.triplover.utils.Constants;
+import com.arcadio.triplover.utils.CountryToPhonePrefix;
+import com.arcadio.triplover.utils.Dialogs;
 import com.arcadio.triplover.utils.ImageLoader;
 import com.arcadio.triplover.utils.PreferencesHelpers;
 import com.arcadio.triplover.utils.Utils;
@@ -142,16 +150,71 @@ public class MyBookingFragment extends Fragment {
             public void onBindViewHolder(BasicAdapter.ViewHolder holder, int position) {
                 MyBookingRes bookingRes = myBookings.get(position);
                 ((TextView) holder.itemView.findViewById(R.id.item_paxname)).setText(bookingRes.getPaxName());
+
                 String details = "Issue: " + bookingRes.getIssueDate();
                 details += "\nDepart: " + bookingRes.getTravellDate();
-                //details += "\nTicket:" + bookingRes.getTicketNumber();
-                details += "\nPnr: " + bookingRes.getPnr();
+                if (bookingRes.getPnr().isEmpty())
+                    details += "\nTransectionID:" + bookingRes.getUniqueTransID();
+                if (!bookingRes.getPnr().isEmpty())
+                    details += "\nPnr: " + bookingRes.getPnr();
                 details += "\nStatus: " + bookingRes.getStatus();
                 ((TextView) holder.itemView.findViewById(R.id.item_paxdes)).setText(details);
+                String[] data = new String[3];
+                data[0] = "call: (880) 9613345345";
+                data[1] = "call: (880) 1730785685";
+                data[2] = "mailto : support@triplover.com";
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showTicketDetail(bookingRes);
+                        if (bookingRes.getPnr().isEmpty()) {
+                            new Dialogs().ShowDialogGender("Please contact..." + bookingRes.getUniqueTransID(), getActivity(), new Dialogs.DialogListener() {
+                                @Override
+                                public void onItemSelected(String code, int position) {
+                                    if (position == 0) {
+                                        if (ContextCompat.checkSelfPermission(getActivity(),
+                                                Manifest.permission.CALL_PHONE)
+                                                != PackageManager.PERMISSION_GRANTED) {
+
+                                            ActivityCompat.requestPermissions(getActivity(),
+                                                    new String[]{Manifest.permission.CALL_PHONE},
+                                                    1221);
+                                            return;
+                                        }
+                                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                                        callIntent.setData(Uri.parse("tel:+8809613345345"));//change the number
+                                        startActivity(callIntent);
+                                    } else if (position == 1) {
+                                        if (ContextCompat.checkSelfPermission(getActivity(),
+                                                Manifest.permission.CALL_PHONE)
+                                                != PackageManager.PERMISSION_GRANTED) {
+
+                                            ActivityCompat.requestPermissions(getActivity(),
+                                                    new String[]{Manifest.permission.CALL_PHONE},
+                                                    1221);
+                                            return;
+                                        }
+                                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                                        callIntent.setData(Uri.parse("tel: +8801730785685"));//change the number
+                                        startActivity(callIntent);
+                                    } else if (position == 2) {
+                                        Intent email = new Intent(Intent.ACTION_SEND);
+                                        email.putExtra(Intent.EXTRA_EMAIL, new String[]{"support@triplover.com"});
+                                        email.putExtra(Intent.EXTRA_SUBJECT, "Ticket Query: "+ bookingRes.getUniqueTransID());
+                                        email.putExtra(Intent.EXTRA_TEXT, "");
+                                        email.setType("message/rfc822");
+
+                                        startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                                    }
+                                }
+
+                                @Override
+                                public void onCountrySelected(CountryToPhonePrefix.CountryDetails code, int position) {
+
+                                }
+                            }, "", data, true);
+                        } else {
+                            showTicketDetail(bookingRes);
+                        }
                     }
                 });
             }
