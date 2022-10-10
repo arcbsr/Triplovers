@@ -260,7 +260,7 @@ public class PassengerEntryActivity extends BaseActivity {
                 holder.itemView.findViewById(R.id.item_pas_header).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showPassengerDetails(position);
+                        //showPassengerDetails(position);
                     }
                 });
                 holder.itemView.findViewById(R.id.layout_international_flight).setVisibility(isDomestic ? View.GONE : View.VISIBLE);

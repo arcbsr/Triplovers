@@ -12,9 +12,9 @@ public class BuildConfiguration {
     static BuildType buildType = BuildType.STAGE;
 
     //Production url
-    private static String PROD_URL = "http://52.221.202.198:83/";
+    private static String PROD_URL = "http://54.169.108.46:81/";
     //Stage url
-    private static String STG_URL = "http://52.221.202.198:83/";
+    private static String STG_URL = "http://54.169.108.46:81/";
     public static final String ROOT_URL_THUMB = "https://tbbd-flight.s3.ap-southeast-1.amazonaws.com/airlines-logo/";
 
     public static String getBaseURL() {
